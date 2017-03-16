@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
 # This file is part of bedmap2pism.
-# Copyright (C) 2015-2016 
+# Copyright (C) 2015-2016
 authors="matthias.mengel@pik-potsdam.de and torsten.albrecht@pik-potsdam.de"
 
 # downloads ALBMAP, BEDMAP2, Rignot velocity and Arthern accumulation
-# creates 1km dataset NetCDF files and adjusts metadata, 
+# creates 1km dataset NetCDF files and adjusts metadata,
 # depends on wget and NCO (ncrename, ncap2, ncatted, ncpdq, ncks)
 
 
@@ -36,17 +36,21 @@ import download_data; reload(download_data)
 compare_bm2_alb = True
 
 ### Albmap   ##########################################################
+# Documentation for the data:
+# http://websrv.cs.umt.edu/isis/index.php/Present_Day_Antarctica
 albmap_nc="Antarctica_5km_dev1.0.nc"
 albmap_link="http://websrv.cs.umt.edu/isis/images/4/4d/"+albmap_nc
 albmap_data="albmap_data"
 ncalb_name=albmap_data+"/albmap_pism_5km.nc"
-if not os.path.isfile(albmap_data+"/"+albmap_nc): 
+if not os.path.isfile(albmap_data+"/"+albmap_nc):
   print "Downloading "+albmap_nc
   os.system("wget -nc "+albmap_link)
   os.system("mkdir "+albmap_data)
   os.system("mv "+albmap_nc+" "+albmap_data+"/")
 
 ### Rignot Velocity   ##########################################################
+# Documentation for the data:
+# https://www.ess.uci.edu/researchgrp/erignot/projects/velocity/gallery
 rignot_bin="rignot_bin"
 rignot_nc="rignot_velocity_1km.nc"
 rignot_link="https://secure.antarctica.ac.uk/data/bedmap2/resources/Rignot_velocity/bin.zip"
@@ -54,7 +58,7 @@ rignot_data="rignot_data"
 N2 = 5602
 x0_rig=2800500.
 y0_rig=2801500.
-if not os.path.exists(rignot_bin): 
+if not os.path.exists(rignot_bin):
   print "Downloading "+rignot_data
   os.system("wget "+rignot_link)
   os.system("mv bin.zip "+rignot_bin+".zip")
@@ -71,7 +75,7 @@ N3a=7899
 N3b=8300
 x0_art=3949500.
 y0_art=x0_art
-if not os.path.exists(arthern_bin): 
+if not os.path.exists(arthern_bin):
   print "Downloading "+arthern_link.split("/")[-1]
   os.system("wget "+arthern_link)
   os.system("mv Arthern_accumulation_bin.zip "+arthern_bin+".zip")
@@ -79,6 +83,7 @@ if not os.path.exists(arthern_bin):
   os.system("rm " + arthern_bin+".zip")
 
 ### Bedmap2   ##########################################################
+# Documentation of the data: https://www.bas.ac.uk/project/bedmap-2/
 bedmap2_bin="bedmap2_bin"
 bedmap2_link="https://secure.antarctica.ac.uk/data/bedmap2/"+bedmap2_bin+".zip"
 bedmap2_data="bedmap2_data"
@@ -245,7 +250,7 @@ if not os.path.isfile(ncalb_name):
   # choose Van de Berg et al version of accumulation; will treat as ice-equivalent snow rate
   os.system("ncrename -O -v accr,precipitation "+ncalb_name)
   os.system("ncatted -O -a units,precipitation,m,c,'m/year' "+ncalb_name)
-  # use bheatflx_shapiro as the default bheatflx data and 
+  # use bheatflx_shapiro as the default bheatflx data and
   os.system("ncrename -O -v bheatflx_shapiro,bheatflx "+ncalb_name)
   os.system("ncatted -O -a units,bheatflx,m,c,'W m-2' "+ncalb_name)
   # delete incorrect standard_name attribute from bheatflx; there is no known standard_name
