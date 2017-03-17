@@ -30,11 +30,9 @@ pism_input
 |   +-- download_and_extract_to_nc.py
 |   +-- regrid.py
 |   +-- fill_missing.py
-|   +-- rename_to_pism_variables.py
+|   +-- rename_to_pism_vars.py
 +-- albmap
-|   +-- download.py
-|   +-- regrid.py
-|   +-- rename_to_pism_variables.py
+|   +-- download_and_rename_to_pism_vars.sh
 +-- merging
 +-- regridding
 ```
