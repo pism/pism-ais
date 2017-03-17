@@ -29,6 +29,7 @@ pism_input
 +-- bedmap2
 |   +-- download_and_extract_to_nc.py
 |   +-- regrid.py
+|   +-- fill_missing.py
 |   +-- rename_to_pism_variables.py
 +-- albmap
 |   +-- download.py
