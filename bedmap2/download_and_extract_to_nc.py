@@ -32,9 +32,15 @@ if not os.path.exists(os.path.join(bedmap2_data_path,"bedmap2_bin")):
 
 data_files = {"topg":"bedmap2_bed.flt",
               "thk":"bedmap2_thickness.flt",
-              "mask":'bedmap2_icemask_grounded_and_shelves.flt',
+              "mask":"bedmap2_icemask_grounded_and_shelves.flt",
               "bedunc":"bedmap2_grounded_bed_uncertainty.flt",
               "usurf":"bedmap2_surface.flt"}
+
+data_fills = {"topg":0.0,
+              "thk":-5000.0,
+              "mask":0.0,
+              "bedunc":0.0,
+              "usurf":2.0}
 
 # taken from bedmap2 readme
 N=6667
@@ -50,28 +56,28 @@ for var, file in data_files.iteritems():
   fname = os.path.join(bedmap2_data_path,"bedmap2_bin",file)
   vardata = np.flipud(np.ma.masked_equal(np.reshape(
           np.fromfile(fname,dtype=np.float32),(N,N)),-9999.0))
+
   print " range of "+str(var)+" = [%.2f, %.2f]" % (vardata.min(),vardata.max())
+  #get rid off NaN
+  vardata[vardata.mask]=data_fills[var]
+
   bedm2_vars[var] =  vardata
 
 
+
 bedm2_attributes = {"bed": {"long_name" : "elevation of bedrock",
-                           "valid_range" : (-9000.0, 9000.0),
                            "standard_name" : "bedrock_altitude",
                            "units" : "meters"},
                     "usurf": {"long_name" : "ice upper surface elevation",
-                            "valid_range" : (-1000.0, 9000.0),
                             "standard_name" : "surface_altitude",
                             "units" : "meters"},
                     "thk": {"long_name" : "thickness of ice sheet or ice shelf",
-                            "valid_range" : (0.0, 9000.0),
                             "standard_name" : "land_ice_thickness",
                             "units" : "meters"},
                     "bedunc": {"long_name" : "uncertainty of bed topography",
-                            "valid_range" : (0.0, 9000.0),
                             "standard_name" : "bed_uncertainty",
                             "units" : "meters"},
                     "mask": {"long_name" : "ice-type (ice-free/grounded/floating/ocean) integer mask",
-                            "valid_range" : (0.0, 1.0),
                             "standard_name" : "mask",
                             "units" : ""} }
 
@@ -83,21 +89,23 @@ ncout = netCDF4.Dataset(ncout_name,"w",format='NETCDF4_CLASSIC')
 # no time dimension needed here
 ncout.createDimension('x',size=len(x))
 ncout.createDimension('y',size=len(x))
-ncx   = ncout.createVariable( 'x','float32',('x',) )
-ncy   = ncout.createVariable( 'y','float32',('y',) )
+ncx   = ncout.createVariable( 'x','float64',('x',) )
+ncy   = ncout.createVariable( 'y','float64',('y',) )
 ncx[:] = x
 ncy[:] = y
 
 for varname,data in bedm2_vars.iteritems():
 
-  ncvar = ncout.createVariable( varname,'float32',('y','x') )
+  ncvar = ncout.createVariable( varname,'float64',('y','x') ) #double precision
   ncvar[:] = data
   for att in bedm2_attributes[var]:
     pass
 
 now = datetime.datetime.now().strftime("%B %d, %Y")
-ncout.proj4      = "+proj=stere +lon_0=0 +lat_0=-90 +lat_ts=-71 +ellps=WGS84 +datum=WGS84"
-ncout.projection = "+proj=stere +lon_0=0 +lat_0=-90 +lat_ts=-71 +ellps=WGS84 +datum=WGS84"
+#antarctica
+ncout.proj4 = "+proj=stere +ellps=WGS84 +datum=WGS84 +lon_0=0 +lat_0=-90 +lat_ts=-71 +units=m"
+#greenland
+#ncout.proj4 = "+proj=stere +lat_0=90 +lat_ts=71 +lon_0=-39 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
 ncout.comment  = cf.authors+" created netcdf bedmap2 file at " + now
 
 ncout.close()

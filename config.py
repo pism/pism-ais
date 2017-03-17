@@ -6,4 +6,5 @@ import os
 
 authors="matthias.mengel@pik-potsdam.de and torsten.albrecht@pik-potsdam.de"
 
-output_data_path = os.path.expanduser("~/data/20170316_PismInputData/")
+output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/python/pism_input/")
+#output_data_path = os.path.expanduser("~/data/20170316_PismInputData/")
