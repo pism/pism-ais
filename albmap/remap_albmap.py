@@ -1,7 +1,7 @@
 
 """
 matthias.mengel@pik, torsten.albrecht@pik
-Regrid Bedmap2 data to various grid resolution using cdo remapcony.
+Regrid Albmap data to various grid resolution using cdo remapcony.
 """
 
 import os
