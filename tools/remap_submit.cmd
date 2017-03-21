@@ -16,18 +16,18 @@
 #scriptname=remap.sh
 scriptname=/p/projects/tumble/pism_input/GitLab/tools/remap.sh
 
-#calls for example "${scriptname} bedmap2 15"
+#calls for example "${scriptname} bedmap2 15 1"
 
 if [ $# -gt 0 ] ; then  # dataset
   dataset="$1"
   resolution="$2"
+  inputres="$3"
 fi
 
-mkdir -p log
 
 export PISM_ON_CLUSTER=1
-echo "${scriptname} ${dataset} ${resolution} $SLURM_NTASKS"
-${scriptname} ${dataset} ${resolution} $SLURM_NTASKS >> ./log/remap.out
+echo "${scriptname} ${dataset} ${resolution} ${inputres} $SLURM_NTASKS"
+${scriptname} ${dataset} ${resolution} ${inputres} $SLURM_NTASKS >> ./log/remap.out
 
 
 

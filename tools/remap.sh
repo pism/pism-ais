@@ -6,10 +6,11 @@
 scriptname="remap.sh"
 
 if [ $# -gt 0 ] ; then  # dataset
-  dataset="$2"
-  resolution="$1"
-  NN="$3"
-  #echo "arguments $dataset $resolution $NN"
+  dataset="$1"
+  resolution="$2"
+  inputres="$3"
+  NN="$4"
+  echo "arguments $dataset $resolution $inputres $NN"
 fi
 
 
@@ -44,11 +45,11 @@ export ncopath=/p/system/packages/nco/4.5.0/bin
 #export cdopath=/usr/bin
 #export ncopath=/usr/bin
 
-export inputfile=${workpath}/${data}/${data}_data/${data}_1km_input.nc
+export inputfile=${workpath}/${data}/${data}_data/${data}_${inputres}km_input.nc
 python ${workpath}/tools/nc2cdo.py $inputfile
 
 mkdir -p ${workpath}/${data}/${data}_weights
-echo $inputfile ${workpath}/${data}/${data}_weights
+echo $inputfile #${workpath}/${data}/${data}_weights
 
 #for res in 50 30 20 15 12 10 7 5 3 2 1;
 #do

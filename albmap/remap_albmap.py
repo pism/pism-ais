@@ -17,10 +17,10 @@ project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path: sys.path.append(project_root)
 import config as cf; reload(cf)
 
-### Bedmap2   ##########################################################
-dataset="bedmap2"
+### Albmap  ##########################################################
+dataset="albmap"
 remap_file=cf.output_data_path+"tools/remap.sh"
-input_res=1 #km
+input_res=5 #km
 
 submit_to_cluster=False
 number_of_cpu=4
@@ -32,7 +32,7 @@ username= username.rstrip("\n")
 
 
 
-for res in [50, 30, 20, 15, 12, 10, 7, 5, 3, 2, 1]:
+for res in [50, 30, 20, 15, 12, 10, 7, 3, 2, 1]:
 
   if submit_to_cluster:
 

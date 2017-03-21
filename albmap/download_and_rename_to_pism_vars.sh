@@ -20,8 +20,11 @@ wget -nc http://websrv.cs.umt.edu/isis/images/4/4d/$DATANAME
 
 echo "making PISM-readable file by copying parts of $DATANAME"
 echo "  and adjusting metadata ..."
-PISMVERSION=pism_Antarctica_5km.nc
+#PISMVERSION=albmap_data/pism_Antarctica_5km.nc
+PISMVERSION=albmap_data/albmap_5km_input.nc
+mkdir -p albmap_data
 cp $DATANAME $PISMVERSION
+mv $DATANAME albmap_data/
 
 # following use NCO (http://nco.sourceforge.net/)
 # rename dimensions
@@ -52,9 +55,8 @@ ncks -O -v x,y,lat,lon,bheatflx,topg,thk,precipitation,air_temp,mapping \
 ncwa -O -a t $PISMVERSION $PISMVERSION
 # remove the time (t) coordinate variable
 ncks -O -x -v t $PISMVERSION $PISMVERSION
-echo "  PISM-readable file $PISMVERSION created; only has fields"
-echo "    used in bootstrapping."
+# create netcdf4 format
+ncks -4 $PISMVERSION $PISMVERSION
 
-echo "now run spin-up script 'antspinCC.sh'"
-echo
+echo "  PISM-readable file $PISMVERSION created;"
 
