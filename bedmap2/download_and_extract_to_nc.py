@@ -18,7 +18,7 @@ import config as cf; reload(cf)
 # Documentation of the data: https://www.bas.ac.uk/project/bedmap-2/
 bedmap2_link="https://secure.antarctica.ac.uk/data/bedmap2/bedmap2_bin.zip"
 bedmap2_data_path = os.path.join(cf.output_data_path, "bedmap2")
-ncout_name = os.path.join(bedmap2_data_path, 'bedmap2_1km.nc')
+ncout_name = os.path.join(bedmap2_data_path, 'bedmap2_data/bedmap2_1km_input.nc')
 
 # if data is not yet extracted in bedmap2_bin
 if not os.path.exists(os.path.join(bedmap2_data_path,"bedmap2_bin")):
@@ -30,17 +30,21 @@ if not os.path.exists(os.path.join(bedmap2_data_path,"bedmap2_bin")):
 # if os.path.isfile(ncout_name):
 #   print ncout_name, "already written, do nothing."
 
+# if folder bedmap2_data is not yet created
+if not os.path.exists(os.path.join(bedmap2_data_path,"bedmap2_data")):
+  os.system("mkdir " + bedmap2_data_path + "/bedmap2_data")
+
 data_files = {"topg":"bedmap2_bed.flt",
               "thk":"bedmap2_thickness.flt",
               "mask":"bedmap2_icemask_grounded_and_shelves.flt",
               "bedunc":"bedmap2_grounded_bed_uncertainty.flt",
               "usurf":"bedmap2_surface.flt"}
 
-data_fills = {"topg":0.0,
-              "thk":-5000.0,
-              "mask":0.0,
+data_fills = {"thk":0.0,
+              "topg":-5000.0,
+              "usurf":0.0,
               "bedunc":0.0,
-              "usurf":2.0}
+              "mask":2.0}
 
 # taken from bedmap2 readme
 N=6667
@@ -103,7 +107,8 @@ for varname,data in bedm2_vars.iteritems():
 
 now = datetime.datetime.now().strftime("%B %d, %Y")
 #antarctica
-ncout.proj4 = "+proj=stere +ellps=WGS84 +datum=WGS84 +lon_0=0 +lat_0=-90 +lat_ts=-71 +units=m"
+#ncout.proj4 = "+proj=stere +ellps=WGS84 +datum=WGS84 +lon_0=0 +lat_0=-90 +lat_ts=-71 +units=m"
+ncout.proj4 = "+lon_0=0.0 +ellps=WGS84 +datum=WGS84 +lat_ts=-71.0 +proj=stere +x_0=0.0 +units=m +y_0=0.0 +lat_0=-90.0"
 #greenland
 #ncout.proj4 = "+proj=stere +lat_0=90 +lat_ts=71 +lon_0=-39 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
 ncout.comment  = cf.authors+" created netcdf bedmap2 file at " + now
