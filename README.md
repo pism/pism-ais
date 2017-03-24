@@ -28,11 +28,23 @@ Here is the graph:
 pism_input
 +-- bedmap2
 |   +-- download_and_extract_to_nc.py
-|   +-- regrid.py
-|   +-- fill_missing.py
-|   +-- rename_to_pism_vars.py
+|   +-- remap_bedmap2.py
 +-- albmap
 |   +-- download_and_rename_to_pism_vars.sh
+|   +-- remap_albmap.py 
++-- racmo
+|   +-- preprocess.sh (TODO: flipud)
+|   +-- remap_racmo.py 
++-- basins
+|   +-- create_basins_netcdf.py
+|   +-- add_shelves_to_basins.py
+|   +-- add_ocean_to_basins.py
+|   +-- remap_basins.py (TODO: no interpolation!)
++-- schmidtko
+|   +-- create_NetCDF.py
+|   +-- calculate_potential_temps.py
+|   +-- remap_schmidtko.py
+|   +-- compute_basin_means.py
 +-- merging
-+-- regridding
+
 ```
