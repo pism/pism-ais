@@ -137,15 +137,14 @@ if __name__ == "__main__":
     var_out.bounds = "lat_bounds"
     var_out[:] = lat
       
-    var = 'dummy'
-    var_out = nc.createVariable(var, 'f', dimensions=("y","x"))
-    var_out.units = "meters";
-#    var_out._FillValue = np.nan
-    var_out.long_name = "Just A Dummy"
-    var_out.comment = "This is just a dummy variable for CDO."
+    var = 'ocean_kill_mask'
+    var_out = nc.createVariable(var, 'b', dimensions=("y","x"))
+    var_out.units = "";
+    var_out.long_name = "mask specifying fixed calving front locations"
+    var_out.comment = "mask is set via topg and thk"
     var_out.grid_mapping = "mapping"
     var_out.coordinates = "lon lat"    
-    var_out[:] = np.nan
+    var_out[:] = 0
 
     mapping = nc.createVariable("mapping",'c')
     mapping.ellipsoid = "WGS84"

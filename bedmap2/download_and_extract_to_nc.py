@@ -50,8 +50,10 @@ data_fills = {"thk":0.0,
 N=6667
 dx = 1000.0 #m
 dy = 1000.0 #m
-x = np.linspace(0.0,(N-1)*dx,N)
-y = np.linspace(0.0,(N-1)*dy,N)
+x = np.linspace(-(N-1)*dx/2.0,(N-1)*dx/2.0,N)
+y = np.linspace(-(N-1)*dy/2.0,(N-1)*dy/2.0,N)
+
+
 
 print "Reading bedmap2 binary files from %s ...\n" % (bedmap2_data_path)
 

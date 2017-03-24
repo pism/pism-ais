@@ -9,6 +9,6 @@ do
 
   python create_grid.py -g ${res} pism_${res}km.nc
 
-  python ../tools/nc2cdo.py pism_${res}km.nc
+  python ../tools/nc2cdo_4.py pism_${res}km.nc
 
 done
