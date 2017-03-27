@@ -19,7 +19,7 @@ import config as cf; reload(cf)
 
 ### Bedmap2   ##########################################################
 dataset="bedmap2"
-remap_file=cf.output_data_path+"tools/remap.sh"
+remap_file=os.path.join(project_root,"tools/remap.sh")
 input_res=1 #km
 
 submit_to_cluster=False
@@ -32,7 +32,8 @@ username= username.rstrip("\n")
 
 
 
-for res in [50, 30, 20, 15, 12, 10, 7, 5, 3, 2, 1]:
+# for res in [50, 30, 20, 15, 12, 10, 7, 5, 3, 2, 1]:
+for res in [50]:
 
   if submit_to_cluster:
 

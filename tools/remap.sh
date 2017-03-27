@@ -40,10 +40,10 @@ export workpath=/p/projects/tumble/pism_input/GitLab
 #export workpath=../
 
 #tools on PIK cluster
-export cdopath=/p/system/packages/cdo/1.7.1/bin
-export ncopath=/p/system/packages/nco/4.5.0/bin
-#export cdopath=/usr/bin
-#export ncopath=/usr/bin
+# export cdopath=/p/system/packages/cdo/1.7.1/bin
+# export ncopath=/p/system/packages/nco/4.5.0/bin
+export cdopath=/usr/bin
+export ncopath=/usr/bin
 
 export inputfile=${workpath}/${data}/${data}_data/${data}_${inputres}km_input.nc
 python ${workpath}/tools/nc2cdo.py $inputfile
@@ -65,11 +65,11 @@ echo $inputfile #${workpath}/${data}/${data}_weights
   if [ "${data}" == bedmap2 -o albmap ]; then
     $MPIDO ${cdopath}/cdo $CDOP genycon,${targetgrid} ${inputfile} ${mapweights}
     $MPIDO ${cdopath}/cdo $CDOP -b F64 remap,${targetgrid},${mapweights} ${inputfile} ${mapres}
- 
+
   else #velocities etc...
     export REMAP_EXTRAPOLATE=on
     $MPIDO ${cdopath}/cdo $CDOP -b F64 remapbil,${targetgrid} ${inputfile} ${mapres}
- 
+
   fi
 
   $MPIDO ${ncopath}/ncks -A -v x,y ${targetgrid} ${mapres}

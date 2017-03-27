@@ -17,6 +17,7 @@ import config as cf; reload(cf)
 ### Bedmap2   ##########################################################
 # Documentation of the data: https://www.bas.ac.uk/project/bedmap-2/
 bedmap2_link="https://secure.antarctica.ac.uk/data/bedmap2/bedmap2_bin.zip"
+## such file definitions should go to config.py, so that other functions can access them.
 bedmap2_data_path = os.path.join(cf.output_data_path, "bedmap2")
 ncout_name = os.path.join(bedmap2_data_path, 'bedmap2_data/bedmap2_1km_input.nc')
 
