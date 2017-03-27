@@ -24,8 +24,8 @@ plt.close('all')
 """
 Parameters
 """
-getData=0
-mergeBasins=0
+getData=1
+mergeBasins=1
 findLongitudes=1
 adjustAP=1
 fillInBasinMask=1

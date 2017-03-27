@@ -33,12 +33,10 @@ pism_input
 |   +-- download_and_rename_to_pism_vars.sh
 |   +-- remap_albmap.py 
 +-- racmo
-|   +-- preprocess.sh (TODO: flipud)
+|   +-- preprocess.sh (TODO: flipud, does not work)
 |   +-- remap_racmo.py 
 +-- basins
-|   +-- create_basins_netcdf.py
-|   +-- add_shelves_to_basins.py
-|   +-- add_ocean_to_basins.py
+|   +-- download_and_extend_to_ocean.py
 |   +-- remap_basins.py (TODO: no interpolation!)
 +-- schmidtko
 |   +-- create_NetCDF.py
