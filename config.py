@@ -3,6 +3,7 @@ This file contains user defined paths and settings.
 Normally, this should not be committed unless your changes are major.
 """
 import os
+import pwd
 
 authors="matthias.mengel@pik-potsdam.de and torsten.albrecht@pik-potsdam.de"
 
@@ -33,3 +34,4 @@ resolution = 5 # in km
 output_file_name = os.path.join(output_data_path,output_file_name)
 cdo_remapgridpath = os.path.join(output_data_path,"cdo_remapgrids")
 project_root = os.path.dirname(os.path.abspath(__file__))
+username = pwd.getpwuid(os.getuid()).pw_name

@@ -50,7 +50,7 @@ regridded_file = os.path.join(data_path, "regridded_"+str(resolution)+"_km.nc")
 mapweights = os.path.join(data_path, "mapweights.nc")
 use_conservative_regridding = True
 
-out = scen_template.render(user="mengel",
+out = scen_template.render(user=cf.username,
                            use_conservative_regridding = use_conservative_regridding,
                            targetgrid = cdo_targetgrid_file,
                            inputfile = inputfile,
