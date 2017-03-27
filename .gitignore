@@ -1,1 +1,7 @@
 *pyc
+.ipynb_checkpoints/
+testing.ipynb
+testing.py
+tools/cdo_remap.sh
+tools/log/
+
