@@ -3,7 +3,7 @@ matthias.mengel@pik, torsten.albrecht@pik
 Download Bedmap 2 data and save to (1km) netcdf file.
 """
 
-import os
+import os, sys
 import numpy as np
 import sys
 import netCDF4
@@ -19,7 +19,7 @@ import config as cf; reload(cf)
 bedmap2_link="https://secure.antarctica.ac.uk/data/bedmap2/bedmap2_bin.zip"
 ## such file definitions should go to config.py, so that other functions can access them.
 bedmap2_data_path = os.path.join(cf.output_data_path, "bedmap2")
-ncout_name = os.path.join(bedmap2_data_path, 'bedmap2_data/bedmap2_1km_input.nc')
+ncout_name = os.path.join(bedmap2_data_path, 'bedmap2_1km_input.nc')
 
 # if data is not yet extracted in bedmap2_bin
 if not os.path.exists(os.path.join(bedmap2_data_path,"bedmap2_bin")):
@@ -28,12 +28,10 @@ if not os.path.exists(os.path.join(bedmap2_data_path,"bedmap2_bin")):
   os.system("wget -N " + bedmap2_link + " -P " + bedmap2_data_path)
   os.system("cd "+bedmap2_data_path+" && unzip bedmap2_bin.zip")
 
-# if os.path.isfile(ncout_name):
-#   print ncout_name, "already written, do nothing."
-
-# if folder bedmap2_data is not yet created
-if not os.path.exists(os.path.join(bedmap2_data_path,"bedmap2_data")):
-  os.system("mkdir " + bedmap2_data_path + "/bedmap2_data")
+if os.path.isfile(ncout_name):
+  print "Bedmap2 file", ncout_name
+  print "was already written, do nothing."
+  sys.exit(0)
 
 data_files = {"topg":"bedmap2_bed.flt",
               "thk":"bedmap2_thickness.flt",
@@ -55,7 +53,6 @@ x = np.linspace(-(N-1)*dx/2.0,(N-1)*dx/2.0,N)
 y = np.linspace(-(N-1)*dy/2.0,(N-1)*dy/2.0,N)
 
 
-
 print "Reading bedmap2 binary files from %s ...\n" % (bedmap2_data_path)
 
 bedm2_vars = {}
@@ -69,7 +66,6 @@ for var, file in data_files.iteritems():
   vardata[vardata.mask]=data_fills[var]
 
   bedm2_vars[var] =  vardata
-
 
 
 bedm2_attributes = {"bed": {"long_name" : "elevation of bedrock",
@@ -87,8 +83,6 @@ bedm2_attributes = {"bed": {"long_name" : "elevation of bedrock",
                     "mask": {"long_name" : "ice-type (ice-free/grounded/floating/ocean) integer mask",
                             "standard_name" : "mask",
                             "units" : ""} }
-
-### Write nc-file
 
 print "Writing NetCDF file '%s' ..." % ncout_name
 ncout = netCDF4.Dataset(ncout_name,"w",format='NETCDF4_CLASSIC')
@@ -112,8 +106,6 @@ now = datetime.datetime.now().strftime("%B %d, %Y")
 #antarctica
 #ncout.proj4 = "+proj=stere +ellps=WGS84 +datum=WGS84 +lon_0=0 +lat_0=-90 +lat_ts=-71 +units=m"
 ncout.proj4 = "+lon_0=0.0 +ellps=WGS84 +datum=WGS84 +lat_ts=-71.0 +proj=stere +x_0=0.0 +units=m +y_0=0.0 +lat_0=-90.0"
-#greenland
-#ncout.proj4 = "+proj=stere +lat_0=90 +lat_ts=71 +lon_0=-39 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
 ncout.comment  = cf.authors+" created netcdf bedmap2 file at " + now
 
 ncout.close()
