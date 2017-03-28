@@ -11,9 +11,13 @@ authors="matthias.mengel@pik-potsdam.de and torsten.albrecht@pik-potsdam.de"
 output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
 #output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/python/pism_input/")
 
-#matthias
+# matthias
 output_data_path = os.path.expanduser("~/data/20170316_PismInputData/")
 output_data_path = "/p/projects/tumble/mengel/pismInputData/20170316_PismInputData"
+# racmo data cannot be downloaded, so we have to provide an explicit path here
+# if racmo data is intended to be used in publications,
+# get in contact the racmo authors before.
+racmo_data_path = "/p/projects/tumble/mengel/pismSourceData/20170328_RacmoHadCM3_Ice2Sea"
 
 # these datasets will be checked for the variables_to_write.
 # a variable is taken from the first dataset in the list in which it is found,
