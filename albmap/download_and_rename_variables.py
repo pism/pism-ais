@@ -68,24 +68,3 @@ subprocess.check_call('ncks -O -x -v t '+ final_filename+' '+final_filename,shel
 subprocess.check_call('ncks -O -4 '+ final_filename+' '+final_filename,shell=True)
 
 print "  PISM-readable file",final_filename,"successfully created."
-
-
-
-
-
-# set -e  # exit on error
-
-# # get file; see page http://websrv.cs.umt.edu/isis/index.php/Present_Day_Antarctica
-# DATAVERSION=dev1.0
-# DATANAME=Antarctica_5km_$DATAVERSION.nc
-# echo
-# echo "downloading master $DATANAME ..."
-# wget -nc http://websrv.cs.umt.edu/isis/images/4/4d/$DATANAME
-
-# echo "making PISM-readable file by copying parts of $DATANAME"
-# echo "  and adjusting metadata ..."
-# #PISMVERSION=albmap_data/pism_Antarctica_5km.nc
-# PISMVERSION=albmap_data/albmap_5km_input.nc
-# mkdir -p albmap_data
-# cp $DATANAME final_filename
-# mv $DATANAME albmap_data/

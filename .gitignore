@@ -4,4 +4,5 @@ testing.ipynb
 testing.py
 tools/cdo_remap.sh
 tools/log/
+cdo_remap.sh
 
