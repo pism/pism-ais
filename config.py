@@ -14,7 +14,9 @@ output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
 # matthias
 output_data_path = os.path.expanduser("~/data/20170316_PismInputData/")
 output_data_path = "/p/projects/tumble/mengel/pismInputData/20170316_PismInputData"
-# racmo data cannot be downloaded, so we have to provide an explicit path here
+
+# RACMO data is not freely available and cannot be downloaded,
+# so we have to provide an explicit path here
 # if racmo data is intended to be used in publications,
 # get in contact the racmo authors before.
 racmo_data_path = "/p/projects/tumble/mengel/pismSourceData/20170328_RacmoHadCM3_Ice2Sea"

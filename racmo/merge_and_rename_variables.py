@@ -1,8 +1,14 @@
 """
-matthias.mengel@pik, torsten.albrecht@pik
-Download Albmap data and save rename variables to make the PISM compatible.
-ALBMAP is documented here:
-http://www.earth-syst-sci-data.net/2/247/2010/
+matthias.mengel@pik, torsten.albrecht@pik, ronja.reese@pik
+
+INFO to the file:
+The file is based on HadCM3_c20_I2S_precip_Y.nc and HadCM3_c20_I2S_t2m_Y.nc which come from data for Frieler et al 2014.
+HadCM3_c20_I2S_precip_Y.nc contains precipitation in mm/yr for 1980-1999 over Antarctica from RACMO2 run forced with HadCM3 data. (ATTENTION units are wrong in this file!)
+HadCM3_c20_I2S_t2m_Y.nc contains temperature in Kelvin for 1980-1999 over Antarctica from RACMO2 run forced with HadCM3 data.
+The variables are extraced from the files, precip is changed in mm/yr ice equivalent and the temporal mean is taken. The variables are renamed and interpolated to a PISM grid.
+These actions are documented in the file /home/reese/data/prepareData_forPISM/prepare.for.pism_HadCM3_c20.sh
+There are some missing_values which are interpolated using the file fill_missing.py from PISM/util.
+This file should be used as PISM input with the atmosphere_given option.
 """
 
 import os, sys
