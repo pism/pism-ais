@@ -4,6 +4,38 @@ import numpy as np
 from pyproj import Proj
 from optparse import OptionParser
 from netCDF4 import Dataset as CDF
+import jinja2
+
+def write_regrid_submission_file(config, data_path, dataset, inputfile, resolution,
+                                 cdo_targetgrid_file,  use_conservative_regridding):
+
+    """ This writes a SLURM submission file for the CPU heavy task of regridding.
+        Regridding is done via CDO.
+        Output: a cdo_remap.sh file in the folder you executed this function.
+    """
+
+    # make jinja aware of templates in the pism_input/tools folder
+    jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(
+                searchpath=os.path.join(config.project_root,"tools")))
+
+    scen_template_file = "GENERATED_SCENARIO.SCEN.template"
+    scen_template = jinja_env.get_template("cdo_remap.sh.template")
+
+    regridded_file = os.path.join(data_path, dataset+"_"+str(resolution)+"km.nc")
+    mapweights = os.path.join(data_path, "mapweights_"+str(resolution)+"km.nc")
+
+    out = scen_template.render(user=config.username,
+                               use_conservative_regridding = use_conservative_regridding,
+                               targetgrid = cdo_targetgrid_file,
+                               inputfile = inputfile,
+                               mapweights = mapweights,
+                               regridded_file = regridded_file,
+                              )
+
+    with open("cdo_remap.sh", 'w') as f:
+        f.write(out)
+    print "Wrote cdo_remap.sh, submit with sbatch cdo_remap.sh to compute nodes."
+
 
 def create_grid_for_cdo_remap(path_to_write,use_PISM_grid=True,resolution=15.0):
 

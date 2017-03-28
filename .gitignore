@@ -5,4 +5,6 @@ testing.py
 tools/cdo_remap.sh
 tools/log/
 cdo_remap.sh
+cdo_remap.err
+cdo_remap.out
 

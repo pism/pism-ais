@@ -4,19 +4,17 @@
 # and the module system.
 # Use sbatch cdo_remap.sh to submit to the compute nodes.
 
-#SBATCH --qos=short
+#SBATCH --qos=medium
 #SBATCH --job-name=cdo_remap
 #SBATCH --account=ice
-#SBATCH --output=log/remapcony-%j.out
-#SBATCH --error=log/remapcony-%j.err
+#SBATCH --output=cdo_remap.out
+#SBATCH --error=cdo_remap.err
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --profile=energy
 #SBATCH --acctg-freq=energy=5
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user={{user}}@pik-potsdam.de
-
-mkdir log
 
 module load cdo
 module load nco

@@ -20,6 +20,10 @@ import pism_input.pism_input as pi; reload(pi)
 dataset="bedmap2"
 # resolution for the output file
 resolution = 50 # in km
+# conservative regridding for bedmap2 and albmap data. does
+# not yet work for the other datasets.
+use_conservative_regridding = True
+
 data_path = os.path.join(cf.output_data_path, dataset)
 
 # prepare the input file for cdo remapping
@@ -44,25 +48,5 @@ if not os.path.isfile(cdo_targetgrid_file):
 # Conservative regridding does not work for all datasets yet, use it for bedmap2 or albmap.
 # We use cdo, see https://code.zmaw.de/projects/cdo/embedded/index.html
 
-# make jinja aware of templates in the pism_input/tools folder
-jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(
-            searchpath=os.path.join(cf.project_root,"tools")))
-
-scen_template_file = "GENERATED_SCENARIO.SCEN.template"
-scen_template = jinja_env.get_template("cdo_remap.sh.template")
-
-regridded_file = os.path.join(data_path, dataset+"_"+str(resolution)+"km.nc")
-mapweights = os.path.join(data_path, "mapweights.nc")
-use_conservative_regridding = True
-
-out = scen_template.render(user=cf.username,
-                           use_conservative_regridding = use_conservative_regridding,
-                           targetgrid = cdo_targetgrid_file,
-                           inputfile = inputfile,
-                           mapweights = mapweights,
-                           regridded_file = regridded_file,
-                          )
-
-with open("cdo_remap.sh", 'w') as f:
-    f.write(out)
-print "Wrote cdo_remap.sh, submit with sbatch cdo_remap.sh to compute nodes."
+pi.write_regrid_submission_file(cf, data_path, dataset, inputfile, resolution,
+                                cdo_targetgrid_file, use_conservative_regridding)
