@@ -17,9 +17,9 @@ if project_root not in sys.path: sys.path.append(project_root)
 import config as cf; reload(cf)
 import pism_input.pism_input as pi; reload(pi)
 
-dataset="bedmap2"
+dataset="albmap"
 # resolution for the output file
-resolution = 50 # in km
+resolution = 20 # in km
 # conservative regridding for bedmap2 and albmap data. does
 # not yet work for the other datasets.
 use_conservative_regridding = True
@@ -28,7 +28,7 @@ data_path = os.path.join(cf.output_data_path, dataset)
 
 # prepare the input file for cdo remapping
 # this step takes a while for high resolution data (i.e. 1km)
-inputfile = os.path.join(data_path, 'bedmap2_1km_input.nc')
+inputfile = os.path.join(data_path, 'albmap_5km_input.nc')
 pi.prepare_ncfile_for_cdo(inputfile)
 
 regridded_file = os.path.join(data_path, dataset+"_"+str(resolution)+"km.nc")
