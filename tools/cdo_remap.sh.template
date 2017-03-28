@@ -4,7 +4,7 @@
 # and the module system.
 # Use sbatch cdo_remap.sh to submit to the compute nodes.
 
-#SBATCH --qos=medium
+#SBATCH --qos=short
 #SBATCH --job-name=cdo_remap
 #SBATCH --account=ice
 #SBATCH --output=cdo_remap.out
@@ -29,8 +29,8 @@ srun -n $SLURM_NTASKS cdo -P $SLURM_NTASKS -b F64 remap,{{targetgrid}},{{mapweig
 {% else %}
 # bilinear interpolation, an option if conservative methods fail.
 export REMAP_EXTRAPOLATE=on
-srun -n $SLURM_NTASKS cdo -P -b F64 remap,{{targetgrid}},{{mapweights}} {{inputfile}} {{regridded_file}}
+srun -n $SLURM_NTASKS cdo -P $SLURM_NTASKS -b F64 remapbil,{{targetgrid}} {{inputfile}} {{regridded_file}}
 {% endif %}
 
 # add x and y variables to output file.
-srun -n $SLURM_NTASKS ncks -A -v x,y {{targetgrid}} {{regridded_file}}
+ncks -A -v x,y {{targetgrid}} {{regridded_file}}

@@ -31,6 +31,8 @@ data_path = os.path.join(cf.output_data_path, dataset)
 inputfile = os.path.join(data_path, 'albmap_5km_input.nc')
 pi.prepare_ncfile_for_cdo(inputfile)
 
+regridded_file = os.path.join(data_path, dataset+"_"+str(resolution)+"km.nc")
+
 # check if target grid is present.
 # the cdo target grids are independent of the specific input dataset.
 # they are therefore created beforehand by grids/create_cdo_grid.py
@@ -49,4 +51,4 @@ if not os.path.isfile(cdo_targetgrid_file):
 # We use cdo, see https://code.zmaw.de/projects/cdo/embedded/index.html
 
 pi.write_regrid_submission_file(cf, data_path, dataset, inputfile, resolution,
-                                cdo_targetgrid_file, use_conservative_regridding)
+                                cdo_targetgrid_file, regridded_file, use_conservative_regridding)

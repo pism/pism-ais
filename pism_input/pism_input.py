@@ -8,7 +8,7 @@ from netCDF4 import Dataset as CDF
 import jinja2
 
 def write_regrid_submission_file(config, data_path, dataset, inputfile, resolution,
-                                 cdo_targetgrid_file,  use_conservative_regridding):
+                                 cdo_targetgrid_file, regridded_file, use_conservative_regridding):
 
     """ This writes a SLURM submission file for the CPU heavy task of regridding.
         Regridding is done via CDO.
@@ -21,8 +21,6 @@ def write_regrid_submission_file(config, data_path, dataset, inputfile, resoluti
 
     scen_template_file = "GENERATED_SCENARIO.SCEN.template"
     scen_template = jinja_env.get_template("cdo_remap.sh.template")
-
-    regridded_file = os.path.join(data_path, dataset+"_"+str(resolution)+"km.nc")
     mapweights = os.path.join(data_path, "mapweights_"+str(resolution)+"km.nc")
 
     out = scen_template.render(user=config.username,
