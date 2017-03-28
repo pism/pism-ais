@@ -3,6 +3,7 @@ import os
 import numpy as np
 from pyproj import Proj
 from optparse import OptionParser
+import netCDF4
 from netCDF4 import Dataset as CDF
 import jinja2
 
@@ -39,17 +40,16 @@ def write_regrid_submission_file(config, data_path, dataset, inputfile, resoluti
 
 def create_grid_for_cdo_remap(path_to_write,use_PISM_grid=True,resolution=15.0):
 
-    # This script creates a cdo-compatible dummy grid.
-    # If use_PISM_gris ia true, x and y values are set as in 5km Albmap dataset regridded with PISM
-    # Call 'python create_grid -g 15 pism_15km.nc'
+    """
+    Create a netcdf file holding the target grid for cdo in folder path_to_write.
+    If use_PISM_grid is true, we create the grid exactly as PISM would do it,
+    so PISM will not regrid internally when such grid is used as input.
+    Else, and for any resolution, grid spacing will be calculated by equal
+    distancing between domain boundaries.
+    """
 
-
-    # default values
-    # resolution = 15.0  # km
-
-    # use_PISM_grid = True
+    # hardcoded grids, as inferred from PISM output
     PISM_grid_set={}
-    # PISM_grid_set[15]=[Mx,My,xl,yl,xr,yr]
     PISM_grid_set[50]=[120,120,-2777500,-2777500,3172500,3172500]
     PISM_grid_set[30]=[200,200,-2787500,-2787500,3182500,3182500]
     PISM_grid_set[20]=[300,300,-2792500,-2792500,3187500,3187500]
@@ -62,34 +62,10 @@ def create_grid_for_cdo_remap(path_to_write,use_PISM_grid=True,resolution=15.0):
     PISM_grid_set[2]=[3000,3000,-2801500,-2801500,3196500,3196500]
     PISM_grid_set[1]=[6000,6000,-2802000,-2802000,3197000,3197000]
 
-
-    # # set up the option parser
-    # parser = OptionParser()
-    # parser.usage = "usage: %prog [options] FILE"
-    # parser.description = "Create CDO-compliant grid description"
-    # parser.add_option("-g", "--grid_spacing",dest="grid_spacing",type='float',
-    #                   help="use X km grid spacing",
-    #                   metavar="X",default=resolution)
-
-    # (options, args) = parser.parse_args()
-    # grid_spacing = options.grid_spacing*1e3 # convert km -> m
-
-    # if len(args) == 0:
-
     ## create output directory if it does not exist.
     if not os.path.exists(path_to_write): os.makedirs(path_to_write)
     nc_outfile = os.path.join(path_to_write,'grid_'+str(int(resolution))+'km.nc')
     grid_spacing = resolution * 1.e3 # convert km -> m
-
-    # elif len(args) == 1:
-    #     nc_outfile = args[0]
-    # else:
-    #     print('wrong number arguments, 0 or 1 arguments accepted')
-    #     parser.print_help()
-    #     exit(0)
-
-
-# if __name__ == "__main__":
 
     # define output grid
     de = dn =  grid_spacing # m
@@ -133,8 +109,6 @@ def create_grid_for_cdo_remap(path_to_write,use_PISM_grid=True,resolution=15.0):
     print "Grid is created for "+str(int(resolution))+"km resolution:"
     print M,N,easting[0],northing[0],easting[-1],northing[-1],np.diff(easting)[0],np.diff(northing)[0]
 
-
-    # Set up SeaRISE Projection
     #projection = "+proj=stere +ellps=WGS84 +datum=WGS84 +lon_0=0 +lat_0=-90 +lat_ts=-71 +units=m"
     projection = "+lon_0=0.0 +ellps=WGS84 +datum=WGS84 +lat_ts=-71.0 +proj=stere +x_0=0.0 +units=m +y_0=0.0 +lat_0=-90.0"
 
@@ -143,7 +117,7 @@ def create_grid_for_cdo_remap(path_to_write,use_PISM_grid=True,resolution=15.0):
 
     lon,lat = proj(ee,nn,inverse=True)
 
-    nc = CDF(nc_outfile,'w',format='NETCDF4_CLASSIC')
+    nc = netCDF4.Dataset(nc_outfile,'w',format='NETCDF4_CLASSIC')
 
     nc.createDimension("x", size=easting.shape[0])
     nc.createDimension("y", size=northing.shape[0])
@@ -198,7 +172,6 @@ def create_grid_for_cdo_remap(path_to_write,use_PISM_grid=True,resolution=15.0):
     print "Grid file", nc_outfile, "has been successfully written."
 
     return nc_outfile
-
 
 
 def get_projection_from_file(nc):
