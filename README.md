@@ -1,12 +1,13 @@
 ## Preprocessing for PISM
 
 
-This repository contains scripts to preprocess input data for PISM.
-Ideally, the scripts provide all steps from downloading the data to
+This is a collection of preprocessing routines for input data to be used in PISM
+for Antarctic ice sheet simulations.
+The preprocessing provides the steps from downloading the data to
 making the PISM-ready, i.e. no other steps in preprocessing should be needed
 to use the data with PISM.
 
-Initial conditions for PISM include bed topography, ice thickness and ice
+Initial conditions for PISM include bed topography, ice thickness and
 ice temperature distribution.
 
 Boundary conditions include ice surface temperature and ice surface mass balance or
@@ -18,25 +19,32 @@ ocean properties (i.e. the SIMPEL ocean model).
 
 ### Structure
 
-Each dataset should get a separate folder. Such folder should contain scripts
-that are named by what they do. The `merging` folder contains scripts that
-merge several datasets to one. The `regridding` folder provides
-more general regridding options that are not specific to a certain dataset.
+Scripts for dataset-specific preprocessing are in the folder with the name
+of the dataset.
+The `grids` folder holds scripts for the creation of target grids to which the
+input data is regridded. The `pism_input` folder holds general program code.
+The `merging` folder holds code to merge single datasets into
+files that hold all the necessary initial and boundary conditions to
+drive PISM.
 Here is the graph:
 
 ```
 pism_input
++-- grids
+|   +-- create_cdo_targetgrids.py
 +-- bedmap2
 |   +-- download_and_extract_to_nc.py
-|   +-- remap_bedmap2.py
+|   +-- remap.py
 +-- albmap
-|   +-- download_and_rename_to_pism_vars.sh
-|   +-- remap_albmap.py 
+|   +-- download_and_rename_variables.py
+|   +-- remap.py
 +-- racmo
-|   +-- preprocess.sh (TODO: flipud, does not work)
-|   +-- remap_racmo.py 
+|   +-- preprocess.sh (TODO: flipud)
+|   +-- remap_racmo.py
 +-- basins
-|   +-- download_and_extend_to_ocean.py
+|   +-- create_basins_netcdf.py
+|   +-- add_shelves_to_basins.py
+|   +-- add_ocean_to_basins.py
 |   +-- remap_basins.py (TODO: no interpolation!)
 +-- schmidtko
 |   +-- create_NetCDF.py
@@ -44,5 +52,6 @@ pism_input
 |   +-- remap_schmidtko.py
 |   +-- compute_basin_means.py
 +-- merging
-
++-- pism_input
+    +-- pism_input.py
 ```
