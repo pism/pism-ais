@@ -12,8 +12,8 @@ output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
 #output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/python/pism_input/")
 
 # matthias
-#output_data_path = os.path.expanduser("~/data/20170316_PismInputData/")
-#output_data_path = "/p/projects/tumble/mengel/pismInputData/20170316_PismInputData"
+output_data_path = os.path.expanduser("~/data/20170316_PismInputData/")
+output_data_path = "/p/projects/tumble/mengel/pismInputData/20170316_PismInputData"
 
 # RACMO data is not freely available and cannot be downloaded,
 # so we have to provide an explicit path here

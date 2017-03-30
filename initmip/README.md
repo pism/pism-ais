@@ -21,6 +21,9 @@ mkdir initmip_data
 cp dSMB/smb_anomaly_1km.nc initmip_data/initmip_1km_input.nc
 ncks -A -v abmb dBasalMelt/basal_melt_anomaly_1km.nc initmip_data/initmip_1km_input.nc
 
+#do the remap
+#remapcony for asmb and remapnn for abmb
+
 #postprocessing (fill NaN with 0.0):
 python ../tools/fill_missing.py -v asmb,abmb -i 0.0 -e 10 -f ${IM_outfile}.nc -o ${IM_outfile}_filled.nc
 
