@@ -45,12 +45,19 @@ pism_input
 |   +-- create_basins_netcdf.py
 |   +-- add_shelves_to_basins.py
 |   +-- add_ocean_to_basins.py
-|   +-- remap_basins.py (TODO: no interpolation!)
+|   +-- remap_basins.py (with cdo rempnn)
 +-- schmidtko
 |   +-- create_NetCDF.py
 |   +-- calculate_potential_temps.py
 |   +-- remap_schmidtko.py
 |   +-- compute_basin_means.py
++-- accum
+|   +-- download_and_extract_to_nc.py
+|   +-- remap.py
++-- initmip
+|   +-- preprocess.sh
+|   +-- remap.py (asmb)
+|   +-- postprocess.sh (incl. cdo remapnn abmb)
 +-- merging
 +-- pism_input
     +-- pism_input.py

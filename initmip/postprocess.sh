@@ -1,5 +1,6 @@
-#Prepare data for initMIP Antarctica
+#!/bin/bash
 
+#Prepare data for initMIP Antarctica
 #Wiki: http://www.climate-cryosphere.org/wiki/index.php?title=InitMIP-Antarctica
 
 #Downloaded dBasalMelt and dSMB anomaly fields from 
@@ -17,15 +18,23 @@ PD_pism_file=pism_smb_f2119_const_15km.nc
 IM_outfile=initmip_${grid}
 
 #merge: 
-mkdir initmip_data
-cp dSMB/smb_anomaly_1km.nc initmip_data/initmip_1km_input.nc
-ncks -A -v abmb dBasalMelt/basal_melt_anomaly_1km.nc initmip_data/initmip_1km_input.nc
+#mkdir initmip_data
+#cp dSMB/smb_anomaly_1km.nc initmip_data/initmip_1km_input.nc
+#ncks -A -v abmb dBasalMelt/basal_melt_anomaly_1km.nc initmip_data/initmip_1km_input.nc
 
 #do the remap
 #remapcony for asmb and remapnn for abmb
+#python remap.py
+#sbatch cdo_remap.sh
 
 #postprocessing (fill NaN with 0.0):
-python ../tools/fill_missing.py -v asmb,abmb -i 0.0 -e 10 -f ${IM_outfile}.nc -o ${IM_outfile}_filled.nc
+#python ../tools/fill_missing.py -v asmb,abmb -i 0.0 -e 10 -f ${IM_outfile}.nc -o ${IM_outfile}_filled.nc
+python ../tools/fill_missing.py -v asmb -i 0.0 -e 10 -f ${IM_outfile}.nc -o ${IM_outfile}_filled.nc
+
+#cdo remapnn,../cdo_remapgrids/pism_${grid}.nc dBasalMelt/basal_melt_anomaly_1km.nc ${IM_outfile}_cdonearest.nc
+ncap2 -O -s "abmb=double(abmb)" ${IM_outfile}_cdonearest.nc ${IM_outfile}_cdonearest.nc
+ncks -A -v abmb ${IM_outfile}_cdonearest.nc ${IM_outfile}_filled.nc
+
 
 #get background forcing (result of 100kyr constant forcing):
 ncks -A -v effective_climatic_mass_balance,effective_ice_surface_temp,x,y,effective_shelf_base_temperature,effective_shelf_base_mass_flux ${PD_pism_file_orig} ${PD_pism_file}
