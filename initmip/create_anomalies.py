@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # Copyright (C) 2015 Andy Aschwanden, 2017 Torsten Albrecht
 
+# see https://github.com/pism/initMIP/blob/master/prepare.sh
+
 import os
 import numpy as np
 from argparse import ArgumentParser
@@ -22,11 +24,11 @@ background_file = options.background_file
 outfile = options.OUTFILE[0]
 
 
-rho_ice=910 #kg/m^3
+rho_ice=910.0 #kg/m^3
 secperyear=31556926.0 #s/yr.
 
 
-def get_dims(nc):
+def get_dims(nc): #from https://github.com/pism/pypismtools/blob/master/pypismtools.py
     '''
     Gets dimensions from netcdf instance
     Parameters:
@@ -131,8 +133,6 @@ btemp_background = nc_b.variables['effective_shelf_base_temperature']
 
 smb_anomaly = nc_a.variables['asmb']
 bmb_anomaly = nc_a.variables['abmb']
-# convert m/year ice equivalent to kg m-2 yr-1
-#smb_anomaly *= 910.
 
 smb_var = nc.createVariable('climatic_mass_balance', 'float64', dimensions=(tdim, ydim, xdim))
 temp_var = nc.createVariable('ice_surface_temp', 'float64', dimensions=(tdim, ydim, xdim))
