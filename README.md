@@ -45,7 +45,7 @@ pism_input
 |   +-- create_basins_netcdf.py
 |   +-- add_shelves_to_basins.py
 |   +-- add_ocean_to_basins.py
-|   +-- remap_basins.py (with cdo rempnn)
+|   +-- remap_basins.py (with local cdo rempnn)
 +-- schmidtko
 |   +-- create_NetCDF.py
 |   +-- calculate_potential_temps.py

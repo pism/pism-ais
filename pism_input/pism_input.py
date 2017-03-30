@@ -1,5 +1,5 @@
 
-import os
+import os, sys
 import numpy as np
 from pyproj import Proj
 from optparse import OptionParser

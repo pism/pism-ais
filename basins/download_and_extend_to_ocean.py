@@ -452,9 +452,12 @@ ncv = ncout.createVariable( varname="basins",datatype='float32',dimensions=('y',
 ncv[:] = basins
 
 now = datetime.datetime.now().strftime("%B %d, %Y")
-ncout.created  = "created based on reese@pik at " + now
+#ncout.created  = "created based on reese@pik at " + now
 ncout.data_origin = "downloaded from http://homepages.see.leeds.ac.uk/~earkhb/Basins_page.html"
 ncout.regions = "regions follow the definition of Zwally et al. 2012"
+ncout.proj4 = "+lon_0=0.0 +ellps=WGS84 +datum=WGS84 +lat_ts=-71.0 +proj=stere +x_0=0.0 +units=m +y_0=0.0 +lat_0=-90.0"
+ncout.comment  = cf.authors+" created netcdf basins file at " + now
+
 
 
 ncout.close()
