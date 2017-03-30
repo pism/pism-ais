@@ -42,10 +42,8 @@ pism_input
 |   +-- preprocess.sh (TODO: flipud)
 |   +-- remap_racmo.py
 +-- basins
-|   +-- create_basins_netcdf.py
-|   +-- add_shelves_to_basins.py
-|   +-- add_ocean_to_basins.py
-|   +-- remap_basins.py (with local cdo rempnn)
+|   +-- download_and_extend_to_ocean.py
+|   +-- remap.py (with local cdo rempnn)
 +-- schmidtko
 |   +-- create_NetCDF.py
 |   +-- calculate_potential_temps.py
