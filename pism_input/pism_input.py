@@ -7,6 +7,19 @@ import netCDF4
 from netCDF4 import Dataset as CDF
 import jinja2
 
+
+def get_path_to_data(output_data_path,dataset,resolution,
+                     dpath=None):
+
+    if dpath is None:
+        dpath =  os.path.join(output_data_path, dataset)
+
+    path_to_data = os.path.join(dpath,
+        dataset+"_"+str(resolution)+"km.nc")
+
+    return path_to_data
+
+
 def write_regrid_submission_file(config, data_path, dataset, inputfile, resolution,
                                  cdo_targetgrid_file, regridded_file, use_conservative_regridding):
 

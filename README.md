@@ -4,7 +4,7 @@
 This is a collection of preprocessing routines for input data to be used in PISM
 for Antarctic ice sheet simulations.
 The preprocessing provides the steps from downloading the data to
-making the PISM-ready, i.e. no other steps in preprocessing should be needed
+making the data PISM-ready, i.e. no other steps in preprocessing should be needed
 to use the data with PISM.
 
 Initial conditions for PISM include bed topography, ice thickness and
@@ -12,9 +12,10 @@ ice temperature distribution.
 
 Boundary conditions include ice surface temperature and ice surface mass balance or
 atmospheric temperature at the snow surface and mass balance at the snow surface.
-Ocean melt rates and ice shelf basal temperatures need to be provided from the
-ocean. PISM includes simple ocean models that can provide such data from open
-ocean properties (i.e. the SIMPEL ocean model).
+PISM needs ocean melt rates and ice shelf basal temperatures as boundary conditions
+at the ice shelf base.
+PISM includes simple ocean models that can provide such data from open
+ocean properties (i.e. the PICO ocean model).
 
 
 ### Structure
