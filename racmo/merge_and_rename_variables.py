@@ -56,11 +56,11 @@ for scen in scenarios:
     subprocess.check_call('ncatted -a coordinates,precipitation,o,c,"lon lat" '+output_file,shell=True)
     subprocess.check_call('ncatted -a units,air_temp,o,c,"Kelvin" '+output_file,shell=True)
     subprocess.check_call('ncatted -a coordinates,air_temp,o,c,"lon lat" '+output_file,shell=True)
-    subprocess.check_call('ncatted -a units,time,o,c,"years since 01-01-0000" '+output_file,shell=True)
-    subprocess.check_call('ncatted -a calendar,time,o,c,"360_day" '+output_file,shell=True)
-    subprocess.check_call('ncatted -a dtgstart,time,d,c,1980010100 '+output_file,shell=True)
-    subprocess.check_call('ncatted -a axis,time,d,c,T '+output_file,shell=True)
-    subprocess.check_call('ncatted -a long_name,time,d,c,"Julian Day" '+output_file,shell=True)
+    # subprocess.check_call('ncatted -a units,time,o,c,"years since 01-01-0000" '+output_file,shell=True)
+    # subprocess.check_call('ncatted -a calendar,time,o,c,"360_day" '+output_file,shell=True)
+    # subprocess.check_call('ncatted -a dtgstart,time,d,c,1980010100 '+output_file,shell=True)
+    # subprocess.check_call('ncatted -a axis,time,d,c,T '+output_file,shell=True)
+    # subprocess.check_call('ncatted -a long_name,time,d,c,"Julian Day" '+output_file,shell=True)
 
     #time average
     #ncra -F -O -d time,1,20,1 +output_file+" "+output_file

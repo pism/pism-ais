@@ -9,13 +9,15 @@ import jinja2
 
 
 def get_path_to_data(output_data_path,dataset,resolution,
-                     dpath=None):
+                     custom_data_path=None, custom_file_name=None):
 
-    if dpath is None:
-        dpath =  os.path.join(output_data_path, dataset)
+    if custom_data_path is None:
+        custom_data_path =  os.path.join(output_data_path, dataset)
 
-    path_to_data = os.path.join(dpath,
-        dataset+"_"+str(resolution)+"km.nc")
+    if custom_file_name is None:
+        custom_file_name = dataset+"_"+str(resolution)+"km.nc"
+
+    path_to_data = os.path.join(custom_data_path,custom_file_name)
 
     return path_to_data
 

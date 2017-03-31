@@ -26,11 +26,12 @@ racmo_data_path = "/p/projects/tumble/mengel/pismSourceData/20170328_RacmoHadCM3
 
 # merge the follwing dataset into one PISM-ready file.
 # datasets should be named here as the subfolder of its preprocessing.
-datasets_to_merge = ["bedmap2","albmap"]
+datasets_to_merge = ["bedmap2","albmap"]#,"racmo_hadcm3_I2S"]
 
 # choose here which variables should be taken from which dataset
 variables = {"bedmap2":["thk","topg"],
-             "albmap":["precipitation","air_temp","bheatflx"]}
+             "albmap":["bheatflx"],
+             "racmo_hadcm3_I2S":["precipitation","air_temp"]}
 
 #### No edits needed below that line. ####
 cdo_remapgridpath = os.path.join(output_data_path,"cdo_remapgrids")
