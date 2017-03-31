@@ -3,15 +3,10 @@ import subprocess
 import config as cf; reload(cf)
 import pism_input.pism_input as pi; reload(pi)
 
-datasets_to_merge = ["bedmap2", "albmap"]
-resolution = 5 # in km
-variables = {"bedmap2":["thk","topg"],
-             "albmap":["precipitation","air_temp"]}
-
 # will hold the merged files
 data_path = os.path.join(cf.output_data_path, "merged")
 
-merged_filename = ("_").join(datasets_to_merge)+"_"+str(resolution)+"km.nc"
+merged_filename = ("_").join(cf.datasets_to_merge)+"_"+str(cf.resolution)+"km.nc"
 merged_filename = os.path.join(data_path,merged_filename)
 
 if not os.path.exists(data_path): os.makedirs(data_path)
@@ -20,13 +15,13 @@ preselected_datapaths = []
 
 added_lat_lon_mapping = False
 
-for ds in datasets_to_merge:
+for ds in cf.datasets_to_merge:
 
-    input_datapath = pi.get_path_to_data(cf.output_data_path,ds,resolution)
+    input_datapath = pi.get_path_to_data(cf.output_data_path,ds,cf.resolution)
     # data with selected variables will be written to /merged directory
-    preselected_datapath = pi.get_path_to_data(cf.output_data_path,ds,resolution,
+    preselected_datapath = pi.get_path_to_data(cf.output_data_path,ds,cf.resolution,
                                 data_path)
-    selected_variables = ",".join(variables[ds])
+    selected_variables = ",".join(cf.variables[ds])
 
     # assume latitude and longitude are present in first input file.
     # TODO: include mapping variable, need to ensure that it is present
