@@ -18,9 +18,9 @@ import config as cf; reload(cf)
 import pism_input.pism_input as pi; reload(pi)
 
 dataset="schmidtko"
-# resolution for the output file
-resolution = 5 # in km
- # using conservative regridding, might create artefacts 
+# resolution for the output file, set from config.
+resolution = cf.resolution # in km
+ # using conservative regridding, might create artefacts
 use_conservative_regridding = False
 
 data_path = os.path.join(cf.output_data_path, dataset)
@@ -28,7 +28,7 @@ data_path = os.path.join(cf.output_data_path, dataset)
 # prepare the input file for cdo remapping
 # this step takes a while for high resolution data (i.e. 1km)
 inputfile = os.path.join(data_path, 'schmidtko_data/schmidtko_ocean_input_potentialtemps.nc')
-# does not work for schmidtko data, not needed since already done in create_NetCDF 
+# does not work for schmidtko data, not needed since already done in create_NetCDF
 #pi.prepare_ncfile_for_cdo(inputfile)
 
 regridded_file = os.path.join(data_path, dataset+"_"+str(resolution)+"km.nc")

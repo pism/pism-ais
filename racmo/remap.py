@@ -17,10 +17,10 @@ if project_root not in sys.path: sys.path.append(project_root)
 import config as cf; reload(cf)
 import pism_input.pism_input as pi; reload(pi)
 
-scenario = "A1B" # A1B or c20
+scenario = "c20" # A1B or c20
 dataset = "racmo_hadcm3_I2S"
-# resolution for the output file
-resolution = 50 # in km
+# resolution for the output file, set from config.
+resolution = cf.resolution # in km
 # conservative regridding for bedmap2 and albmap data. does
 # not yet work for the other datasets.
 use_conservative_regridding = False

@@ -18,8 +18,8 @@ import config as cf; reload(cf)
 import pism_input.pism_input as pi; reload(pi)
 
 dataset="initmip"
-# resolution for the output file
-resolution = 15 # in km
+# resolution for the output file, set from config.
+resolution = cf.resolution # in km
 # conservative regridding for bedmap2 and albmap data. does
 # not yet work for the other datasets.
 use_conservative_regridding = True
