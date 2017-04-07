@@ -4,7 +4,7 @@ matthias.mengel@pik, torsten.albrecht@pik
 Regridding: bring your data to the grid we commonly use for PISM Antarctica
 simulations. This is equivalent to the ALBMAP grid.
 This step will take a while if high resolution data is processed.
-Regrid Bedmap2 data to various grid resolution using cdo remapcony.
+Regrid Schmidtko ocean data to various grid resolution using cdo remapcony.
 
 """
 
@@ -17,19 +17,19 @@ if project_root not in sys.path: sys.path.append(project_root)
 import config as cf; reload(cf)
 import pism_input.pism_input as pi; reload(pi)
 
-dataset="basins"
+dataset="schmidtko"
 # resolution for the output file
 resolution = 5 # in km
-# conservative regridding for bedmap2 and albmap data. does
-# not yet work for the other datasets.
+ # using conservative regridding, might create artefacts 
 use_conservative_regridding = False
 
 data_path = os.path.join(cf.output_data_path, dataset)
 
 # prepare the input file for cdo remapping
 # this step takes a while for high resolution data (i.e. 1km)
-inputfile = os.path.join(data_path, 'basins_data/basins_zwally_5km_input.nc')
-pi.prepare_ncfile_for_cdo(inputfile)
+inputfile = os.path.join(data_path, 'schmidtko_data/schmidtko_ocean_input_potentialtemps.nc')
+# does not work for schmidtko data, not needed since already done in create_NetCDF 
+#pi.prepare_ncfile_for_cdo(inputfile)
 
 regridded_file = os.path.join(data_path, dataset+"_"+str(resolution)+"km.nc")
 
@@ -50,7 +50,5 @@ if not os.path.isfile(cdo_targetgrid_file):
 # Conservative regridding does not work for all datasets yet, use it for bedmap2 or albmap.
 # We use cdo, see https://code.zmaw.de/projects/cdo/embedded/index.html
 
-os.system("cdo remapnn,"+cdo_targetgrid_file+" "+inputfile+" "+regridded_file)
-
-#pi.write_regrid_submission_file(cf, data_path, dataset, inputfile, resolution,
-#                                cdo_targetgrid_file, regridded_file, use_conservative_regridding)
+pi.write_regrid_submission_file(cf, data_path, dataset, inputfile, resolution,
+                                cdo_targetgrid_file, regridded_file, use_conservative_regridding)

@@ -1,11 +1,33 @@
 """
 Create NetCDF file from Schmitdko Data 
 ronja.reese@pik-potsdam.de
+
+FIXME use correct pism names for variables
 """
 
+import os, sys
 import numpy as np
 import numpy.ma as ma
 import netCDF4 as nc
+
+## this hack is needed to import config.py from the project root
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if project_root not in sys.path: sys.path.append(project_root)
+import config as cf; reload(cf)
+
+# save data path
+dataset="schmidtko"
+data_path = os.path.join(cf.output_data_path, dataset)
+savefile = os.path.join(data_path, 'schmidtko_data/schmidtko_ocean_input.nc')
+
+
+
+# if folder schmidtko and schmidtko_data are not yet created
+if not os.path.exists(data_path):
+  os.system("mkdir " + data_path )
+if not os.path.exists(os.path.join(data_path,"schmidtko_data")):
+  os.system("mkdir " + data_path + "/schmidtko_data")
+
 
 read_data = True
 if read_data:
@@ -19,7 +41,7 @@ if read_data:
 	abs_s_std = np.zeros(0)
 
 
-	f = open('schmidtko_data/Antarctic_shelf_data.txt', 'r')
+	f = open(os.path.join(data_path,"schmidtko_data", 'Antarctic_shelf_data.txt'), 'r')
 
 	for i,line in enumerate(f):
           if i>0:    
@@ -70,7 +92,7 @@ temp_in_kelvin = False
 
 if(save_in_file):
 	print 'save data to file....'
-	wrtfile = nc.Dataset('schmidtko_data/schmidtko_ocean.nc', 'w', format='NETCDF4_CLASSIC')
+	wrtfile = nc.Dataset(savefile, 'w', format='NETCDF4_CLASSIC')
 	wrtfile.createDimension('lon', size=len(lon_new))
 	wrtfile.createDimension('lat', size=len(lat_new))
 	wrtfile.createDimension('time', size=None)
