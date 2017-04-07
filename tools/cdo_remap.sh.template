@@ -34,3 +34,5 @@ srun -n $SLURM_NTASKS cdo -P $SLURM_NTASKS -b F64 -f nc4c remapbil,{{targetgrid}
 
 # add x and y variables to output file.
 ncks -A -v x,y {{targetgrid}} {{regridded_file}}
+
+echo "regridded file is {{regridded_file}}"

@@ -24,20 +24,14 @@ resolution = cf.resolution # in km
 use_conservative_regridding = False
 
 data_path = os.path.join(cf.output_data_path, dataset)
-
-# prepare the input file for cdo remapping
-# this step takes a while for high resolution data (i.e. 1km)
-inputfile = os.path.join(data_path, 'schmidtko_data/schmidtko_ocean_input_potentialtemps.nc')
-# does not work for schmidtko data, not needed since already done in create_NetCDF
-#pi.prepare_ncfile_for_cdo(inputfile)
-
+inputfile = os.path.join(data_path, 'schmidtko_ocean_input_potentialtemps.nc')
 regridded_file = os.path.join(data_path, dataset+"_"+str(resolution)+"km.nc")
 
-# check if target grid is present.
 # the cdo target grids are independent of the specific input dataset.
 # they are therefore created beforehand by grids/create_cdo_grid.py
 cdo_targetgrid_file = os.path.join(cf.cdo_remapgridpath,'pism_'+str(int(resolution))+'km.nc')
 
+# check if target grid is present.
 if not os.path.isfile(cdo_targetgrid_file):
     print "cdo target grid file", cdo_targetgrid_file," does not exist."
     print "run grids/create_cdo_grid.py first."

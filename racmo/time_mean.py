@@ -13,10 +13,10 @@ project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path: sys.path.append(project_root)
 import config as cf; reload(cf)
 
-scenario = "A1B" # A1B or c20
+scenario = "c20" # A1B or c20
 dataset = "racmo_hadcm3_I2S"
 # resolution for the output file
-resolution = 50 # in km
+resolution = 20 # in km
 
 data_path = os.path.join(cf.output_data_path, dataset)
 inputfile = os.path.join(data_path, dataset+"_"+scenario+"_"+str(resolution)+"km.nc")

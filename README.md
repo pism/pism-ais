@@ -21,7 +21,7 @@ ocean properties (i.e. the PICO ocean model).
 ### Structure
 
 Scripts for dataset-specific preprocessing are in the folder with the name
-of the dataset.
+of the dataset. They should be run in the order listed below.
 The `grids` folder holds scripts for the creation of target grids to which the
 input data is regridded. The `pism_input` folder holds general program code.
 The `merging` folder holds code to merge single datasets into
@@ -46,7 +46,7 @@ pism_input
 |   +-- download_and_extend_to_ocean.py
 |   +-- remap.py (with local cdo rempnn)
 +-- schmidtko
-|   +-- create_NetCDF.py
+|   +-- download_and_write_to_netcdf.py
 |   +-- calculate_potential_temps.py
 |   +-- remap_schmidtko.py
 |   +-- compute_basin_means.py

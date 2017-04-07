@@ -8,7 +8,7 @@ import pwd
 authors="matthias.mengel@pik-potsdam.de and torsten.albrecht@pik-potsdam.de"
 
 # the resolution of the final output files.
-resolution = 5 # in km
+resolution = 20 # in km
 
 #torsten local and tumble
 output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
@@ -16,7 +16,7 @@ output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
 
 # matthias
 #output_data_path = os.path.expanduser("~/data/20170316_PismInputData/")
-#output_data_path = "/p/projects/tumble/mengel/pismInputData/20170316_PismInputData"
+output_data_path = "/p/projects/tumble/mengel/pismInputData/20170316_PismInputData"
 
 # RACMO data is not freely available and cannot be downloaded,
 # so we have to provide an explicit path here
@@ -26,12 +26,13 @@ racmo_data_path = "/p/projects/tumble/mengel/pismSourceData/20170328_RacmoHadCM3
 
 # merge the follwing dataset into one PISM-ready file.
 # datasets should be named here as the subfolder of its preprocessing.
-datasets_to_merge = ["bedmap2","albmap"]#,"racmo_hadcm3_I2S"]
+datasets_to_merge = ["bedmap2","albmap","racmo_hadcm3_I2S","schmidtko"]
 
 # choose here which variables should be taken from which dataset
 variables = {"bedmap2":["thk","topg"],
              "albmap":["bheatflx"],
-             "racmo_hadcm3_I2S":["precipitation","air_temp"]}
+             "racmo_hadcm3_I2S":["precipitation","air_temp"],
+             "schmidtko":["thetao","salinity"]}
 
 #### No edits needed below that line. ####
 cdo_remapgridpath = os.path.join(output_data_path,"cdo_remapgrids")
