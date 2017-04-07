@@ -7,7 +7,8 @@ from shutil import copyfile
 
 
 infile='schmidtko_data/schmidtko_15km.nc'
-basinfile='../basins/basins_data/basins_zwally12_15km.nc'
+#basinfile='../basins/basins_data/basins_zwally12_15km.nc'
+basinfile='../basins/basins_15km.nc'
 outfile='schmidtko_data/schmidtko_15km_means.nc'
 
 # Load data
@@ -33,7 +34,7 @@ salcount = np.zeros(basins.max()+1)
 for i in range(len(x)):
 	for j in range(len(y)):
 		#basin_id = int(basins[0,i,j])
-                basin_id = int(basins[0,i,j])
+                basin_id = int(basins[i,j])
 		if np.logical_not(np.isnan(temperature[0,i,j])):
 			temperature_means[basin_id] = temperature_means[basin_id] + temperature[0,i,j]
 			tempcount[basin_id] = tempcount[basin_id] +1 
@@ -57,7 +58,7 @@ print salinity_means
 for i in range(len(x)):
 	for j in range(len(y)):
                 #basin_id = int(basins[i,j])
-		basin_id = int(basins[0,i,j])
+		basin_id = int(basins[i,j])
 		temperature[0,i,j] = temperature_means[basin_id]
 		salinity[0,i,j] = salinity_means[basin_id]
 
