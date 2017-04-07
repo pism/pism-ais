@@ -1,3 +1,13 @@
+"""
+
+Merge different datasets of the same resolution into one output file.
+This output file should be ready for PISM to read.
+
+This script normally does not nead user input, except for custom filenames.
+All other user specific setting are in config.py
+
+"""
+
 import os
 import subprocess
 import config as cf; reload(cf)
@@ -7,7 +17,9 @@ import pism_input.pism_input as pi; reload(pi)
 data_path = os.path.join(cf.output_data_path, "merged")
 
 # set your custom name here if standard naming is not used
-custom_file_names = {"racmo_hadcm3_I2S":"racmo_hadcm3_c20_timemean_input.nc"}
+# (for example if you applied a time mean in between)
+custom_file_names = {"racmo_hadcm3_I2S":
+                     "racmo_hadcm3_I2S_A1B_"+str(cf.resolution)+"km_timemean.nc"}
 
 merged_filename = ("_").join(cf.datasets_to_merge)+"_"+str(cf.resolution)+"km.nc"
 merged_filename = os.path.join(data_path,merged_filename)
@@ -43,7 +55,7 @@ for ds in cf.datasets_to_merge:
     subprocess.check_call(cmd,shell=True)
     preselected_datapaths.append(preselected_datapath)
 
-cmd = "cdo -O merge "+" ".join(preselected_datapaths)+" "+merged_filename
+cmd = "cdo -O -f nc4c merge "+" ".join(preselected_datapaths)+" "+merged_filename
 print cmd
 # if you see "cdo: error while loading shared libraries:",
 # 'module load cdo'
