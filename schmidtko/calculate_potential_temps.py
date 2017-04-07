@@ -6,16 +6,24 @@ as this value might not exits close to the continent
 ronja.reese@pik-potsdam.de
 """
 
-import os
+import os, sys
 import numpy as np
 import numpy.ma as ma
 from shutil import copyfile
 import netCDF4 as nc
-
+mod
 from gsw_functions import pt_from_CT, SP_from_SA_Antarctica
 
-datafile ='schmidtko_data/schmidtko_ocean_input.nc'
-copyfile('schmidtko_data/schmidtko_ocean.nc', datafile)
+## this hack is needed to import config.py from the project root
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if project_root not in sys.path: sys.path.append(project_root)
+import config as cf; reload(cf)
+
+# save data path
+dataset="schmidtko"
+data_path = os.path.join(cf.output_data_path, dataset)
+datafile = os.path.join(data_path, 'schmidtko_data/schmidtko_ocean_input_potentialtemps.nc')
+copyfile(os.path.join(data_path, 'schmidtko_data/schmidtko_ocean_input.nc') , datafile)
 
 print 'Reading ', datafile
 infile 		= nc.Dataset(datafile, 'r+')
@@ -38,16 +46,18 @@ if (compute_potential_temperatures):
 	potential_temps[0,:,:] = pt_from_CT(salinity[0,:,:], temperature[0,:,:]) # needs temperature in degC
 	if(temp_in_kelvin):
 		potential_temps = potential_temps + 273.15
+	potential_temps = potential_temps.filled(np.nan) # set masked values to nan
 
 
 
 if (compute_practical_salinity) :
 	practical_salinity 	= np.zeros_like(salinity)	#time,depth,lat,lon
 	practical_salinity[0,:,:] = SP_from_SA_Antarctica(salinity[0,:,:])
+	practical_salinity = practical_salinity.filled(np.nan)
 
 
 #save converted values in file
-infile.variables['thetao'][:] = potential_temps
+infile.variables['thetao'][:] = potential_temps # FIXME this changes fill values from NaNf to -- which makes a problem in cdo...!!!
 infile.variables['salinity'][:] = practical_salinity
 infile.variables['salinity'].units = '' # now dimensionless
 infile.close()
