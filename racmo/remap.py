@@ -20,19 +20,13 @@ import pism_input.pism_input as pi; reload(pi)
 scenario = "A1B" # A1B or c20
 dataset = "racmo_hadcm3_I2S"
 # resolution for the output file
-resolution = 5 # in km
+resolution = 50 # in km
 # conservative regridding for bedmap2 and albmap data. does
 # not yet work for the other datasets.
 use_conservative_regridding = False
 
 data_path = os.path.join(cf.output_data_path, dataset)
-
-# prepare the input file for cdo remapping
-# this step takes a while for high resolution data (i.e. 1km)
 inputfile = os.path.join(data_path, 'racmo_hadcm3_'+scenario+'_input.nc')
-# inputfile = os.path.join(data_path, 'racmo_hadcm3_A1B_input.nc')
-pi.prepare_ncfile_for_cdo(inputfile)
-
 regridded_file = os.path.join(data_path, dataset+"_"+scenario+"_"+str(resolution)+"km.nc")
 
 # check if target grid is present.

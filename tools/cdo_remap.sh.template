@@ -25,11 +25,11 @@ module load nco
 # conservative regridding:
 # heavier, but preferred for bed topography and ice thickness
 srun -n $SLURM_NTASKS cdo -P $SLURM_NTASKS genycon,{{targetgrid}} {{inputfile}} {{mapweights}}
-srun -n $SLURM_NTASKS cdo -P $SLURM_NTASKS -b F64 remap,{{targetgrid}},{{mapweights}} {{inputfile}} {{regridded_file}}
+srun -n $SLURM_NTASKS cdo -P $SLURM_NTASKS -b F64 -f nc4c remap,{{targetgrid}},{{mapweights}} {{inputfile}} {{regridded_file}}
 {% else %}
 # bilinear interpolation, an option if conservative methods fail.
 export REMAP_EXTRAPOLATE=on
-srun -n $SLURM_NTASKS cdo -P $SLURM_NTASKS -b F64 remapbil,{{targetgrid}} {{inputfile}} {{regridded_file}}
+srun -n $SLURM_NTASKS cdo -P $SLURM_NTASKS -b F64 -f nc4c remapbil,{{targetgrid}} {{inputfile}} {{regridded_file}}
 {% endif %}
 
 # add x and y variables to output file.

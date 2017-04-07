@@ -17,6 +17,7 @@ import subprocess
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path: sys.path.append(project_root)
 import config as cf; reload(cf)
+import pism_input.pism_input as pi; reload(pi)
 
 dataset = "racmo_hadcm3_I2S"
 data_path = os.path.join(cf.output_data_path, dataset)
@@ -69,6 +70,14 @@ for scen in scenarios:
     subprocess.check_call('ncks -O -x -v height '+output_file+" "+output_file, shell=True) #delete the height dimension!
 
     subprocess.check_call('ncatted -O -a projection,global,a,c,"+lon_0=0.0 +ellps=WGS84 +datum=WGS84 +lat_ts=-71.0 +proj=stere +x_0=0.0 +units=m +y_0=0.0 +lat_0=-90.0" '+output_file,shell=True)
-    subprocess.check_call('ncatted -a units,time_bnds,o,c,"years since 01-01-0000" '+output_file,shell=True)
+    # subprocess.check_call('ncatted -a units,time_bnds,o,c,"years since 01-01-0000" '+output_file,shell=True)
+
+    # make all variables double (some already are).
+    subprocess.check_call("ncap2 -O -s 'lon=double(lon);lat=double(lat);air_temp=double(air_temp)' "+
+                          output_file+" "+output_file,shell=True)
+
+    # prepare the input file for cdo remapping
+    # this step takes a while for high resolution data (i.e. 1km)
+    pi.prepare_ncfile_for_cdo(output_file)
 
     print " RACMO file",output_file,"successfully preprocessed."
