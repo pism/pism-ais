@@ -44,15 +44,15 @@ basins_link="http://homepages.see.leeds.ac.uk/~earkhb/ais_basins_imbie_ascii.zip
 ## such file definitions should go to config.py, so that other functions can access them.
 basins_data_path = os.path.join(cf.output_data_path, "basins")
 basins_ascii_path = os.path.join(basins_data_path, 'basins_ascii')
-infile = os.path.join(basins_ascii_path, 'ais_basins_imbie.z12.txt') 
-namefile = os.path.join(basins_ascii_path, 'ais_basins_imbie.z12.names.txt') 
-maskfile = os.path.join(cf.output_data_path, "albmap/albmap_data/Antarctica_5km_dev1.0.nc") 
+infile = os.path.join(basins_ascii_path, 'ais_basins_imbie.z12.txt')
+namefile = os.path.join(basins_ascii_path, 'ais_basins_imbie.z12.names.txt')
+maskfile = os.path.join(cf.output_data_path, "albmap/Antarctica_5km_dev1.0.nc")
 
 #ncout_name = os.path.join(basins_data_path, 'basins_data/basins_zwally_5km_input.nc')
-ncout_raw = os.path.join(basins_data_path, 'basins_data/basins_zwally_5km_drainage.nc')
-ncout_shelves = os.path.join(basins_data_path, 'basins_data/basins_zwally_5km_shelves.nc')
-ncout_merged = os.path.join(basins_data_path, 'basins_data/basins_zwally_5km_merged.nc')
-ncout_ocean = os.path.join(basins_data_path, 'basins_data/basins_zwally_5km_input.nc')
+ncout_raw = os.path.join(basins_data_path, 'basins_zwally_5km_drainage.nc')
+ncout_shelves = os.path.join(basins_data_path, 'basins_zwally_5km_shelves.nc')
+ncout_merged = os.path.join(basins_data_path, 'basins_zwally_5km_merged.nc')
+ncout_ocean = os.path.join(basins_data_path, 'basins_zwally_5km_input.nc')
 
 
 # if data is not yet extracted in basins_ascii
@@ -68,12 +68,9 @@ if not os.path.exists(basins_ascii_path):
 
 #########################################################################################
 
-
-
-# if folder bedmap2_data is not yet created
+# if folder basins is not yet created
 if not os.path.exists(os.path.join(basins_data_path,"basins_data")):
-  os.system("mkdir " + basins_data_path + "/basins_data")
-
+  os.system("mkdir -v " + basins_data_path)
 
 ## get data
 reader = csv.reader(open(infile, "rb"))
@@ -149,20 +146,20 @@ print '\nExtend basins to ice shelves... '
 
 
 infile = nc.Dataset(maskfile, 'r')
-mask = ma.masked_array(infile.variables['mask'][0,:,:]) 
-lon = ma.masked_array(infile.variables['lon'][0,:,:]) 
+mask = ma.masked_array(infile.variables['mask'][0,:,:])
+lon = ma.masked_array(infile.variables['lon'][0,:,:])
 infile.close()
 Mx=np.shape(mask)[0]
 My=np.shape(mask)[1]
-mask_floating = 2 
-mask_grounded = 1  
+mask_floating = 2
+mask_grounded = 1
 
 #print 'Mx = ' + str(Mx)
 #print 'My = ' + str(My)
 
 
 infile = nc.Dataset(ncout_raw, 'r')
-basins_orig = ma.masked_array(infile.variables['basins'][:,:]) 
+basins_orig = ma.masked_array(infile.variables['basins'][:,:])
 infile.close()
 
 basins=basins_orig
@@ -175,7 +172,7 @@ if (getData==1):
     done = 0
     loopcount = 0
 
-    while(done == 0):  
+    while(done == 0):
       done = 1
       for i in range(1,Mx-1):
         for j in range(1,My-1):
@@ -192,19 +189,19 @@ if (getData==1):
       if (loopcount == 2):
         done = 1
 
-    
+
 print '\nPlotting... '
 
 fig=plt.figure()
-ax = plt.subplot(1,1,1) 
-plt.contourf(basins) 
+ax = plt.subplot(1,1,1)
+plt.contourf(basins)
 
-plt.contour(mask,mask_grounded,colors='gray',linewidths=2) # GROUNDING LINE 
-plt.contour(mask,mask_floating,colors='gray',linewidths=2) # CALVING FRONT 
+plt.contour(mask,mask_grounded,colors='gray',linewidths=2) # GROUNDING LINE
+plt.contour(mask,mask_floating,colors='gray',linewidths=2) # CALVING FRONT
 #cbar = plt.colorbar(ticks=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19])
 
-ax.set_xticks([]) 
-ax.set_yticks([]) 
+ax.set_xticks([])
+ax.set_yticks([])
 p.axis('equal')
 
 #plt.show()
@@ -256,25 +253,25 @@ print '\nMerge basins... '
 
 
 #infile = nc.Dataset(maskfile, 'r')
-#mask = ma.masked_array(infile.variables['mask'][0,:,:]) 
-#lon = ma.masked_array(infile.variables['lon'][0,:,:]) 
+#mask = ma.masked_array(infile.variables['mask'][0,:,:])
+#lon = ma.masked_array(infile.variables['lon'][0,:,:])
 #infile.close()
 #Mx=np.shape(mask)[0]
 #My=np.shape(mask)[1]
-#mask_floating = 2 
-#mask_grounded = 1  
+#mask_floating = 2
+#mask_grounded = 1
 
 #print 'Mx = ' + str(Mx)
 #print 'My = ' + str(My)
 
 
 """
-Merge basins: 
+Merge basins:
 """
 if (mergeBasins==1):
     print '\nMerge basins... '
     infile = nc.Dataset(ncout_shelves, 'r')
-    basins = ma.masked_array(infile.variables['basins'][:,:]) 
+    basins = ma.masked_array(infile.variables['basins'][:,:])
     infile.close()
 
     basins_dict = {0.0:0.0, 1.0:1.0, 2.0:1.0 ,3.0:1.0, 4.0:2.0, 5.0:3.0, 6.0:4.0, 7.0:5.0,
@@ -326,7 +323,7 @@ Adjust Basin 18/19 (originally 26/27)
 '''
 #print '\nReading basins... '
 infile = nc.Dataset(ncout_merged, 'r')
-basins = ma.masked_array(infile.variables['basins'][:,:]) 
+basins = ma.masked_array(infile.variables['basins'][:,:])
 infile.close()
 
 if (adjustAP):
@@ -346,7 +343,7 @@ Find longitude for ice divides
 """
 #print '\nReading basins... '
 #infile = nc.Dataset(ncfile, 'r')
-#basins_orig = ma.masked_array(infile.variables['basins'][:,:]) 
+#basins_orig = ma.masked_array(infile.variables['basins'][:,:])
 #infile.close()
 
 #basins=basins_orig
@@ -388,18 +385,18 @@ if (fillInBasinMask) :
           if (lon[i,j] >= longitudeVec[-3] and lon[i,j] < longitudeVec[0]):
             basins[i,j] = 1.0
           # fill in at the border between -180/+180 degrees, here between basin 11 and 12
-          if (lon[i,j] >= -180.0 and lon[i,j] < longitudeVec[11]): 
-            basins[i,j] = 12.0 
+          if (lon[i,j] >= -180.0 and lon[i,j] < longitudeVec[11]):
+            basins[i,j] = 12.0
           if (j>=560 and j< 684 and i > 221 and i < 322): # for basin 11
             basins[i,j] = 11.0
           if (j>=560 and j< 627 and i < 322): # for basin 12
             if ((j-560)<i/5.0):
-              basins[i,j] = 12.0 
+              basins[i,j] = 12.0
           if (j>=560 and j< 720 and i <= 221): # rest in this region should be basin 10
             if ((j-560)>=i/5.0):
-              basins[i,j] = 10.0 
+              basins[i,j] = 10.0
           #Amery wider at bottom
-          if (i>=683 and i< 750 and j > 987): 
+          if (i>=683 and i< 750 and j > 987):
             if ( (i-683.0)/(750-683) < (j-987.0)/(1200-987)):
               basins[i,j] = 6.0 # replaced
            # region of Pine Island Glacier
@@ -407,28 +404,28 @@ if (fillInBasinMask) :
             basins[i,j]=14.0 #replaced
           if (i>=430 and i <= 480 and j>= 170 and j<=211): #extending basin 11 downwards
             if((i-430.0)/(480-430)> (j-170.0)/(211-170)):
-              basins[i,j] = 15.0 
+              basins[i,j] = 15.0
           if (i>=430 and i <= 480 and j<= 170 ):
             basins[i,j] = 15.0 # replaced
-          # Antarctic Peninsula between 17 and 18         
+          # Antarctic Peninsula between 17 and 18
           if (j< 66 and i > 764):
-            basins[i,j] = 17.0  
+            basins[i,j] = 17.0
           if (j> 65 and j< 167 and i > 764 and basins[i,j]!=17.0):
-            basins[i,j] = 18.0 
+            basins[i,j] = 18.0
           #small insulas which are basin 17 and should be 18...
           if (j> 156 and j< 166 and  i > 770 and i< 780 and basins[i,j]==17.0):
-            basins[i,j] = 18.0 
+            basins[i,j] = 18.0
           if (j> 75 and j< 190 and  i > 810 and i< 825 and basins[i,j]==17.0):
-            basins[i,j] = 18.0  
+            basins[i,j] = 18.0
           if (j == 65 and i==875):
             basins[i,j] = 18.0
           #Adjust Antarctic Peninsula-FRIS-border
-          if (j <= 263 and j >= 167 and i >= 720 ): 
+          if (j <= 263 and j >= 167 and i >= 720 ):
             if ((i-720.0)/(795-720) + (j-167.0)/(263-167)>= 0.5):
-              basins[i,j]= 19.0 
+              basins[i,j]= 19.0
           #Adjust FRIS, small edge which is AP
-          if (j >= 263 and j <= 271 and i >= 715 and i<= 721 ): 
-            basins[i,j]= 1.0 
+          if (j >= 263 and j <= 271 and i >= 715 and i<= 721 ):
+            basins[i,j]= 1.0
 
 
 ##############################################################################################################
@@ -465,15 +462,15 @@ ncout.close()
 
 print '\nPlotting... '
 fig=plt.figure()
-ax = plt.subplot(1,1,1) 
-plt.contourf(basins) 
+ax = plt.subplot(1,1,1)
+plt.contourf(basins)
 
-plt.contour(mask,mask_grounded,colors='gray',linewidths=2) # GROUNDING LINE 
-plt.contour(mask,mask_floating,colors='gray',linewidths=2) # CALVING FRONT 
+plt.contour(mask,mask_grounded,colors='gray',linewidths=2) # GROUNDING LINE
+plt.contour(mask,mask_floating,colors='gray',linewidths=2) # CALVING FRONT
 #cbar = plt.colorbar(ticks=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19])
 
-ax.set_xticks([]) 
-ax.set_yticks([]) 
+ax.set_xticks([])
+ax.set_yticks([])
 p.axis('equal')
 
 #plt.show()
