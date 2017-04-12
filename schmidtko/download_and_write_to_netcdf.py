@@ -25,8 +25,6 @@ temp_in_kelvin = False
 data_path = os.path.join(cf.output_data_path, dataset)
 savefile = os.path.join(data_path, 'schmidtko_ocean_input.nc')
 
-
-
 # the original data is provided for download here.
 link = "http://www.geomar.de/fileadmin/personal/fb1/po/sschmidtko/Antarctic_shelf_data.txt"
 
@@ -36,8 +34,6 @@ if not os.path.isfile(downloaded_file):
   print "Downloading Schmidtko data."
   os.system("mkdir " + data_path)
   os.system("wget -N " + link + " -P " + data_path)
-
-
 
 # Read data from txt file:
 lon = np.zeros(0)
@@ -78,8 +74,8 @@ lon_new = np.sort(lon_new)
 #create array for these dimensions and fill in values:
 fillvalue = np.nan
 
-thetao = np.zeros((1,len(lat_new), len(lon_new))) + fillvalue
-salinity = np.zeros((1,len(lat_new), len(lon_new))) + fillvalue
+theta_ocean = np.zeros((1,len(lat_new), len(lon_new))) + fillvalue
+salinity_ocean = np.zeros((1,len(lat_new), len(lon_new))) + fillvalue
 height   = np.zeros((1,len(lat_new), len(lon_new))) + fillvalue
 
 for i in range(len(c_t)):
@@ -89,8 +85,8 @@ for i in range(len(c_t)):
     if comp_lon < -180:
         comp_lon = 360 + comp_lon
     ilon = np.in1d(lon_new.ravel(), comp_lon).reshape(lon_new.shape)
-    thetao[0,ilat,ilon] = c_t[i]
-    salinity[0,ilat,ilon] = abs_s[i]
+    theta_ocean[0,ilat,ilon] = c_t[i]
+    salinity_ocean[0,ilat,ilon] = abs_s[i]
     height[0,ilat,ilon] = depth[i]
 
 # Save data as NetCDF file
@@ -105,8 +101,8 @@ nct     = wrtfile.createVariable('time', 'float32', ('time',))
 nctb    = wrtfile.createVariable('time_bnds', 'float32', ('time','nv'))
 nclat   = wrtfile.createVariable('lat', 'f4', ('lat',))
 nclon   = wrtfile.createVariable('lon', 'f4', ('lon',))
-nctemp  = wrtfile.createVariable('thetao', 'f4', ('time','lat', 'lon'))
-ncsal   = wrtfile.createVariable('salinity', 'f4', ('time','lat', 'lon'))
+nctemp  = wrtfile.createVariable('theta_ocean', 'f4', ('time','lat', 'lon'))
+ncsal   = wrtfile.createVariable('salinity_ocean', 'f4', ('time','lat', 'lon'))
 nchgt   = wrtfile.createVariable('height', 'f4', ('time','lat', 'lon'))
 
 tm = np.arange(1,1.5,1)
@@ -125,9 +121,9 @@ nclon.units = 'degrees_east'
 nclat[:] = lat_new[:]
 nclat.units = 'degrees_north'
 
-ncsal[:] = salinity
-ncsal.units = 'g/kg' # absolute salinity
-nctemp[:] = thetao
+ncsal[:] = salinity_ocean
+ncsal.units = 'g/kg' # absolute salinity_ocean
+nctemp[:] = theta_ocean
 if(temp_in_kelvin):
     nctemp.units='Kelvin'
 else:

@@ -33,8 +33,8 @@ copyfile(os.path.join(data_path, 'schmidtko_ocean_input.nc') , datafile)
 
 print 'Reading ', datafile
 infile 		= nc.Dataset(datafile, 'r+')
-temperature = ma.masked_array(infile.variables['thetao'][:]) #time, lat, lon
-salinity 	= ma.masked_array(infile.variables['salinity'][:]) #time,lat,lon
+temperature = ma.masked_array(infile.variables['theta_ocean'][:]) #time, lat, lon
+salinity 	= ma.masked_array(infile.variables['salinity_ocean'][:]) #time,lat,lon
 height 	 	= ma.masked_array(infile.variables['height'][:]) #time,lat,lon
 lat 	 	= ma.masked_array(infile.variables['lat'][:]) # lat, degrees north
 lon 	 	= ma.masked_array(infile.variables['lon'][:]) # lon, degrees east
@@ -59,26 +59,26 @@ if (compute_practical_salinity) :
 
 
 #save converted values in file
-infile.variables['thetao'][:] = potential_temps # FIXME this changes fill values from NaNf to -- which makes a problem in cdo...!!!
-infile.variables['salinity'][:] = practical_salinity
-infile.variables['salinity'].units = '' # now dimensionless
+infile.variables['theta_ocean'][:] = potential_temps # FIXME this changes fill values from NaNf to -- which makes a problem in cdo...!!!
+infile.variables['salinity_ocean'][:] = practical_salinity
+infile.variables['salinity_ocean'].units = '' # now dimensionless
 infile.close()
 
 print "Temperature and salinity successfully converted and written to", datafile
 
 
-# # plot the difference between potential and absolute salinity
+# # plot the difference between potential and absolute salinity_ocean
 # import matplotlib.pyplot as plt
 
 # fig=plt.figure()
 # ax = plt.subplot(1,1,1)
 
-# plt.contourf(practical_salinity[0,:,:]-salinity[0,:,:])
+# plt.contourf(practical_salinity[0,:,:]-salinity_ocean[0,:,:])
 
 # ax.set_xticks([])
 # ax.set_yticks([])
 
 # #plt.show()
-# plt.savefig(os.path.join(schmidtko_data_path,"plots/Practical_versus_absolute_salinity.png"))
+# plt.savefig(os.path.join(schmidtko_data_path,"plots/Practical_versus_absolute_salinity_ocean.png"))
 # plt.clf()
 

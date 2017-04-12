@@ -37,8 +37,8 @@ basinfile='../basins/basins_15km.nc'
 
 # Load data
 readfile = nc.Dataset(infile, 'r')
-temperature = readfile.variables['thetao'][:]
-salinity = readfile.variables['salinity'][:]
+temperature = readfile.variables['theta_ocean'][:]
+salinity = readfile.variables['salinity_ocean'][:]
 x = readfile.variables['x'][:]
 y = readfile.variables['y'][:]
 readfile.close()
@@ -92,10 +92,10 @@ copyfile(infile, outfile)
 
 wrtfile = nc.Dataset(outfile, 'r+')
 
-wrtfile.variables['thetao'][:] = temperature
-wrtfile.variables['salinity'][:] = salinity
-wrtfile.variables['thetao'].units = "Celsius"
-wrtfile.variables['salinity'].units = "g/kg"
+wrtfile.variables['theta_ocean'][:] = temperature
+wrtfile.variables['salinity_ocean'][:] = salinity
+wrtfile.variables['theta_ocean'].units = "Celsius"
+wrtfile.variables['salinity_ocean'].units = "g/kg"
 
 ## add variable basins to the file
 basinsvar = wrtfile.createVariable('basins', 'f8', ('time','y', 'x'))
@@ -107,6 +107,3 @@ basinsvar.long_name = "drainage basins"
 basinsvar.standard_name = "drainage_basins"
 
 wrtfile.close()
-
-
-os.system("ncrename -O -v thetao,theta_ocean -v salinity,salinity_ocean "+outfile)
