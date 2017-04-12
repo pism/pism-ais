@@ -23,6 +23,9 @@ custom_file_names = {"racmo_hadcm3_I2S":
 
 merged_filename = ("_").join(cf.datasets_to_merge)+"_"+str(cf.resolution)+"km.nc"
 merged_filename = os.path.join(data_path,merged_filename)
+# created beforehand by grids/create_cdo_grid.py
+cdo_targetgrid_file = os.path.join(cf.cdo_remapgridpath,'pism_'+str(cf.resolution)+'km.nc')
+
 
 if not os.path.exists(data_path): os.makedirs(data_path)
 
@@ -59,4 +62,8 @@ cmd = "cdo -O -f nc4c merge "+" ".join(preselected_datapaths)+" "+merged_filenam
 print cmd
 # if you see "cdo: error while loading shared libraries:",
 # 'module load cdo'
+subprocess.check_call(cmd,shell=True)
+
+# add the axes from the gridfile to the merged file
+cmd = "ncks -A -v x,y "+cdo_targetgrid_file+" "+merged_filename
 subprocess.check_call(cmd,shell=True)

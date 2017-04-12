@@ -13,6 +13,7 @@ import datetime
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path: sys.path.append(project_root)
 import config as cf; reload(cf)
+import pism_input.pism_input as pi; reload(pi)
 
 ### Bedmap2   ##########################################################
 # Documentation of the data: https://www.bas.ac.uk/project/bedmap-2/
@@ -27,11 +28,6 @@ if not os.path.exists(os.path.join(bedmap2_data_path,"bedmap2_bin")):
   os.system("mkdir " + bedmap2_data_path)
   os.system("wget -N " + bedmap2_link + " -P " + bedmap2_data_path)
   os.system("cd "+bedmap2_data_path+" && unzip bedmap2_bin.zip")
-
-if os.path.isfile(ncout_name):
-  print "Bedmap2 file", ncout_name
-  print "was already written, do nothing."
-  sys.exit(0)
 
 data_files = {"topg":"bedmap2_bed.flt",
               "thk":"bedmap2_thickness.flt",
@@ -68,7 +64,7 @@ for var, file in data_files.iteritems():
   bedm2_vars[var] =  vardata
 
 
-bedm2_attributes = {"bed": {"long_name" : "elevation of bedrock",
+bedm2_attributes = {"topg": {"long_name" : "elevation of bedrock",
                            "standard_name" : "bedrock_altitude",
                            "units" : "meters"},
                     "usurf": {"long_name" : "ice upper surface elevation",
@@ -99,8 +95,8 @@ for varname,data in bedm2_vars.iteritems():
 
   ncvar = ncout.createVariable( varname,'float64',('y','x') ) #double precision
   ncvar[:] = data
-  for att in bedm2_attributes[var]:
-    pass
+  for att in bedm2_attributes[varname]:
+    setattr(ncvar,att,bedm2_attributes[varname][att])
 
 now = datetime.datetime.now().strftime("%B %d, %Y")
 #antarctica
@@ -109,5 +105,8 @@ ncout.proj4 = "+lon_0=0.0 +ellps=WGS84 +datum=WGS84 +lat_ts=-71.0 +proj=stere +x
 ncout.comment  = cf.authors+" created netcdf bedmap2 file at " + now
 
 ncout.close()
-print "Done"
+
+# prepare the input file for cdo remapping
+# this step takes a while for high resolution data (i.e. 1km)
+pi.prepare_ncfile_for_cdo(ncout_name)
 

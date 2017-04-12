@@ -25,12 +25,7 @@ resolution = cf.resolution # in km
 use_conservative_regridding = True
 
 data_path = os.path.join(cf.output_data_path, dataset)
-
-# prepare the input file for cdo remapping
-# this step takes a while for high resolution data (i.e. 1km)
 inputfile = os.path.join(data_path, 'bedmap2_1km_input.nc')
-pi.prepare_ncfile_for_cdo(inputfile)
-
 regridded_file = os.path.join(data_path, dataset+"_"+str(resolution)+"km.nc")
 
 # check if target grid is present.
