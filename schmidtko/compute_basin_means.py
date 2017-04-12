@@ -30,10 +30,10 @@ data_path = os.path.join(cf.output_data_path, dataset)
 infile = os.path.join(data_path, 'schmidtko_'+str(resolution)+'km.nc')
 outfile = os.path.join(data_path, 'schmidtko_'+str(resolution)+'km_means.nc')
 print infile
-#basinfile = '../basins/basins/basins_data/basins_zwally_5km_input.nc' # FIXME replace later
-#basinfile = os.path.join(cf.output_data_path, 'basins_zwally_5km_input.nc')
-#basinfile='../basins/basins_data/basins_zwally12_15km.nc'
-basinfile='../basins/basins_15km.nc'
+
+zwally_data_path = os.path.join(cf.output_data_path,"zwally_basins")
+basinfile = os.path.join(zwally_data_path, 'zwally_basins_'+str(resolution)+'km.nc')
+
 
 # Load data
 readfile = nc.Dataset(infile, 'r')

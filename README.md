@@ -42,7 +42,7 @@ pism_input
 +-- racmo
 |   +-- preprocess.sh (TODO: flipud)
 |   +-- remap_racmo.py
-+-- basins
++-- zwally_basins
 |   +-- download_and_extend_to_ocean.py
 |   +-- remap.py (with local cdo rempnn)
 +-- schmidtko

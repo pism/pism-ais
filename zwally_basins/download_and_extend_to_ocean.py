@@ -10,17 +10,14 @@ import sys, csv, datetime
 import netCDF4 as nc
 import datetime, math
 
-import matplotlib.pyplot as plt
-import matplotlib.cm as cm
-import pylab as p
+## this hack is needed to import config.py from the project root
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if project_root not in sys.path: sys.path.append(project_root)
+import config as cf; reload(cf)
 
-from matplotlib.patches import Rectangle
-plt.rcParams['font.size']=30
-plt.rcParams['legend.fontsize']=30
-plt.rcParams['figure.figsize'] = 15, 15
-plt.close('all')
 
-###############################################################################
+dataset="zwally_basins"
+
 """
 Parameters
 """
@@ -31,18 +28,12 @@ adjustAP=1
 fillInBasinMask=1
 
 
-
-## this hack is needed to import config.py from the project root
-project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if project_root not in sys.path: sys.path.append(project_root)
-import config as cf; reload(cf)
-
 ### Zwally basins   ##########################################################
 # Documentation of the data: http://homepages.see.leeds.ac.uk/~earkhb/Basins_page.html
 basins_link="http://homepages.see.leeds.ac.uk/~earkhb/ais_basins_imbie_ascii.zip"
 
 ## such file definitions should go to config.py, so that other functions can access them.
-basins_data_path = os.path.join(cf.output_data_path, "basins")
+basins_data_path = os.path.join(cf.output_data_path, dataset)
 basins_ascii_path = os.path.join(basins_data_path, 'basins_ascii')
 infile = os.path.join(basins_ascii_path, 'ais_basins_imbie.z12.txt')
 namefile = os.path.join(basins_ascii_path, 'ais_basins_imbie.z12.names.txt')
@@ -190,7 +181,19 @@ if (getData==1):
         done = 1
 
 
+# TODO: remove plotting from data processing scripts.
 print '\nPlotting... '
+
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+import pylab as p
+
+from matplotlib.patches import Rectangle
+plt.rcParams['font.size']=30
+plt.rcParams['legend.fontsize']=30
+plt.rcParams['figure.figsize'] = 15, 15
+plt.close('all')
+
 
 fig=plt.figure()
 ax = plt.subplot(1,1,1)
@@ -455,9 +458,11 @@ ncout.regions = "regions follow the definition of Zwally et al. 2012"
 ncout.proj4 = "+lon_0=0.0 +ellps=WGS84 +datum=WGS84 +lat_ts=-71.0 +proj=stere +x_0=0.0 +units=m +y_0=0.0 +lat_0=-90.0"
 ncout.comment  = cf.authors+" created netcdf basins file at " + now
 
-
-
 ncout.close()
+
+# prepare the input file for cdo remapping
+# this step takes a while for high resolution data (i.e. 1km)
+pi.prepare_ncfile_for_cdo(ncout_ocean)
 
 
 print '\nPlotting... '
@@ -476,8 +481,6 @@ p.axis('equal')
 #plt.show()
 plt.savefig(os.path.join(basins_data_path,"plots/ZwallyBasinsWithOcean.png"))
 plt.clf()
-
-
 
 print "\nDone"
 
