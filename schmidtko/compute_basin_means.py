@@ -14,6 +14,7 @@ import numpy as np
 import numpy.ma as ma
 import netCDF4 as nc
 from shutil import copyfile
+import subprocess
 
 ## this hack is needed to import config.py from the project root
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -107,3 +108,16 @@ basinsvar.long_name = "drainage basins"
 basinsvar.standard_name = "drainage_basins"
 
 wrtfile.close()
+
+print "Basin mean values successfully written to"
+print outfile
+
+
+## TODO: the following does not fully solve the problem for cdo merge this file with the
+##       others. Should we just not put time and depth dimension in the creation of
+##       the Schmidtko data at first place?
+## Remove the time dimesion
+subprocess.check_call("ncwa -O -a time "+outfile+" "+outfile, shell=True)
+## delete the time and the height variable
+subprocess.check_call("ncks -O -C -x -v time "+outfile+" "+outfile, shell=True)
+subprocess.check_call("ncks -O -C -x -v height "+outfile+" "+outfile, shell=True)

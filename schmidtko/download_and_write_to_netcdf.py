@@ -4,7 +4,6 @@ http://science.sciencemag.org/content/346/6214/1227
 and create NetCDF file from the txt data.
 ronja.reese@pik-potsdam.de, matthias.mengel@pik
 
-FIXME use correct pism names for variables
 """
 
 import os, sys
