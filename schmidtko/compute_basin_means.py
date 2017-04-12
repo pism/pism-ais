@@ -23,9 +23,12 @@ import pism_input.pism_input as pi; reload(pi)
 
 # save data path
 dataset="schmidtko"
+# resolution for the output file, set from config.
+resolution = cf.resolution # in km
+
 data_path = os.path.join(cf.output_data_path, dataset)
-infile = os.path.join(data_path, 'schmidtko_data/schmidtko_15km.nc')
-outfile = os.path.join(data_path, 'schmidtko_15km_means.nc')
+infile = os.path.join(data_path, 'schmidtko_'+str(resolution)+'km.nc')
+outfile = os.path.join(data_path, 'schmidtko_'+str(resolution)+'km_means.nc')
 print infile
 #basinfile = '../basins/basins/basins_data/basins_zwally_5km_input.nc' # FIXME replace later
 #basinfile = os.path.join(cf.output_data_path, 'basins_zwally_5km_input.nc')
@@ -99,9 +102,9 @@ basinsvar = wrtfile.createVariable('basins', 'f8', ('time','y', 'x'))
 basins_variable = np.zeros_like(temperature)
 basins_variable[0,:,:] = basins
 basinsvar[:] = basins_variable
-basinsvar.units = "" 
-basinsvar.long_name = "drainage basins" 
-basinsvar.standard_name = "drainage_basins" 
+basinsvar.units = ""
+basinsvar.long_name = "drainage basins"
+basinsvar.standard_name = "drainage_basins"
 
 wrtfile.close()
 
