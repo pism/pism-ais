@@ -16,7 +16,7 @@ import config as cf; reload(cf)
 scenario = "c20" # A1B or c20
 dataset = "racmo_hadcm3_I2S"
 # resolution for the output file
-resolution = 20 # in km
+resolution = cf.resolution # in km
 
 data_path = os.path.join(cf.output_data_path, dataset)
 inputfile = os.path.join(data_path, dataset+"_"+scenario+"_"+str(resolution)+"km.nc")

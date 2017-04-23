@@ -19,7 +19,7 @@ data_path = os.path.join(cf.output_data_path, "merged")
 # set your custom name here if standard naming is not used
 # (for example if you applied a time mean in between)
 custom_file_names = {"racmo_hadcm3_I2S":
-                     "racmo_hadcm3_I2S_A1B_"+str(cf.resolution)+"km_timemean.nc",
+                     "racmo_hadcm3_I2S_c20_"+str(cf.resolution)+"km_timemean.nc",
                      "schmidtko":"schmidtko_"+str(cf.resolution)+"km_means.nc"}
 
 merged_filename = ("_").join(cf.datasets_to_merge)+"_"+str(cf.resolution)+"km.nc"
