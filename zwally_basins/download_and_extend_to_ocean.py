@@ -364,7 +364,7 @@ if (findLongitudes == 1):
             longitudeVec[-1] = lon[i,j]
 
     print longitudeVec
-    np.save(os.path.join(basins_data_path,"basins_data/longitudeVec.npy"), longitudeVec)
+    np.save(os.path.join(basins_data_path,"longitudeVec.npy"), longitudeVec)
 
 
 ##############################################################################################################
@@ -372,7 +372,7 @@ if (findLongitudes == 1):
 
 if (fillInBasinMask) :
   print '\nFilling basin mask... '
-  longitudeVec = np.load(os.path.join(basins_data_path,"basins_data/longitudeVec.npy"))
+  longitudeVec = np.load(os.path.join(basins_data_path,"longitudeVec.npy"))
   longitudeVec = longitudeVec
   for i in range(1,Mx-1):
     for j in range(1,My-1):

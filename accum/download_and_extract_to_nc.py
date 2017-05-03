@@ -25,12 +25,9 @@ ncout_name = os.path.join(arthern_data_path, 'accum_1km_input.nc')
 if not os.path.exists(os.path.join(arthern_data_path,"accum_bin")):
   print "Downloading arthern acumulation binary data."
   os.system("mkdir -p " + os.path.join(arthern_data_path, 'accum_bin'))
-  os.system("wget -N " + arthern_link + " -P " + arthern_data_path)
-  os.system("unzip "+os.path.join(arthern_data_path,"Arthern_accumulation_bin.zip"))
+  os.system("wget -N " + arthern_link + " -P " + arthern_data_path+'/')
+  os.system("unzip "+os.path.join(arthern_data_path,"Arthern_accumulation_bin.zip")+" -d "+os.path.join(arthern_data_path, 'accum_bin/'))
   os.system("rm "+os.path.join(arthern_data_path,"Arthern_accumulation_bin.zip"))
-  os.system("mv "+os.path.join(arthern_data_path,"*flt")+" "+os.path.join(arthern_data_path,"accum_bin/"))
-  os.system("mv "+os.path.join(arthern_data_path,"*hdr")+" "+os.path.join(arthern_data_path,"accum_bin/"))
-  os.system("mv "+os.path.join(arthern_data_path,"*prj")+" "+os.path.join(arthern_data_path,"accum_bin/"))
 
 if os.path.isfile(ncout_name):
   print "Accum file", ncout_name
@@ -100,7 +97,7 @@ now = datetime.datetime.now().strftime("%B %d, %Y")
 #ncout.proj4 = "+proj=stere +ellps=WGS84 +datum=WGS84 +lon_0=0 +lat_0=-90 +lat_ts=-71 +units=m"
 ncout.proj4 = "+lon_0=0.0 +ellps=WGS84 +datum=WGS84 +lat_ts=-71.0 +proj=stere +x_0=0.0 +units=m +y_0=0.0 +lat_0=-90.0"
 ncout.comment  = cf.authors+" created netcdf accumulation file at " + now
-ncout.citation = "rthern, R. J., D. P. Winebrenner, and D. G. Vaughan (2006), Antarctic snow accumulation mapped using polarization of 4.3-cm wavelength microwave emission, J. Geophys. Res., 111, D06107, doi:10.1029/2004JD005667."
+ncout.citation = "Arthern, R. J., D. P. Winebrenner, and D. G. Vaughan (2006), Antarctic snow accumulation mapped using polarization of 4.3-cm wavelength microwave emission, J. Geophys. Res., 111, D06107, doi:10.1029/2004JD005667."
 
 ncout.close()
 print "Done"

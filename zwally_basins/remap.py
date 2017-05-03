@@ -26,7 +26,10 @@ use_conservative_regridding = False
 
 data_path = os.path.join(cf.output_data_path, dataset)
 inputfile = os.path.join(data_path, 'basins_zwally_5km_input.nc')
+pi.prepare_ncfile_for_cdo(inputfile)
+
 regridded_file = os.path.join(data_path, dataset+"_"+str(resolution)+"km.nc")
+
 
 # the cdo target grids are independent of the specific input dataset.
 # they are therefore created beforehand by grids/create_cdo_grid.py

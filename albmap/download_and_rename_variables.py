@@ -67,4 +67,9 @@ subprocess.check_call('ncks -O -x -v t '+ final_filename+' '+final_filename,shel
 # create netcdf4 format
 subprocess.check_call('ncks -O -4 '+ final_filename+' '+final_filename,shell=True)
 
+ 
+# projection metadata
+#subprocess.check_call('ncatted -O -a proj4,global,a,c,"+lon_0=0.0 +ellps=WGS84 +datum=WGS84 +lat_ts=-71.0 +proj=stere +x_0=0.0 +units=m +y_0=0.0 +lat_0=-90.0"'+ final_filename,shell=True)
+
+
 print "  PISM-readable file",final_filename,"successfully created."

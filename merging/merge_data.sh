@@ -3,14 +3,15 @@
 #res=2km #3000x3000
 #res=10km #600X600
 #res=12km #500X500
-#res=15km #400x400
+res=15km #400x400
 #res=20km #300x300
 #res=30km #200x200
-res=50km #120x120
+#res=50km #120x120
 
 
 # combine bedmap2 and albmap atmosphere date
-pisminpath=/p/projects/tumble/pism_input/GitLab
+#pisminpath=/p/projects/tumble/pism_input/GitLab
+pisminpath=/p/projects/tumble/albrecht/pism_input/data
 albmapfile=${pisminpath}/albmap/albmap_data/albmap_${res}.nc
 bedmapfile=${pisminpath}/bedmap2/bedmap2_data/bedmap2_${res}.nc
 pismgridfile=${pisminpath}/GitLab/grids/pism_${res}.nc
