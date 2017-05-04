@@ -25,7 +25,7 @@ resolution = cf.resolution # in km
 use_conservative_regridding = True
 
 data_path = os.path.join(cf.output_data_path, dataset)
-inputfile = os.path.join(data_path, 'rignotvel_450mm_input.nc')
+inputfile = os.path.join(data_path, 'rignotvel_450m_input.nc')
 regridded_file = os.path.join(data_path, dataset+"_"+str(resolution)+"km.nc")
 
 # check if target grid is present.

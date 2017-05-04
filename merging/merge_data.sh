@@ -12,9 +12,9 @@ res=15km #400x400
 # combine bedmap2 and albmap atmosphere date
 #pisminpath=/p/projects/tumble/pism_input/GitLab
 pisminpath=/p/projects/tumble/albrecht/pism_input/data
-albmapfile=${pisminpath}/albmap/albmap_data/albmap_${res}.nc
-bedmapfile=${pisminpath}/bedmap2/bedmap2_data/bedmap2_${res}.nc
-pismgridfile=${pisminpath}/GitLab/grids/pism_${res}.nc
+albmapfile=${pisminpath}/albmap/albmap_${res}.nc
+bedmapfile=${pisminpath}/bedmap2/bedmap2_${res}.nc
+pismgridfile=${pisminpath}/cdo_remapgrids/pism_${res}.nc
 
 pismoutfile=pism_bedmap2_albmap_${res}.nc
 ncks -A -v topg,thk,usurf,bedunc,x,y $bedmapfile -o $pismoutfile
