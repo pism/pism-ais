@@ -259,16 +259,16 @@ if __name__ == "__main__":
     histstr = asctime() + \
         ' : grid info for CDO added by nc2cdo.py, a PISM utility\n'
     if 'History' in nc.ncattrs():
-        nc.History = histstr + nc.History
+        nc.History = histstr + str(nc.History)
     elif 'history' in nc.ncattrs():
-        nc.history = histstr + nc.history
+        nc.history = histstr + str(nc.history)
     else:
         nc.history = histstr
-
     for attr in ("projection", "proj4"):
         if hasattr(nc, attr):
             delattr(nc, attr)
     # Write projection attribute
     nc.proj4 = proj.srs
+
     # Close file
     nc.close()
