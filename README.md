@@ -39,7 +39,7 @@ pism_input
 |   +-- remap.py
 +-- albmap
 |   +-- download_and_rename_variables.py
-|   +-- remap.py (FIXME: Segmentation fault)
+|   +-- remap.py
 +-- racmo
 |   +-- merge_and_rename_variables.py
 |   +-- remap.py
@@ -47,21 +47,24 @@ pism_input
 |   +-- download_and_extend_to_ocean.py
 |   +-- remap.py (with local cdo rempnn)
 +-- schmidtko
-|   +-- download_and_write_to_netcdf.py (FIXME: url not available)
+|   +-- download_and_write_to_netcdf.py
 |   +-- calculate_potential_temps.py
 |   +-- remap.py
 |   +-- compute_basin_means.py
 +-- accum
 |   +-- download_and_extract_to_nc.py
 |   +-- remap.py
++-- rignotvel
+|   +-- preprocess_netcdf.py
+|   +-- remap.py
 +-- initmip
 |   +-- preprocess.sh
 |   +-- remap.py (asmb)
 |   +-- postprocess.sh (incl. cdo remapnn abmb)
-+-- merging
-|   +-- merge_data.sh (determine resolution! FIXME: Convert to python)
++-- merge_datasets.py
+|   
 +-- pism_input
-    +-- pism_input.py
+    +-- pism_input.py (tools)
 ```
 
 ### Data sources

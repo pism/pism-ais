@@ -22,7 +22,7 @@ dataset="rignotvel"
 resolution = cf.resolution # in km
 # conservative regridding for bedmap2, albmap and velocity data. does
 # not yet work for the other datasets.
-use_conservative_regridding = True
+use_conservative_regridding = False
 
 data_path = os.path.join(cf.output_data_path, dataset)
 inputfile = os.path.join(data_path, 'rignotvel_450m_input.nc')

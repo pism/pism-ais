@@ -8,7 +8,7 @@ import pwd
 authors="matthias.mengel@pik-potsdam.de and torsten.albrecht@pik-potsdam.de"
 
 # the resolution of the final output files.
-resolution = 15 # in km
+resolution = 5 # in km
 
 #torsten local and tumble
 #output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
@@ -30,7 +30,7 @@ racmo_data_path = "/p/projects/tumble/mengel/pismSourceData/20170328_RacmoHadCM3
 # datasets should be named here as the subfolder of its preprocessing.
 # TODO: merging schmidtko data does not work yet due to subtle grid differences.
 #       it can be supplied through -ocean cavity -ocean_cavity_file $file directly.
-datasets_to_merge = ["bedmap2","albmap","racmo_hadcm3_I2S"]#,"schmidtko"]
+datasets_to_merge = ["bedmap2","albmap","racmo_hadcm3_I2S","schmidtko"]
 
 # choose here which variables should be taken from which dataset
 # The basins variable for the PICO model can be passed with the Schmidtko dataset.

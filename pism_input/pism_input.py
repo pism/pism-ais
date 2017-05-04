@@ -311,7 +311,7 @@ def prepare_ncfile_for_cdo(nc_outfile):
         var = 'lon_bnds'
         # Create variable 'lon_bnds'
         var_out = nc.createVariable(
-            var, 'f', dimensions=(ydim, xdim, grid_corner_dim_name))
+            var, 'float64', dimensions=(ydim, xdim, grid_corner_dim_name))
         # Assign units to variable 'lon_bnds'
         var_out.units = "degreesE"
         # Assign values to variable 'lon_nds'
@@ -320,7 +320,7 @@ def prepare_ncfile_for_cdo(nc_outfile):
         var = 'lat_bnds'
         # Create variable 'lat_bnds'
         var_out = nc.createVariable(
-            var, 'f', dimensions=(ydim, xdim, grid_corner_dim_name))
+            var, 'float64', dimensions=(ydim, xdim, grid_corner_dim_name))
         # Assign units to variable 'lat_bnds'
         var_out.units = "degreesN"
         # Assign values to variable 'lat_bnds'
