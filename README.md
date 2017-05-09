@@ -68,7 +68,7 @@ pism_input
 
 
 #### Surface elevation
-- Albmap data
+###### Albmap data
 
   5km resolution, NetCDF files of Antarctica gathered from various data sources and interpolated, when necessary, onto the same grid using polar stereographic projection
 
@@ -78,7 +78,7 @@ pism_input
 
    Griggs, J. A., & Bamber, J. L. (2009). A new 1 km digital elevation model of Antarctica derived from combined radar and laser data-Part 2: Validation and error estimates. The Cryosphere, 3(1), 113.
 
-- Bedmap 2 data
+###### Bedmap 2 data
 
   Dataset describing surface elevation, ice-thickness and the sea ﬂoor and subglacial bed elevation of the Antarctic south of 60◦ S. Dataset was derived using data from a variety of sources, including many substantial surveys completed since the original Bedmap compilation (Bedmap1) in 2001. The Bedmap2 ice thickness grid is made from 25 million measurements, over two orders of magnitude more than were used in Bedmap1.
 
@@ -98,7 +98,7 @@ Citation: Fretwell, P., Pritchard, H. D., Vaughan, D. G., Bamber, J. L., Barrand
 
 
 #### Accumulation
-- Arthern accumulation
+###### Arthern accumulation
 
   Antarctic surface accumulation map on the same grid, with the same projection and in the same file formats as bedmap2.
 
@@ -106,7 +106,7 @@ Citation: Fretwell, P., Pritchard, H. D., Vaughan, D. G., Bamber, J. L., Barrand
 
   Citation: Arthern, R. J., D. P. Winebrenner, and D. G. Vaughan (2006), Antarctic snow accumulation mapped using polarization of 4.3-cm wavelength microwave emission, J. Geophys. Res., 111, D06107, doi:10.1029/2004JD005667.
 
-- Albmap data
+###### Albmap data
 
   5km resolution, NetCDF files of Antarctica gathered from various data sources and interpolated, when necessary, onto the same grid using polar stereographic projection
 
@@ -118,8 +118,16 @@ Citation: Fretwell, P., Pritchard, H. D., Vaughan, D. G., Bamber, J. L., Barrand
 
 Racmo data
 
-HadCM3_c20_I2S_precip_Y.nc contains precipitation in mm/yr for 1980-1999 over Antarctica from RACMO2 run forced with HadCM3 data. HadCM3_c20_I2S_t2m_Y.nc contains temperature in Kelvin for 1980-1999 over Antarctica from RACMO2 run forced with HadCM3 data. This file should be used as PISM input with the atmosphere_given option.
+HadCM3_c20_I2S_precip_Y.nc contains precipitation in mm/yr for 1980-1999 over Antarctica from RACMO2 run forced with HadCM3 data. HadCM3_c20_I2S_t2m_Y.nc contains temperature in Kelvin for 1980-1999 over Antarctica from RACMO2 run forced with HadCM3 data.
 
+Citation: Ligtenberg, S. R. M., van de Berg, W. J., van den Broeke, M. R.,
+Rae, J. G. L. & van Meijgaard, E. (2013). Future surface mass balance of the
+Antarctic Ice Sheet and its influence on sea level change, simulated by
+a regional atmospheric climate model. Clim. Dynam. 41, 867–884
+
+###### Note:
+Data was given for use in this paper:
+Frieler Katja; Clark Peter U.; He Feng; Buizert Christo; Reese Ronja; Ligtenberg Stefan R. M.; van den Broeke Michiel R.; Winkelmann Ricarda & Levermann Anders Consistent evidence of increasing Antarctic accumulation with warming. Nature Clim. Change, 2015, 5, 348-352
 
 
 
