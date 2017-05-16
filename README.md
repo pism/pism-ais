@@ -41,26 +41,29 @@ pism_input
 |   +-- download_and_rename_variables.py
 |   +-- remap.py
 +-- racmo
-|   +-- preprocess.sh (TODO: flipud)
-|   +-- remap_racmo.py
+|   +-- merge_and_rename_variables.py
+|   +-- remap.py
 +-- zwally_basins
 |   +-- download_and_extend_to_ocean.py
 |   +-- remap.py (with local cdo rempnn)
 +-- schmidtko
 |   +-- download_and_write_to_netcdf.py
 |   +-- calculate_potential_temps.py
-|   +-- remap_schmidtko.py
+|   +-- remap.py
 |   +-- compute_basin_means.py
 +-- accum
 |   +-- download_and_extract_to_nc.py
+|   +-- remap.py
++-- rignotvel
+|   +-- preprocess_netcdf.py
 |   +-- remap.py
 +-- initmip
 |   +-- preprocess.sh
 |   +-- remap.py (asmb)
 |   +-- postprocess.sh (incl. cdo remapnn abmb)
-+-- merging
++-- merge_dataset.py
 +-- pism_input
-    +-- pism_input.py
+    +-- pism_input.py (tools)
 ```
 
 ### Data sources
@@ -162,3 +165,13 @@ Zwally dataset
 Documentation: <http://homepages.see.leeds.ac.uk/~earkhb/Basins_page.html>
 
 Citation: Zwally, H. J., Giovinetto, M. B., Beckley, M. A., & Saba, J. L. (2012). Antarctic and Greenland drainage systems. GSFC Cryospheric Sciences Laboratory.
+
+
+#### Surface Velocity
+Rignotvel data.
+
+Citation: Rignot, E., J. Mouginot, and B. Scheuchl. 2017. MEaSUREs InSAR-Based Antarctica Ice Velocity Map, Version 2. [Indicate subset used]. Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. doi: http://dx.doi.org/10.5067/D7GK8F5J8M8R. [Date Accessed].
+
+More infos: http://nsidc.org/data/nsidc-0484
+
+
