@@ -8,7 +8,7 @@ import pwd
 authors="matthias.mengel@pik-potsdam.de and torsten.albrecht@pik-potsdam.de"
 
 # the resolution of the final output files.
-resolution = 5 # in km
+resolution = 15 # in km
 
 #torsten local and tumble
 #output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
@@ -34,7 +34,7 @@ datasets_to_merge = ["bedmap2","albmap","racmo_hadcm3_I2S","schmidtko"]
 
 # choose here which variables should be taken from which dataset
 # The basins variable for the PICO model can be passed with the Schmidtko dataset.
-variables = {"bedmap2":["thk","topg"],
+variables = {"bedmap2":["thk","topg","usurf"],
              "albmap":["bheatflx"],
              "racmo_hadcm3_I2S":["precipitation","air_temp"],
              "schmidtko":["theta_ocean","salinity_ocean","basins"]}
