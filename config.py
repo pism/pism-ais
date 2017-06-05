@@ -35,14 +35,16 @@ tillphi_data_path = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2300_TPSO/res
 # datasets should be named here as the subfolder of its preprocessing.
 # TODO: merging schmidtko data does not work yet due to subtle grid differences.
 #       it can be supplied through -ocean cavity -ocean_cavity_file $file directly.
-datasets_to_merge = ["bedmap2","albmap","racmo_hadcm3_I2S","schmidtko","tillphi_pism"]
+datasets_to_merge = ["bedmap2","albmap","racmo_hadcm3_I2S",
+                     # "schmidtko",
+                     "tillphi_pism"]
 
 # choose here which variables should be taken from which dataset
 # The basins variable for the PICO model can be passed with the Schmidtko dataset.
 variables = {"bedmap2":["thk","topg","usurf"],
              "albmap":["bheatflx"],
              "racmo_hadcm3_I2S":["precipitation","air_temp"],
-             "schmidtko":["theta_ocean","salinity_ocean","basins"],
+             # "schmidtko":["theta_ocean","salinity_ocean","basins"],
              "tillphi_pism":["tillphi"]}
 
 #### No edits needed below that line. ####
