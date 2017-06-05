@@ -17,6 +17,7 @@ import subprocess
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path: sys.path.append(project_root)
 import config as cf; reload(cf)
+import pism_input.pism_input as pi; reload(pi)
 
 dataset = "tillphi_pism"
 
@@ -31,3 +32,5 @@ subprocess.check_call("ncks -O -4 -v tillphi "+cf.tillphi_data_path+" "+
 subprocess.check_call('ncap2 -O -s "lon_bnds=double(lon_bnds);lat_bnds=double(lat_bnds)" '+
                       os.path.join(data_path,dataset+"temp.nc")+" "+
                       os.path.join(data_path,dataset+".nc"),shell=True)
+
+pi.prepare_ncfile_for_cdo(os.path.join(data_path,dataset+".nc"))
