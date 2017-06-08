@@ -64,8 +64,6 @@ def preprocess_ice_velocity():
 
     nc = NC.Dataset(output_filename, 'a')
 
-    # Create x and y coordinate variables and set projection parameters; cut
-    # out the Ross area.
 
     # Metadata provided with the dataset describes the *full* grid, so it is a
     # lot easier to modify this file instead of adding grid information to the
@@ -103,6 +101,10 @@ def preprocess_ice_velocity():
         nc.variables['vx'].units = "m / year"
         nc.variables['vy'].units = "m / year"
 
+
+    y_var = nc.variables['y']
+    print y_var[:],np.flipud(y_var[:])
+    y_var[:] = np.flipud(y_var[:])
 
 
     # Compute and save the velocity magnitude

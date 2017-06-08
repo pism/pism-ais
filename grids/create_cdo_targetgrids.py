@@ -24,7 +24,7 @@ use_PISM_grid=True
 
 if __name__ == "__main__":
 
-    for resolution in [5,10,12,15,20,30,50]:
+    for resolution in [1,2,5,10,12,15,20,30,50]:
 
         # cdo_targetgrid_file = os.path.join(cf.cdo_remapgridpath,
         #                         'pism_'+str(int(resolution))+'km.nc')

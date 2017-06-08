@@ -8,7 +8,7 @@ import pwd
 authors="matthias.mengel@pik-potsdam.de and torsten.albrecht@pik-potsdam.de"
 
 # the resolution of the final output files.
-resolution = 15 # in km
+resolution = 2 # in km
 
 #torsten local and tumble
 #output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
