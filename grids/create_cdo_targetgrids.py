@@ -19,15 +19,23 @@ import config as cf; reload(cf)
 import pism_input.pism_input as pi; reload(pi)
 
 # if true, PISM will not need to regrid
-use_PISM_grid=True
+use_PISM_grid=False
+resolutions=[1,2,5,10,12,15,20,30,50]
+
+# can be only true if use_PISM_grid=False
+use_initMIP_grid=True
+if use_initMIP_grid:
+  resolutions=[1,2,4,8,16,32]
+  if use_PISM_grid:
+    print "initMIP grid cannot be created, PISM grid instead!"
 
 
 if __name__ == "__main__":
 
-    for resolution in [1,2,5,10,12,15,20,30,50]:
+    for resolution in resolutions:
 
         # cdo_targetgrid_file = os.path.join(cf.cdo_remapgridpath,
         #                         'pism_'+str(int(resolution))+'km.nc')
         gridfile = pi.create_grid_for_cdo_remap(cf.cdo_remapgridpath,
-                        use_PISM_grid=True, resolution=resolution)
+                        use_PISM_grid=use_PISM_grid, use_initMIP_grid=use_initMIP_grid, resolution=resolution)
         pi.prepare_ncfile_for_cdo(gridfile)

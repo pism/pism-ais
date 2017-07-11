@@ -8,17 +8,17 @@ import pwd
 authors="matthias.mengel@pik-potsdam.de and torsten.albrecht@pik-potsdam.de"
 
 # the resolution of the final output files.
-resolution = 2 # in km
+resolution = 16 # in km
 
 #torsten local and tumble
 #output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
 #output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/python/pism_input/")
-# output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/data/")
+output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/data/")
 
 
 # matthias
-# output_data_path = os.path.expanduser("~/data/20170316_PismInputData/")
-output_data_path = "/p/projects/tumble/mengel/pismInputData/20170316_PismInputData"
+#output_data_path = os.path.expanduser("~/data/20170316_PismInputData/")
+#output_data_path = "/p/projects/tumble/mengel/pismInputData/20170316_PismInputData"
 
 # RACMO data is not freely available and cannot be downloaded,
 # so we have to provide an explicit path here

@@ -51,7 +51,8 @@ def write_regrid_submission_file(config, data_path, dataset, inputfile, resoluti
     print "Wrote cdo_remap.sh, submit with sbatch cdo_remap.sh to compute nodes."
 
 
-def create_grid_for_cdo_remap(path_to_write,use_PISM_grid=True,resolution=15.0):
+def create_grid_for_cdo_remap(path_to_write,use_PISM_grid,use_initMIP_grid,resolution=15.0):
+
 
     """
     Create a netcdf file holding the target grid for cdo in folder path_to_write.
@@ -74,6 +75,9 @@ def create_grid_for_cdo_remap(path_to_write,use_PISM_grid=True,resolution=15.0):
     PISM_grid_set[3]=[2000,2000,-2801000,-2801000,3196000,3196000]
     PISM_grid_set[2]=[3000,3000,-2801500,-2801500,3196500,3196500]
     PISM_grid_set[1]=[6000,6000,-2802000,-2802000,3197000,3197000]
+
+    initmip_grid_set={}
+    initmip_grid_set[8]=[761,761,-3040000,-3040000,3040000,3040000] # only corners are relevant for initMIP
 
     ## create output directory if it does not exist.
     if not os.path.exists(path_to_write): os.makedirs(path_to_write)
@@ -102,6 +106,17 @@ def create_grid_for_cdo_remap(path_to_write,use_PISM_grid=True,resolution=15.0):
 
     else:
 
+      if (use_initMIP_grid):
+
+        e0 = initmip_grid_set[8][2]
+        n0 = initmip_grid_set[8][3]
+        e1 = initmip_grid_set[8][4]
+        n1 = initmip_grid_set[8][5]
+
+        nc_outfile = nc_outfile.replace('grid_', 'initmip_')
+
+      else:
+
         dxy_albmap=5
         e0 = PISM_grid_set[dxy_albmap][2]
         n0 = PISM_grid_set[dxy_albmap][3]
@@ -110,11 +125,11 @@ def create_grid_for_cdo_remap(path_to_write,use_PISM_grid=True,resolution=15.0):
         #x: -2800000 to 3195000
         #y: -2800000 to 3195000
 
-        M = int((e1 - e0)/de) + 1
-        N = int((n1 - n0)/dn) + 1
+      M = int((e1 - e0)/de) + 1
+      N = int((n1 - n0)/dn) + 1
 
-        easting  = np.linspace(e0, e1, M)
-        northing = np.linspace(n0, n1, N)
+      easting  = np.linspace(e0, e1, M)
+      northing = np.linspace(n0, n1, N)
 
 
     ee, nn = np.meshgrid(easting,northing)
