@@ -175,3 +175,6 @@ Citation: Rignot, E., J. Mouginot, and B. Scheuchl. 2017. MEaSUREs InSAR-Based A
 More infos: http://nsidc.org/data/nsidc-0484
 
 
+### License
+
+This code is licensed under GPLv3, see the LICENSE.txt. See the commit history for authors.
