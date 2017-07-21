@@ -1,0 +1,31 @@
+# ISMIP6 name , PISM name             , units, standard name, dimension, state, do_mask
+acabf         , surface_mass_balance_average , kg m-2 s-1, land_ice_surface_specific_mass_balance_flux, 2, 0, 1
+dlithkdt      , dHdt                  , m s-1, tendency_of_land_ice_thickness, 2, 0, 0
+hfgeoubed     , hfgeoubed             , W m-2, upward_geothermal_heat_flux_at_ground_level, 2, 0, 0
+iareaf        , area_glacierized_floating , m2, floating_ice_shelf_area, 1, 0, 0
+iareag        , area_glacierized_grounded , m2, grounded_land_ice_area, 1, 0, 0
+libmassbf     , basal_mass_balance_average , kg m-2 s-1, land_ice_basal_specific_mass_balance_flux, 2, 1, 1
+licalvf       , discharge_flux        , kg m-2 s-1, land_ice_specific_mass_flux_due_to_calving, 2, 1, 0
+lim           , mass_glacierized      , kg, land_ice_mass, 1, 0, 0
+limnsw        , limnsw                , kg, land_ice_mass_not_displacing_sea_water, 1, 0, 0
+litempbot     , tempbase              , K, land_ice_basal_temperature, 2, 0, 1
+litempsnic    , tempsurf              , K, temperature_at_ground_level_in_snow_or_firn, 2, 0, 1
+lithk         , thk                   , m, land_ice_thickness, 2, 0, 0
+orog          , usurf                 , m, surface_altitude, 2, 0, 0
+sftgrf        , sftgrf                , 1, grounded_ice_sheet_area_fraction, 2, 0, 0
+sftflf        , sftflf                , 1, floating_ice_sheet_area_fraction, 2, 0, 0
+sftgif        , sftgif                , 1, land_ice_area_fraction, 2, 0, 0
+strbasemag    , taub_mag              , Pa, magnitude_of_land_ice_basal_drag, 2, 0, 1
+tendacabf     , surface_ice_flux      , kg s-1, tendency_of_land_ice_mass_due_to_surface_mass_balance, 1, 0, 0
+tendlibmassbf , grounded_basal_ice_flux, kg s-1, tendency_of_land_ice_mass_due_to_basal_mass_balance, 1, 0, 0
+tendlicalvf   , discharge_flux        , kg s-1, tendency_of_land_ice_mass_due_to_calving, 1, 0, 0
+topg          , topg                  , m, bedrock_altitude, 2, 0, 0
+uvelbase      , uvelbase              , m s-1, land_ice_basal_x_velocity, 2, 0, 1
+uvelmean      , ubar                  , m s-1, land_ice_vertical_mean_x_velocity, 2, 0, 1
+uvelsurf      , uvelsurf              , m s-1, land_ice_surface_x_velocity, 2, 0, 1
+vvelbase      , vvelbase              , m s-1, land_ice_basal_y_velocity, 2, 0, 1
+vvelmean      , vbar                  , m s-1, land_ice_vertical_mean_y_velocity, 2, 0, 1
+vvelsurf      , vvelsurf              , m s-1, land_ice_surface_y_velocity, 2, 0, 1
+wvelbase      , wvelbase              , m s-1, land_ice_basal_upward_velocity, 2, 0, 1
+wvelsurf      , wvelsurf              , m s-1, land_ice_surface_upward_velocity, 2, 0, 1
+base          , base                  , m, base_altitude, 2, 0, 0

@@ -31,6 +31,15 @@ racmo_data_path = "/p/projects/tumble/mengel/pismSourceData/20170328_RacmoHadCM3
 # The code here allows to remap the 15km to other resolutions.
 tillphi_data_path = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2300_TPSO/results/result_fit_15km_50000yrs.nc"
 
+# anomaly data used for initMIP experiments
+# Downloaded dBasalMelt and dSMB anomaly fields from 
+# ftp searise@cryoftp1.gsfc.nasa.gov initMIP directory /ISMIP6/initMIP/AIS
+initmip_data_path = "/p/projects/tumble/pism_input/ISMIP6/initMIP/AIS/"
+# PISM initial (background) state for initMIP experiments 
+initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2308_TPSO/results/result_forcing_16km_205000yrs_backup.nc"
+
+
+
 # merge the follwing dataset into one PISM-ready file.
 # datasets should be named here as the subfolder of its preprocessing.
 # TODO: merging schmidtko data does not work yet due to subtle grid differences.

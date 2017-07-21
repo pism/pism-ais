@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# see also for Greenland: https://github.com/pism/pism-gris/blob/master/initMIP/prepare_anomalies.sh
+
 #Prepare data for initMIP Antarctica
 #Wiki: http://www.climate-cryosphere.org/wiki/index.php?title=InitMIP-Antarctica
 
@@ -29,11 +31,15 @@ resolution = cf.resolution
 
 data_resolution = 16 # or: 8,1
 IM_filename = os.path.join(data_path,'inimip_'+str(data_resolution)+'km_input.nc')
-IM_data_path = '/p/projects/tumble/pism_input/ISMIP6/initMIP/AIS/'
+IM_data_path = cf.initmip_data_path
 
-#PD_pism_out = '/p/tmp/albrecht/pism17/pismOut/forcing/forcing2119_TPSO/results/result_constant_15km_100000yrs.nc'
-PD_pism_out = '/p/tmp/albrecht/pism17/pismOut/forcing/forcing2308_TPSO/results/result_forcing_16km_205000yrs_backup.nc'
-PD_pism_climate = os.path.join(data_path,'pism_f2308_'+str(resolution)+'km.nc')
+PD_pism_out = cf.initmip_pism_out
+try:
+  pism_experiment=initmip_pism_out.split("/")[-3].split("_")[0] #specific naming 
+else:
+  pism_experiment='climate'
+PD_pism_climate = os.path.join(data_path,'pism_'+pism_experiment+'_'+str(resolution)+'km.nc')
+#PD_pism_climate = os.path.join(data_path,'pism_f2308_'+str(resolution)+'km.nc')
 
 final_filename = os.path.join(data_path,'inimip_'+str(data_resolution)+'km_forcing.nc')
 final_filename_ctrl = os.path.join(data_path,'inimip_'+str(data_resolution)+'km_control.nc')
@@ -56,6 +62,7 @@ if not os.path.isfile(IM_filename):
     sub.call(cmd_ncks)
   else:
     print 'Anomaly data for '+str(data_resolution)+'km are not available, try 1km and remap'
+    #FIXME: if needed at all
 
 
 # get PISM initial climate forcing
