@@ -10,8 +10,8 @@ lim           , mass_glacierized      , kg, land_ice_mass, 1, 0, 0
 limnsw        , limnsw                , kg, land_ice_mass_not_displacing_sea_water, 1, 0, 0
 litempbot     , tempbase              , K, land_ice_basal_temperature, 2, 0, 1
 litempsnic    , tempsurf              , K, temperature_at_ground_level_in_snow_or_firn, 2, 0, 1
-lithk         , thk                   , m, land_ice_thickness, 2, 0, 0
-orog          , usurf                 , m, surface_altitude, 2, 0, 0
+lithk         , thk                   , m, land_ice_thickness, 2, 0, 1
+orog          , usurf                 , m, surface_altitude, 2, 0, 1
 sftgrf        , sftgrf                , 1, grounded_ice_sheet_area_fraction, 2, 0, 0
 sftflf        , sftflf                , 1, floating_ice_sheet_area_fraction, 2, 0, 0
 sftgif        , sftgif                , 1, land_ice_area_fraction, 2, 0, 0
@@ -28,4 +28,4 @@ vvelmean      , vbar                  , m s-1, land_ice_vertical_mean_y_velocity
 vvelsurf      , vvelsurf              , m s-1, land_ice_surface_y_velocity, 2, 0, 1
 wvelbase      , wvelbase              , m s-1, land_ice_basal_upward_velocity, 2, 0, 1
 wvelsurf      , wvelsurf              , m s-1, land_ice_surface_upward_velocity, 2, 0, 1
-base          , base                  , m, base_altitude, 2, 0, 0
+base          , base                  , m, base_altitude, 2, 0, 1

@@ -18,6 +18,7 @@ try:
     import subprocess32 as sub
 except:
     import subprocess as sub
+from netCDF4 import Dataset as CDF
 #import create_anomalies
 
 ## this hack is needed to import config.py from the project root
@@ -30,19 +31,19 @@ data_path = os.path.join(cf.output_data_path, dataset)
 resolution = cf.resolution
 
 data_resolution = 16 # or: 8,1
-IM_filename = os.path.join(data_path,'inimip_'+str(data_resolution)+'km_input.nc')
+IM_filename = os.path.join(data_path,'initmip_'+str(data_resolution)+'km_input.nc')
 IM_data_path = cf.initmip_data_path
 
 PD_pism_out = cf.initmip_pism_out
 try:
   pism_experiment=initmip_pism_out.split("/")[-3].split("_")[0] #specific naming 
-else:
+except:
   pism_experiment='climate'
 PD_pism_climate = os.path.join(data_path,'pism_'+pism_experiment+'_'+str(resolution)+'km.nc')
 #PD_pism_climate = os.path.join(data_path,'pism_f2308_'+str(resolution)+'km.nc')
 
-final_filename = os.path.join(data_path,'inimip_'+str(data_resolution)+'km_forcing.nc')
-final_filename_ctrl = os.path.join(data_path,'inimip_'+str(data_resolution)+'km_control.nc')
+final_filename = os.path.join(data_path,'initmip_'+str(data_resolution)+'km_forcing.nc')
+final_filename_ctrl = os.path.join(data_path,'initmip_'+str(data_resolution)+'km_control.nc')
 
 # if anomaly fields data is not yet there in one file, create it
 if not os.path.isfile(IM_filename):
@@ -87,11 +88,27 @@ ca_cmd = ['python','create_anomalies.py', '--force_file', IM_filename,
 sub.call(ca_cmd)
 
 #add x and y and mapping
-#ncks -A -v x,y,mapping ${gridfile} ${IM_outfile}_forcing.nc
+ncks_cmd = ['ncks', '-A', '-v' , 'x,y',
+           IM_filename, final_filename]
+sub.call(ncks_cmd)
+
+nc = CDF(final_filename, 'a')
+try:
+    mapping = nc.createVariable("mapping", 'c')
+    mapping.ellipsoid = "WGS84"
+    mapping.false_easting = 0.
+    mapping.false_northing = 0.
+    mapping.grid_mapping_name = "polar_stereographic"
+    mapping.latitude_of_projection_origin = -90.
+    mapping.standard_parallel = -71.
+    mapping.straight_vertical_longitude_from_pole = 0.
+except:
+    print "  Mapping seems to exist!"
+nc.close()
 
 #change units
 ncatted_cmd = ['ncatted', 
-               '-a', '''units,climatic_mass_balance,o,c,"kg m-2 year-1"''',
+               '-a', '''units,climatic_mass_balance,o,c,kg m-2 year-1''',
                '-a', '''standard_name,climatic_mass_balance,o,c,"land_ice_surface_specific_mass_balance"''', 
                '-a', '''grid_mapping,climatic_mass_balance,o,c,"mapping"''', 
                '-a', '''grid_mapping,ice_surface_temp,o,c,"mapping"''', 

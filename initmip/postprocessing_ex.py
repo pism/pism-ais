@@ -145,7 +145,7 @@ def prepare_inputfile(infile,outfile):
   sub.call(ncatted_cmd)
 
 
-  print "  Convert added varibales to single precision" 
+  print "  Convert added variables to single precision" 
   ncap2_cmd = ['ncap2', '-A', '-s',
             '''"x=float(x);y=float(y);lon=float(lon);lat=float(lat);lat_bnds=float(lat_bnds);lon_bnds=float(lon_bnds);"''',
             outfile,
@@ -332,14 +332,17 @@ if __name__ == "__main__":
             cmd = ['ncks', '-A', '-v', '{var}'.format(var=mask_var),
                         out_file,
                         final_file]
-            print cmd
+
             sub.call(cmd)
             # mask where mask==0
             cmd = ['ncap2', '-O', '-s', '''"where({maskvar}==0) {var}=-2e9;"'''.format(maskvar=mask_var, var=m_var),
                         final_file,
                         final_file]
-            print cmd
-            sub.call(cmd)
+            cmd = 'ncap2 -O -s "where({maskvar}==0) {var}=-2e9;" '.format(maskvar=mask_var, var=m_var)+final_file+' '+final_file
+            #print cmd
+            #sub.call(cmd)
+            sub.check_call(cmd,shell=True)
+ 
 
             cmd = ["ncatted", '-O',
                    "-a", '''_FillValue,{var},o,f,-2e9'''.format(var=m_var),
@@ -354,7 +357,7 @@ if __name__ == "__main__":
             sub.call(cmd)
 
             # remove lon lat variable
-            var_list='lat_bnds,lon_bnds,lat,lon,time_bnds'
+            var_list='lat_bnds,lon_bnds,lat,lon' #,time_bnds'
             cmd = ['ncks', '-C','-O', '-x', '-v', '{var}'.format(var=var_list),
                         final_file,
                         final_file]
@@ -375,8 +378,22 @@ if __name__ == "__main__":
         except:
             pass
         nc.Conventions = 'CF-1.6'
+        nc.institution = 'Potsdam Institute for Climate Impact Research (PIK), Germany'
+        nc.contact = 'torsten.albrecht@pik-potsdam.de'
+        nc.source = 'PISM (https://github.com/talbrecht/pism_pik; branch: pik_newdev_paleo_07; commit: 9d72bce)'
         #nc.history = None
         nc.close()
+
+        ncatted_cmd = ["ncatted","-hO",
+                   "-a", '''nco_openmp_thread_number,global,d,,''',
+                   "-a", '''command,global,d,,''',
+                   "-a", '''history,global,d,,''',
+                   "-a", '''history_of_appended_files,global,d,,''',
+                   "-a", '''NCO,global,d,,''',
+                   "-a", '''_NCProperties,global,d,,''', 
+                   final_file]
+        sub.call(ncatted_cmd)
+
         print('  Done finalizing variable {}'.format(m_var))
 
         if EXP in ('ctrl'):
