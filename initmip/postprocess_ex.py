@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # Copyright (C) 2016 Andy Aschwanden (https://github.com/pism/pism-gris/blob/master/initMIP)
-# Modified by Torsten Albrecht for initMIP Antarctica
+# Modified by Torsten Albrecht for initMIP Antarctica 2017
 
 import os
 import glob
@@ -76,7 +76,7 @@ ID = options.id
 
 IS = 'AIS'
 GROUP = 'PIK'
-MODEL = 'PISM' + PISM_GRID_RES_ID + '_' + ID
+MODEL = 'PISM' + ID + 'PAL'
 EXP = experiment
 TYPE = '_'.join([EXP, '0' + TARGET_GRID_RES_ID])
 INIT = '_'.join(['init', '0' + TARGET_GRID_RES_ID])
@@ -101,7 +101,7 @@ ismip6_vars_dict = get_ismip6_vars_dict('resources/ismip6vars.csv', 2)
 ismip6_to_pism_dict = dict((k, v.pism_name) for k, v in ismip6_vars_dict.iteritems())
 pism_to_ismip6_dict = dict((v.pism_name, k) for k, v in ismip6_vars_dict.iteritems())
 
-pism_copy_vars = [x for x in (ismip6_to_pism_dict.values() + pism_stats_vars + pism_proj_vars)]
+pism_copy_vars = [x for x in (ismip6_to_pism_dict.values() + pism_proj_vars)] #+ pism_stats_vars
 
 mask_var = 'sftgif' 
 
@@ -146,7 +146,7 @@ def prepare_inputfile(infile,outfile):
 
 
   print "  Convert added variables to single precision" 
-  ncap2_cmd = ['ncap2', '-A', '-s',
+  ncap2_cmd = ['ncap2', '-O', '-s',
             '''"x=float(x);y=float(y);lon=float(lon);lat=float(lat);lat_bnds=float(lat_bnds);lon_bnds=float(lon_bnds);"''',
             outfile,
             outfile]
@@ -219,36 +219,46 @@ if __name__ == "__main__":
     sub.call(ncatted_cmd)
 
 
-    # Create source grid definition file
-    source_grid_filename = 'source_grid.nc'
-    source_grid_file = os.path.join(tmp_dir, source_grid_filename)
-    print('create source grid file {}'.format(source_grid_file))
-    ncks_cmd = ['ncks', '-O', '-v', 'thk,mapping', infile_ismip6, source_grid_file]
-    sub.call(ncks_cmd)
-
-    #nc2cdo_cmd = ['nc2cdo.py', source_grid_file]
-    #nc2cdo_cmd = ['/p/projects/tumble/pism_input/GitLab/tools/nc2cdo.py', source_grid_file]
-    nc2cdo_cmd = [os.path.join(os.path.dirname(os.path.dirname(cf.output_data_path)), 
-                  'tools', 'nc2cdo.py'), source_grid_file]
-    sub.call(nc2cdo_cmd)
-
-    
-    # If exist, remove target grid description file
-    target_grid_file = os.path.join(tmp_dir, target_grid_filename)
+    out_filename = '{project}_{exp}.nc'.format(project=project, exp=EXP)
+    out_file = os.path.join(tmp_dir, out_filename)
     try:
-        os.remove(target_grid_file)
+        os.remove(out_file)
     except OSError:
         pass
 
-    # Create target grid description file
-    print('create target grid file {}'.format(target_grid_file))
-    #create_searise_gis_grid(target_grid_file, target_resolution)
-    create_searise_grid(IS, target_grid_file, target_resolution)
+    #cdo remap
+    if np.int(PISM_GRID_RES_ID) != np.int(target_res_km):
+
+      print('Prepare the remap from {}km to {}km'.format(str(PISM_GRID_RES_ID),str(target_res_km)))
+
+      # Create source grid definition file
+      source_grid_filename = 'source_grid.nc'
+      source_grid_file = os.path.join(tmp_dir, source_grid_filename)
+      print('create source grid file {}'.format(source_grid_file))
+      ncks_cmd = ['ncks', '-O', '-v', 'thk,mapping', infile_ismip6, source_grid_file]
+      sub.call(ncks_cmd)
+
+      #nc2cdo_cmd = ['nc2cdo.py', source_grid_file]
+      nc2cdo_cmd = [os.path.join(os.path.dirname(os.path.dirname(cf.output_data_path)), 
+                    'tools', 'nc2cdo.py'), source_grid_file]
+      sub.call(nc2cdo_cmd)
+
     
-    # Generate weights if weights file does not exist yet
-    cdo_weights_filename = 'searise_grid_{resolution}m_{method}_weights.nc'.format(resolution=target_resolution, method=remap_method)
-    cdo_weights_file = os.path.join(tmp_dir, cdo_weights_filename)
-    if (not os.path.isfile(cdo_weights_file)) or (override_weights_file is True):
+      # If exist, remove target grid description file
+      target_grid_file = os.path.join(tmp_dir, target_grid_filename)
+      try:
+        os.remove(target_grid_file)
+      except OSError:
+        pass
+
+      # Create target grid description file
+      print('create target grid file {}'.format(target_grid_file))
+      create_searise_grid(IS, target_grid_file, target_resolution)
+    
+      # Generate weights if weights file does not exist yet
+      cdo_weights_filename = 'searise_grid_{resolution}m_{method}_weights.nc'.format(resolution=target_resolution, method=remap_method)
+      cdo_weights_file = os.path.join(tmp_dir, cdo_weights_filename)
+      if (not os.path.isfile(cdo_weights_file)) or (override_weights_file is True):
         print('Generating CDO weights file {}'.format(cdo_weights_file))
         if n_procs > 1:
             cdo_cmd = ['cdo', '-P', '{}'.format(n_procs),
@@ -262,35 +272,41 @@ if __name__ == "__main__":
                        cdo_weights_file]            
         sub.call(cdo_cmd)
     
-    # Remap to SeaRISE grid    
-    out_filename = '{project}_{exp}.nc'.format(project=project, exp=EXP)
-    out_file = os.path.join(tmp_dir, out_filename)
-    try:
-        os.remove(out_file)
-    except OSError:
-        pass
-    print('Remapping to SeaRISE grid')
-    if n_procs > 1:
+      # Remap to SeaRISE grid    
+      print('Remapping to SeaRISE grid')
+      if n_procs > 1:
         cdo_cmd = ['cdo', '-P', '{}'.format(n_procs),
                    'remap,{},{}'.format(target_grid_file, cdo_weights_file),
                    tmp_file,
                    out_file]
-    else:
+      else:
         cdo_cmd = ['cdo',
                    'remap,{},{}'.format(target_grid_file, cdo_weights_file),
                    tmp_file,
                    out_file]
-    sub.call(cdo_cmd)
+      sub.call(cdo_cmd)
+    else: #already on seaRISE grid
+      cp_cmd = ['cp', tmp_file, out_file]
+      sub.call(cp_cmd)
 
     #Convert to netcdf4 format
     ncks_cmd = ['ncks', '-O', '-4', '-L', '3',
                 out_file,
                 out_file]
     sub.call(ncks_cmd)
+
+    # add ligroundf placeholder
+    #ncap2_cmd = 'ncap2 -O -s "ligroundf = -2e9 * licalvf / licalvf;" '
+    #ncap2_cmd += final_file+' '+final_file
+    #sub.check_call(ncap2_cmd,shell=True)
+    #ncatted_cmd = ["ncatted","-O",
+    #               "-a", '''long_name,ligroundf,a,c,land_ice_specific_mass_flux_due_at_grounding_line''',
+    #               final_file]
+    #sub.call(ncatted_cmd)
     
     # Adjust the time axis
     print('Adjusting time axis')
-    #adjust_time_axis(IS,out_file)
+    adjust_time_axis(IS,out_file)
 
     for m_var in ismip6_vars_dict.keys():
         final_file = '{}/{}_{}_{}.nc'.format(project_dir, m_var, project, EXP)
@@ -298,23 +314,24 @@ if __name__ == "__main__":
         # Generate file
         print('  Copying to file {}'.format(final_file))
         ncks_cmd = ['ncks', '-O', '-4', '-L', '3',
-                    '-v', ','.join([m_var,'lat','lon', 'lat_bnds', 'lon_bnds']),
+                    '-v', m_var ,
+                    #'-v', ','.join([m_var,'lat','lon', 'lat_bnds', 'lon_bnds']),
                     out_file,
                     final_file]
         sub.call(ncks_cmd)
         # Add stats vars
-        print('  Adding config/stats variables')
-        ncks_cmd = ['ncks', '-A',
-                    '-v', ','.join(pism_stats_vars),
-                    tmp_file,
-                    final_file]
+        #print('  Adding config/stats variables')
+        #ncks_cmd = ['ncks', '-A',
+        #            '-v', ','.join(pism_stats_vars),
+        #            tmp_file,
+        #            final_file]
         #sub.call(ncks_cmd)
         # Add coordinate vars and mapping
-        print('  Adding coordinate and mapping variables')
-        ncks_cmd = ['ncks', '-A', '-v', 'x,y,mapping',
-                    target_grid_file,
-                    final_file]
-        sub.call(ncks_cmd)
+        #print('  Adding coordinate and mapping variables')
+        #ncks_cmd = ['ncks', '-A', '-v', 'x,y,mapping',
+        #            target_grid_file,
+        #            final_file]
+        #sub.call(ncks_cmd)
 
 
 
@@ -335,12 +352,8 @@ if __name__ == "__main__":
 
             sub.call(cmd)
             # mask where mask==0
-            cmd = ['ncap2', '-O', '-s', '''"where({maskvar}==0) {var}=-2e9;"'''.format(maskvar=mask_var, var=m_var),
-                        final_file,
-                        final_file]
-            cmd = 'ncap2 -O -s "where({maskvar}==0) {var}=-2e9;" '.format(maskvar=mask_var, var=m_var)+final_file+' '+final_file
-            #print cmd
-            #sub.call(cmd)
+            cmd = 'ncap2 -O -s "where({maskvar}==0) {var}=-2e9;" '.format(maskvar=mask_var, var=m_var)
+            cmd += final_file+' '+final_file
             sub.check_call(cmd,shell=True)
  
 
@@ -352,20 +365,24 @@ if __name__ == "__main__":
 
             # remove mask variable
             cmd = ['ncks', '-O', '-x', '-v', '{var}'.format(var=mask_var),
-                        final_file,
-                        final_file]
+                    final_file,
+                    final_file]
             sub.call(cmd)
-
-            # remove lon lat variable
-            var_list='lat_bnds,lon_bnds,lat,lon' #,time_bnds'
-            cmd = ['ncks', '-C','-O', '-x', '-v', '{var}'.format(var=var_list),
-                        final_file,
-                        final_file]
-            sub.call(cmd)
-
 
         # Update attributes
         print('  Adjusting attributes')
+
+        # remove lon lat variable
+        var_list='lat_bnds,lon_bnds,lat,lon' #,time_bnds'
+        rm_cmd = ['ncks', '-C','-O', '-x', '-v', '{var}'.format(var=var_list),
+                  final_file,
+                  final_file]
+        sub.call(rm_cmd)
+
+        ncap2_cmd = 'ncap2 -O -s "x=float(x);y=float(y);time=float(time);time_bounds=float(time_bounds);" '
+        ncap2_cmd += final_file+' '+final_file
+        sub.check_call(ncap2_cmd,shell=True)
+
         nc = CDF(final_file, 'a')
         try:
             nc_var = nc.variables[m_var]
@@ -379,8 +396,8 @@ if __name__ == "__main__":
             pass
         nc.Conventions = 'CF-1.6'
         nc.institution = 'Potsdam Institute for Climate Impact Research (PIK), Germany'
-        nc.contact = 'torsten.albrecht@pik-potsdam.de'
-        nc.source = 'PISM (https://github.com/talbrecht/pism_pik; branch: pik_newdev_paleo_07; commit: 9d72bce)'
+        nc.contact = 'torsten.albrecht@pik-potsdam.de and matthias.mengel@pik-potsdam.de'
+        nc.source = 'PISM (https://github.com/talbrecht/pism_pik; branch: pik_newdev_paleo_07; commit: 5d9d88e)'
         #nc.history = None
         nc.close()
 
@@ -390,6 +407,7 @@ if __name__ == "__main__":
                    "-a", '''history,global,d,,''',
                    "-a", '''history_of_appended_files,global,d,,''',
                    "-a", '''NCO,global,d,,''',
+                   "-a", '''CDI,global,d,,''',
                    "-a", '''_NCProperties,global,d,,''', 
                    final_file]
         sub.call(ncatted_cmd)

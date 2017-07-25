@@ -2,7 +2,7 @@
 acabf         , surface_mass_balance_average , kg m-2 s-1, land_ice_surface_specific_mass_balance_flux, 2, 0, 1
 dlithkdt      , dHdt                  , m s-1, tendency_of_land_ice_thickness, 2, 0, 0
 hfgeoubed     , hfgeoubed             , W m-2, upward_geothermal_heat_flux_at_ground_level, 2, 0, 0
-iareaf        , area_glacierized_floating , m2, floating_ice_shelf_area, 1, 0, 0
+iareaf        , area_glacierized_shelf , m2, floating_ice_shelf_area, 1, 0, 0
 iareag        , area_glacierized_grounded , m2, grounded_land_ice_area, 1, 0, 0
 libmassbf     , basal_mass_balance_average , kg m-2 s-1, land_ice_basal_specific_mass_balance_flux, 2, 1, 1
 licalvf       , discharge_flux        , kg m-2 s-1, land_ice_specific_mass_flux_due_to_calving, 2, 1, 0
@@ -17,8 +17,9 @@ sftflf        , sftflf                , 1, floating_ice_sheet_area_fraction, 2, 
 sftgif        , sftgif                , 1, land_ice_area_fraction, 2, 0, 0
 strbasemag    , taub_mag              , Pa, magnitude_of_land_ice_basal_drag, 2, 0, 1
 tendacabf     , surface_ice_flux      , kg s-1, tendency_of_land_ice_mass_due_to_surface_mass_balance, 1, 0, 0
-tendlibmassbf , grounded_basal_ice_flux, kg s-1, tendency_of_land_ice_mass_due_to_basal_mass_balance, 1, 0, 0
+tendlibmassbf , tendlibmassbf         , kg s-1, tendency_of_land_ice_mass_due_to_basal_mass_balance, 1, 0, 0
 tendlicalvf   , discharge_flux        , kg s-1, tendency_of_land_ice_mass_due_to_calving, 1, 0, 0
+tendligroundf , tendligroundf         , kg s-1, tendency_of_grounded_ice_mass, 1, 0, 0
 topg          , topg                  , m, bedrock_altitude, 2, 0, 0
 uvelbase      , uvelbase              , m s-1, land_ice_basal_x_velocity, 2, 0, 1
 uvelmean      , ubar                  , m s-1, land_ice_vertical_mean_x_velocity, 2, 0, 1

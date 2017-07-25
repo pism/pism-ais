@@ -75,6 +75,7 @@ def adjust_time_axis(icesheet,filename):
       time.units = 'years since 2008-1-1'
     elif icesheet=="AIS":
       time.units = 'years since 2000-1-1'
+      time_bnds.units = 'years since 2000-1-1'
 
     nc.close()
 
@@ -331,5 +332,5 @@ def create_searise_grid(icesheet,filename, grid_spacing, **kwargs):
     historystr = 'Created ' + asctime() + '\n'
     nc.history = historystr
     nc.proj4 = projection
-    nc.Conventions = 'CF-1.5'
+    nc.Conventions = 'CF-1.6'
     nc.close()

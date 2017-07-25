@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 # see also for Greenland: https://github.com/pism/pism-gris/blob/master/initMIP/prepare_anomalies.sh
+# by Andy Aschwanden (UAF)
 
 #Prepare data for initMIP Antarctica
 #Wiki: http://www.climate-cryosphere.org/wiki/index.php?title=InitMIP-Antarctica

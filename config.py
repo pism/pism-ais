@@ -36,7 +36,7 @@ tillphi_data_path = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2300_TPSO/res
 # ftp searise@cryoftp1.gsfc.nasa.gov initMIP directory /ISMIP6/initMIP/AIS
 initmip_data_path = "/p/projects/tumble/pism_input/ISMIP6/initMIP/AIS/"
 # PISM initial (background) state for initMIP experiments 
-initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2308_TPSO/results/result_forcing_16km_205000yrs_backup.nc"
+initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2308_TPSO/results/result_forcing_16km_205000yrs.nc"
 
 
 
