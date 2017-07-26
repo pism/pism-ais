@@ -41,7 +41,7 @@ parser.add_argument("EXP_FILE", nargs=1)
 parser.add_argument("-n", '--n_procs', dest="n_procs", type=int,
                     help='''number of cores/processors. default=4.''', default=4)
 parser.add_argument("-e", "--experiment", dest="experiment",
-                    choices=['ctrl', 'asmb'],
+                    choices=['ctrl', 'asmb', 'abmb'],
                     help="Experiment type", default='ctrl')
 parser.add_argument('--id', dest="id", type=str,
                     help='''Experiemnt ID''', default='1')
@@ -69,6 +69,7 @@ target_grid_filename = 'searise_grid_{}m.nc'.format(target_resolution)
 # Need to get grid resolution from file
 nc = CDF(infile, 'r')
 pism_grid_dx = int(round(nc.variables['run_stats'].grid_dx_meters))
+pism_vars_av = nc.variables.keys()
 nc.close()
 PISM_GRID_RES_ID = str(pism_grid_dx / 1000)
 TARGET_GRID_RES_ID = str(target_resolution / 1000)
@@ -116,6 +117,8 @@ def prepare_inputfile(infile,outfile):
              outfile]
   sub.call(ncks_cmd)
 
+  #lonlat_list = ['lat','lon', 'lat_bnds', 'lon_bnds', 'cell_area']
+  #if all([x in pism_vars_av for x in lonlat_list]):
   print "  Add 'lon' and 'lat' coordinates and 'cell_area' variable"
   ncks_cmd = ['ncks', '-A', '-4', '-L', '3',
             '-v', ','.join(['lat','lon', 'lat_bnds', 'lon_bnds', 'cell_area']),
@@ -123,9 +126,9 @@ def prepare_inputfile(infile,outfile):
             outfile]
   sub.call(ncks_cmd)
 
-  print "  Add 'mapping' information"
-  nc = CDF(outfile, 'a')
-  try:
+  if 'mapping' not in pism_vars_av:
+    print "  Add 'mapping' information"
+    nc = CDF(outfile, 'a')
     mapping = nc.createVariable("mapping", 'c')
     mapping.ellipsoid = "WGS84"
     mapping.false_easting = 0.
@@ -134,9 +137,9 @@ def prepare_inputfile(infile,outfile):
     mapping.latitude_of_projection_origin = -90.
     mapping.standard_parallel = -71.
     mapping.straight_vertical_longitude_from_pole = 0.
-  except:
-    print "  Mapping seems to exist!"
-  nc.close()
+    #except:
+    #print "  Mapping seems to exist!"
+    nc.close()
 
   print "  Add 'projection' information"
   ncatted_cmd = ["ncatted", '-O',
@@ -162,6 +165,18 @@ def prepare_inputfile(infile,outfile):
                 "-a", '''long_name,base,o,c,ice lower surface elevation''',
                 "-a", '''standard_name,base,o,c,base_altitude''',
                 outfile]
+  sub.call(ncatted_cmd)
+
+  print "  Add variable 'ligroundf'"
+  ncap2_cmd = 'ncap2 -O -s "ligroundf = -2e9 * discharge_flux / discharge_flux;" '
+  ncap2_cmd += outfile+' '+outfile
+  sub.check_call(ncap2_cmd,shell=True)
+  ncatted_cmd = ["ncatted","-O",
+                  "-a", '''standard_name,ligroundf,a,c,land_ice_specific_mass_flux_due_at_grounding_line''',
+                  "-a", '''long_name,ligroundf,o,c,average ice flux across grounding line over reporting interval''',
+                  "-a", '''comment,ligroundf,o,c,not available in PISM''',
+                  "-a", '''units,ligroundf,o,c,kg m-2 s-1''',
+                  outfile]
   sub.call(ncatted_cmd)
 
   print "Finished preprocessing and save to "+outfile
@@ -295,14 +310,6 @@ if __name__ == "__main__":
                 out_file]
     sub.call(ncks_cmd)
 
-    # add ligroundf placeholder
-    #ncap2_cmd = 'ncap2 -O -s "ligroundf = -2e9 * licalvf / licalvf;" '
-    #ncap2_cmd += final_file+' '+final_file
-    #sub.check_call(ncap2_cmd,shell=True)
-    #ncatted_cmd = ["ncatted","-O",
-    #               "-a", '''long_name,ligroundf,a,c,land_ice_specific_mass_flux_due_at_grounding_line''',
-    #               final_file]
-    #sub.call(ncatted_cmd)
     
     # Adjust the time axis
     print('Adjusting time axis')
@@ -336,11 +343,11 @@ if __name__ == "__main__":
 
 
         # flip signs for some fluxes to comply with arbitrary sign convention
-        if m_var in ('libmassbf', 'licalvf'):
-            cmd = ['ncap2', '-O', '-s', '''"{var}={var}*-1;"'''.format(var=m_var),
-                        final_file,
-                        final_file]
-            sub.call(cmd)
+        #if m_var in ('libmassbf', 'licalvf'):
+        #    cmd = ['ncap2', '-O', '-s', '''"{var}={var}*-1;"'''.format(var=m_var),
+        #                final_file,
+        #                final_file]
+        #    sub.call(cmd)
        
         if ismip6_vars_dict[m_var].do_mask == 1:
 
@@ -386,10 +393,11 @@ if __name__ == "__main__":
         nc = CDF(final_file, 'a')
         try:
             nc_var = nc.variables[m_var]
-            nc_var.coordinates = 'lat lon'
-            nc_var.mapping = 'mapping'
+            #nc_var.coordinates = 'lat lon'
+            #nc_var.mapping = 'mapping'
             nc_var.standard_name = ismip6_vars_dict[m_var].standard_name
             nc_var.units = ismip6_vars_dict[m_var].units
+            nc_var.pism_intent = None
             if ismip6_vars_dict[m_var].state == 1:
                 nc_var.cell_methods = 'time: mean (interval: 5 year)' 
         except:
@@ -398,7 +406,7 @@ if __name__ == "__main__":
         nc.institution = 'Potsdam Institute for Climate Impact Research (PIK), Germany'
         nc.contact = 'torsten.albrecht@pik-potsdam.de and matthias.mengel@pik-potsdam.de'
         nc.source = 'PISM (https://github.com/talbrecht/pism_pik; branch: pik_newdev_paleo_07; commit: 5d9d88e)'
-        #nc.history = None
+        nc.title = 'ISMIP6 AIS InitMIP'
         nc.close()
 
         ncatted_cmd = ["ncatted","-hO",

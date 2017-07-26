@@ -66,16 +66,20 @@ def adjust_time_axis(icesheet,filename):
     time = nc.variables['time']
     time_bnds_var = time.bounds
     time_bnds = nc.variables[time_bnds_var]
-    nt = len(time[:])
-    new_timeline = np.linspace(0, 100, nt, endpoint=True)
-    time[:] = new_timeline
-    time_bnds[:,0] = new_timeline - 5
-    time_bnds[:,1] = new_timeline
+
     if icesheet=="GIS":
+      nt = len(time[:])
+      new_timeline = np.linspace(0, 100, nt, endpoint=True)
+      time[:] = new_timeline
+      time_bnds[:,0] = new_timeline - 5
+      time_bnds[:,1] = new_timeline
       time.units = 'years since 2008-1-1'
+    
     elif icesheet=="AIS":
-      time.units = 'years since 2000-1-1'
-      time_bnds.units = 'years since 2000-1-1'
+      #time.units = 'years since 2000-1-1'
+      #time_bnds.units = 'years since 2000-1-1'
+      time.units = 'seconds since 2000-01-01 00:00:00'
+      time_bnds.units = 'seconds since 2000-01-01 00:00:00'
 
     nc.close()
 

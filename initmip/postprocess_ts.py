@@ -33,7 +33,7 @@ parser = ArgumentParser()
 parser.description = "Script to make ISMIP6-conforming scalar time series."
 parser.add_argument("EXP_FILE", nargs=1)
 parser.add_argument("-e", "--experiment", dest="experiment",
-                    choices=['ctrl', 'asmb'],
+                    choices=['ctrl', 'asmb', 'abmb'],
                     help="Output size type", default='ctrl')
 parser.add_argument('--id', dest="id", type=str,
                     help='''Experiemnt ID''', default='1')
