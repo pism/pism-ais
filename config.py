@@ -13,12 +13,13 @@ resolution = 16 # in km
 #torsten local and tumble
 #output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
 #output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/python/pism_input/")
-output_data_path = os.path.expanduser("/p/projects/pism/mengel/pism_input/")
-
+output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/data/")
 
 # matthias
 #output_data_path = os.path.expanduser("~/data/20170316_PismInputData/")
 #output_data_path = "/p/projects/tumble/mengel/pismInputData/20170316_PismInputData"
+#output_data_path = os.path.expanduser("/p/projects/pism/mengel/pism_input/")
+
 
 # RACMO data is not freely available and cannot be downloaded,
 # so we have to provide an explicit path here
@@ -26,7 +27,6 @@ output_data_path = os.path.expanduser("/p/projects/pism/mengel/pism_input/")
 # get in contact with the racmo authors before.
 # deprecated: RACMO v2.1 i2s data. not suggested to use in PISM runs
 racmo_i2s_data_path = "/p/projects/tumble/mengel/pismSourceData/20170328_RacmoHadCM3_Ice2Sea"
-
 racmo_wessem_data_path = "/p/projects/tumble/mengel/pismSourceData/20170626_RacmoData_Wessem_etal"
 
 

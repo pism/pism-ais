@@ -44,6 +44,7 @@ def write_regrid_submission_file(config, data_path, dataset, inputfile, resoluti
                                inputfile = inputfile,
                                mapweights = mapweights,
                                regridded_file = regridded_file,
+                               resolution = resolution,
                               )
 
     with open("cdo_remap.sh", 'w') as f:

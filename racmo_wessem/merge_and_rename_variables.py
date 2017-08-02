@@ -22,7 +22,7 @@ source_file = {"t2m": os.path.join(cf.racmo_wessem_data_path,"t2m_RACMO2.4_yearl
 process_file = {var:os.path.join(data_path, dataset+"_"+var+".nc") for var in ["t2m","smb"]}
 
 for var,fl in process_file.iteritems():
-    subprocess.check_call("rm -v "+fl,shell=True)
+    if os.path.exists(fl): subprocess.check_call("rm -v "+fl,shell=True)
 
 for var in ["t2m","smb"]:
 

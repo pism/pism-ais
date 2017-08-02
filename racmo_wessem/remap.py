@@ -31,6 +31,7 @@ regridded_file = os.path.join(data_path, dataset+"_"+str(resolution)+"km.nc")
 # check if target grid is present.
 # the cdo target grids are independent of the specific input dataset.
 # they are therefore created beforehand by grids/create_cdo_grid.py
+#cdo_targetgrid_file = os.path.join(cf.cdo_remapgridpath,'pism_'+str(int(resolution))+'km.nc')
 cdo_targetgrid_file = os.path.join(cf.cdo_remapgridpath,'initmip_'+str(int(resolution))+'km.nc')
 
 if not os.path.isfile(cdo_targetgrid_file):
