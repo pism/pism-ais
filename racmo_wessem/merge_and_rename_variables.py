@@ -41,6 +41,9 @@ for var in ["t2m","smb"]:
     subprocess.check_call('ncks -O -C -x -v nblock1 '+process_file[var]+" "+process_file[var], shell=True)
     subprocess.check_call('ncks -O -C -x -v nblock2 '+process_file[var]+" "+process_file[var], shell=True)
 
+# Converting SMB units: Not needed probably.
+# subprocess.check_call("ncap2 -O -s 'smb=smb*1000.0/910.0' "+output_file+" "+output_file,shell=True)
+
 subprocess.check_call('cdo -O merge '+process_file["smb"]+" "+process_file["t2m"]+" "+ output_file, shell=True)
 
 # make all variables double (some already are).
