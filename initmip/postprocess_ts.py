@@ -59,8 +59,8 @@ GROUP = 'PIK'
 #MODEL = 'PISM' + '_' + PISM_GRID_RES_ID + 'km_' + ID
 MODEL = 'PISM' + ID + 'PAL'
 EXP = experiment
-TYPE = '_'.join([EXP, '0' + TARGET_GRID_RES_ID])
-INIT = '_'.join(['init', '0' + TARGET_GRID_RES_ID])
+TYPE = '_'.join([EXP, str(TARGET_GRID_RES_ID).zfill(2)])
+INIT = '_'.join(['init', str(TARGET_GRID_RES_ID).zfill(2)])
 project = '{IS}_{GROUP}_{MODEL}'.format(IS=IS, GROUP=GROUP, MODEL=MODEL)
 pism_stats_vars = ['pism_config',
                    'run_stats']
@@ -146,7 +146,7 @@ if __name__ == "__main__":
     nc.Conventions = 'CF-1.6'
     nc.institution = 'Potsdam Institute for Climate Impact Research (PIK), Germany'
     nc.contact = 'torsten.albrecht@pik-potsdam.de and matthias.mengel@pik-potsdam.de'
-    nc.source = 'PISM (https://github.com/talbrecht/pism_pik; branch: pik_newdev_paleo_07; commit: 5d9d88e)'
+    nc.source = 'PISM (https://github.com/talbrecht/pism_pik; branch: pik_newdev_paleo_07; commit: 9ae1674'
     #del nc.variables["pism_config"]
     #del nc.variables["run_stats"]
     #nc.variables["pism_config"] = None

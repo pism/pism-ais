@@ -37,7 +37,7 @@ IM_data_path = cf.initmip_data_path
 
 PD_pism_out = cf.initmip_pism_out
 try:
-  pism_experiment=initmip_pism_out.split("/")[-3].split("_")[0] #specific naming 
+  pism_experiment=PD_pism_out.split("/")[-3].split("_")[0] #specific naming 
 except:
   pism_experiment='climate'
 PD_pism_climate = os.path.join(data_path,'pism_'+pism_experiment+'_'+str(resolution)+'km.nc')

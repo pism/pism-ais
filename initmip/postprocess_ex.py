@@ -49,7 +49,7 @@ parser.add_argument("-r", "--remap_method", dest="remap_method",
                     choices=['ycon', 'bil'],
                     help="Remapping method", default='con')
 parser.add_argument("-t", "--target_resolution", dest="target_resolution", type=int,
-                    choices=[1000, 8000, 16000],
+                    choices=[1000, 8000, 16000, 32000],
                     help="Horizontal grid resolution", default=1000)
 parser.add_argument("-w", "--override_weights_file",
                     dest="override_weights_file", action="store_true",
@@ -79,8 +79,8 @@ IS = 'AIS'
 GROUP = 'PIK'
 MODEL = 'PISM' + ID + 'PAL'
 EXP = experiment
-TYPE = '_'.join([EXP, '0' + TARGET_GRID_RES_ID])
-INIT = '_'.join(['init', '0' + TARGET_GRID_RES_ID])
+TYPE = '_'.join([EXP, str(TARGET_GRID_RES_ID).zfill(2)])
+INIT = '_'.join(['init', str(TARGET_GRID_RES_ID).zfill(2)])
 project = '{IS}_{GROUP}_{MODEL}'.format(IS=IS, GROUP=GROUP, MODEL=MODEL)
 
 pism_stats_vars = ['pism_config',
@@ -112,19 +112,20 @@ def prepare_inputfile(infile,outfile):
   resfile = infile.replace("extra_","result_")
 
   print "Prepare PISM output for ismip6 compatibility and save as '{}'".format(outfile)
-  ncks_cmd = ['ncks', '-O', '-4', '-L', '3',
-             infile,
-             outfile]
+  ncks_cmd = ['ncks', '-O', '-4', '-L', '3', infile, outfile]
   sub.call(ncks_cmd)
 
   #lonlat_list = ['lat','lon', 'lat_bnds', 'lon_bnds', 'cell_area']
-  #if all([x in pism_vars_av for x in lonlat_list]):
-  print "  Add 'lon' and 'lat' coordinates and 'cell_area' variable"
-  ncks_cmd = ['ncks', '-A', '-4', '-L', '3',
-            '-v', ','.join(['lat','lon', 'lat_bnds', 'lon_bnds', 'cell_area']),
+  lonlat_list = ['lat','lon', 'lat_bnds', 'lon_bnds', 'cell_area', 'x', 'y']
+  if all([x in pism_vars_av for x in lonlat_list]):
+    print "  Variables "+str(lonlat_list)+" in PISM input file"
+  else:
+    print "  Add 'lon' and 'lat' coordinates and 'cell_area' variable"
+    ncks_cmd = ['ncks', '-A', '-4', '-L', '3',
+            '-v', '{}'.format(','.join(lonlat_list)),
             resfile,
             outfile]
-  sub.call(ncks_cmd)
+    sub.call(ncks_cmd)
 
   if 'mapping' not in pism_vars_av:
     print "  Add 'mapping' information"
@@ -137,8 +138,6 @@ def prepare_inputfile(infile,outfile):
     mapping.latitude_of_projection_origin = -90.
     mapping.standard_parallel = -71.
     mapping.straight_vertical_longitude_from_pole = 0.
-    #except:
-    #print "  Mapping seems to exist!"
     nc.close()
 
   print "  Add 'projection' information"
@@ -147,15 +146,21 @@ def prepare_inputfile(infile,outfile):
                 outfile]
   sub.call(ncatted_cmd)
 
+  if 'time_bounds' in pism_vars_av:
+    print "  Rename time_bounds"
+    ncrename_cmd = ["ncrename", '-O',
+                '-v time_bounds,time_bnds',
+                outfile]
+    #sub.call(ncrename_cmd)
 
-  print "  Convert added variables to single precision" 
+  print "  Convert added variables to single precision"
   ncap2_cmd = ['ncap2', '-O', '-s',
-            '''"x=float(x);y=float(y);lon=float(lon);lat=float(lat);lat_bnds=float(lat_bnds);lon_bnds=float(lon_bnds);"''',
+            '''{}'''.format(";".join([var+"=float("+var+")" for var in lonlat_list])),
             outfile,
             outfile]
   sub.call(ncap2_cmd)
 
-  print "  Add variable 'base'"
+  print "  Add variable 'base + usurf - thk'"
   ncap2_cmd = ['ncap2', '-O', '-s',
             'base = usurf - thk',
             outfile,
@@ -167,8 +172,9 @@ def prepare_inputfile(infile,outfile):
                 outfile]
   sub.call(ncatted_cmd)
 
-  print "  Add variable 'ligroundf'"
-  ncap2_cmd = 'ncap2 -O -s "ligroundf = -2e9 * discharge_flux / discharge_flux;" '
+  print "  Add variable 'ligroundf = NaN'"
+  #ncap2_cmd = 'ncap2 -O -s "ligroundf = -2e9 * discharge_flux / discharge_flux;" '
+  ncap2_cmd = 'ncap2 -O -s "ligroundf = discharge_flux / discharge_flux;" ' #set to NaN after remap
   ncap2_cmd += outfile+' '+outfile
   sub.check_call(ncap2_cmd,shell=True)
   ncatted_cmd = ["ncatted","-O",
@@ -222,7 +228,6 @@ if __name__ == "__main__":
     
     # Make the file ISMIP6 conforming
     make_spatial_vars_ismip6_conforming(tmp_file, ismip6_vars_dict)
-    # Should be temporary until new runs
     ncatted_cmd = ["ncatted",
                    "-a", '''bounds,lat,o,c,lat_bnds''',
                    "-a", '''bounds,lon,o,c,lon_bnds''',
@@ -284,7 +289,7 @@ if __name__ == "__main__":
             cdo_cmd = ['cdo',
                        'gen{method},{grid}'.format(method=remap_method, grid=target_grid_file),
                        source_grid_file,
-                       cdo_weights_file]            
+                       cdo_weights_file]
         sub.call(cdo_cmd)
     
       # Remap to SeaRISE grid    
@@ -341,13 +346,11 @@ if __name__ == "__main__":
         #sub.call(ncks_cmd)
 
 
-
-        # flip signs for some fluxes to comply with arbitrary sign convention
-        #if m_var in ('libmassbf', 'licalvf'):
-        #    cmd = ['ncap2', '-O', '-s', '''"{var}={var}*-1;"'''.format(var=m_var),
-        #                final_file,
-        #                final_file]
-        #    sub.call(cmd)
+        # set values of grounding line flux to NaN
+        if m_var in ('ligroundf'):
+          ncap2_cmd = 'ncap2 -O -s "ligroundf = -2e9 * ligroundf ;" '
+          ncap2_cmd += final_file+' '+final_file
+          sub.check_call(ncap2_cmd,shell=True)
        
         if ismip6_vars_dict[m_var].do_mask == 1:
 
@@ -379,16 +382,30 @@ if __name__ == "__main__":
         # Update attributes
         print('  Adjusting attributes')
 
+        ncf = CDF(final_file, 'r')
+        pism_vars_ff = ncf.variables.keys()
+        ncf.close()
+
         # remove lon lat variable
-        var_list='lat_bnds,lon_bnds,lat,lon' #,time_bnds'
+        var_list='lat_bnds,lon_bnds,lat,lon'
         rm_cmd = ['ncks', '-C','-O', '-x', '-v', '{var}'.format(var=var_list),
                   final_file,
                   final_file]
+        #if all([x in pism_vars_ff for x in var_list]):
         sub.call(rm_cmd)
 
-        ncap2_cmd = 'ncap2 -O -s "x=float(x);y=float(y);time=float(time);time_bounds=float(time_bounds);" '
-        ncap2_cmd += final_file+' '+final_file
-        sub.check_call(ncap2_cmd,shell=True)
+
+        float_list=['x', 'y', 'time', 'time_bnds', 'time_bounds']
+        #ncap2_cmd = 'ncap2 -O -s "x=float(x);y=float(y);time=float(time);" ' #time_bnds=float(time_bnds);" '
+        for var in float_list:
+          ncap2_cmd = 'ncap2 -O -s "{}=float({});" '.format(var,var)
+          ncap2_cmd += final_file+' '+final_file
+          #try:
+          if var in pism_vars_ff:
+            sub.check_call(ncap2_cmd,shell=True)
+          else:
+          #except:
+            print "  "+var+" is not in final file"
 
         nc = CDF(final_file, 'a')
         try:
@@ -405,7 +422,7 @@ if __name__ == "__main__":
         nc.Conventions = 'CF-1.6'
         nc.institution = 'Potsdam Institute for Climate Impact Research (PIK), Germany'
         nc.contact = 'torsten.albrecht@pik-potsdam.de and matthias.mengel@pik-potsdam.de'
-        nc.source = 'PISM (https://github.com/talbrecht/pism_pik; branch: pik_newdev_paleo_07; commit: 5d9d88e)'
+        nc.source = 'PISM (https://github.com/talbrecht/pism_pik; branch: pik_newdev_paleo_07; commit: 9ae1674)'
         nc.title = 'ISMIP6 AIS InitMIP'
         nc.close()
 
