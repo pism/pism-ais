@@ -40,9 +40,14 @@ pism_input
 +-- albmap
 |   +-- download_and_rename_variables.py
 |   +-- remap.py
-+-- racmo
++-- racmo_ice2sea
 |   +-- merge_and_rename_variables.py
 |   +-- remap.py
+|   +-- time_mean.py
++-- racmo_wessem
+|   +-- merge_and_rename_variables.py
+|   +-- remap.py
+|   +-- time_mean.py
 +-- zwally_basins
 |   +-- download_and_extend_to_ocean.py
 |   +-- remap.py (with local cdo rempnn)

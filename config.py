@@ -13,7 +13,7 @@ resolution = 16 # in km
 #torsten local and tumble
 #output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
 #output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/python/pism_input/")
-output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/data/")
+output_data_path = os.path.expanduser("/p/projects/pism/mengel/pism_input/")
 
 
 # matthias
@@ -23,8 +23,12 @@ output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/da
 # RACMO data is not freely available and cannot be downloaded,
 # so we have to provide an explicit path here
 # if racmo data is intended to be used in publications,
-# get in contact the racmo authors before.
-racmo_data_path = "/p/projects/tumble/mengel/pismSourceData/20170328_RacmoHadCM3_Ice2Sea"
+# get in contact with the racmo authors before.
+# deprecated: RACMO v2.1 i2s data. not suggested to use in PISM runs
+racmo_i2s_data_path = "/p/projects/tumble/mengel/pismSourceData/20170328_RacmoHadCM3_Ice2Sea"
+
+racmo_wessem_data_path = "/p/projects/tumble/mengel/pismSourceData/20170626_RacmoData_Wessem_etal"
+
 
 # the till friction angle (tillphi) can be infered from PISM inversion.
 # for now, we rely on an inversion run from Torsten on 15km.
