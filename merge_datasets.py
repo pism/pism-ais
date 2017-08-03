@@ -18,15 +18,14 @@ data_path = os.path.join(cf.output_data_path, "merged")
 
 # set your custom name here if standard naming is not used
 # (for example if you applied a time mean in between)
-custom_file_names = {"racmo_hadcm3_I2S":
-                     "racmo_hadcm3_I2S_c20_"+str(cf.resolution)+"km_timemean.nc",
+custom_file_names = {"racmo_wessem":
+                     "racmo_wessem_"+str(cf.resolution)+"km_timemean.nc",
                      "schmidtko":"schmidtko_"+str(cf.resolution)+"km_means.nc"}
 
 merged_filename = ("_").join(cf.datasets_to_merge)+"_"+str(cf.resolution)+"km.nc"
 merged_filename = os.path.join(data_path,merged_filename)
 # created beforehand by grids/create_cdo_grid.py
 cdo_targetgrid_file = os.path.join(cf.cdo_remapgridpath,'pism_'+str(cf.resolution)+'km.nc')
-
 
 if not os.path.exists(data_path): os.makedirs(data_path)
 
