@@ -23,7 +23,7 @@ def get_path_to_data(output_data_path,dataset,resolution,
     return path_to_data
 
 
-def write_regrid_submission_file(config, data_path, dataset, inputfile, resolution,
+def write_regrid_command_file(config, data_path, dataset, inputfile, resolution,
                                  cdo_targetgrid_file, regridded_file, use_conservative_regridding):
 
     """ This writes a SLURM submission file for the CPU heavy task of regridding.
@@ -40,16 +40,18 @@ def write_regrid_submission_file(config, data_path, dataset, inputfile, resoluti
     mapweights = os.path.join(data_path, "mapweights_"+str(resolution)+"km.nc")
 
     out = scen_template.render(user=config.username,
+                               cluster_regridding=config.cluster_regridding,
                                use_conservative_regridding = use_conservative_regridding,
                                targetgrid = cdo_targetgrid_file,
                                inputfile = inputfile,
                                mapweights = mapweights,
-                               regridded_file = regridded_file,
-                              )
+                               regridded_file = regridded_file)
 
     with open("cdo_remap.sh", 'w') as f:
         f.write(out)
-    print "Wrote cdo_remap.sh, submit with sbatch cdo_remap.sh to compute nodes."
+    print "Wrote cdo_remap.sh."
+    if config.cluster_regridding:
+        print "Submit with sbatch cdo_remap.sh to compute nodes."
 
 
 def create_grid_for_cdo_remap(path_to_write, name, grid):
@@ -381,3 +383,18 @@ def prepare_ncfile_for_cdo(nc_outfile):
     nc.close()
 
     print "Prepared file",nc_outfile,"for cdo."
+
+
+def get_filenames_for_cdo(cdo_remapgridpath, data_path, dataset, grid_id):
+
+    cdo_targetgrid_file = os.path.join(cdo_remapgridpath, grid_id+'.nc')
+
+    regrid_destination_file = os.path.join(data_path,
+        dataset+"_"+grid_id+".nc")
+
+    if not os.path.isfile(cdo_targetgrid_file):
+        print "cdo target grid file", cdo_targetgrid_file," does not exist."
+        print "run grids/create_cdo_grid.py first."
+        raise IOError
+
+    return cdo_targetgrid_file, regrid_destination_file

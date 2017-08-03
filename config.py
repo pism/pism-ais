@@ -30,6 +30,9 @@ grids={
     "initmip8km":[761,761,-3040000,-3040000,3040000,3040000],
 }
 
+# if true, prepare regridding bash grid to be submitted and not run interactively.
+cluster_regridding = False
+
 #torsten local and tumble
 #output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
 #output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/python/pism_input/")

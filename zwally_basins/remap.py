@@ -2,7 +2,7 @@
 """
 matthias.mengel@pik, torsten.albrecht@pik
 Regridding: bring your data to the grid we commonly use for PISM Antarctica
-simulations. This is equivalent to the ALBMAP grid.
+simulations.
 This step will take a while if high resolution data is processed.
 Regrid Bedmap2 data to various grid resolution using cdo remapcony.
 
@@ -28,18 +28,8 @@ data_path = os.path.join(cf.output_data_path, dataset)
 inputfile = os.path.join(data_path, 'basins_zwally_5km_input.nc')
 pi.prepare_ncfile_for_cdo(inputfile)
 
-regridded_file = os.path.join(data_path, dataset+"_"+str(resolution)+"km.nc")
-
-
-# the cdo target grids are independent of the specific input dataset.
-# they are therefore created beforehand by grids/create_cdo_grid.py
-cdo_targetgrid_file = os.path.join(cf.cdo_remapgridpath,'pism_'+str(int(resolution))+'km.nc')
-
-# check if target grid is present.
-if not os.path.isfile(cdo_targetgrid_file):
-    print "cdo target grid file", cdo_targetgrid_file," does not exist."
-    print "run grids/create_cdo_grid.py first."
-    sys.exit(0)
+cdo_targetgrid_file, regridded_file = pi.get_filenames_for_cdo(
+    cf.cdo_remapgridpath, data_path, dataset, cf.grid_id)
 
 ## Integer regridding for basin values, can be run interactively.
 subprocess.check_call("cdo remapnn,"+cdo_targetgrid_file+" "+inputfile+" "+
