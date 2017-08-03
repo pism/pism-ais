@@ -124,9 +124,9 @@ Citation: Fretwell, P., Pritchard, H. D., Vaughan, D. G., Bamber, J. L., Barrand
 
 #### Surface mass balance
 
-Racmo data
+Racmo data (v.2.1)
 
-HadCM3_c20_I2S_precip_Y.nc contains precipitation in mm/yr for 1980-1999 over Antarctica from RACMO2 run forced with HadCM3 data. HadCM3_c20_I2S_t2m_Y.nc contains temperature in Kelvin for 1980-1999 over Antarctica from RACMO2 run forced with HadCM3 data.
+HadCM3_c20_I2S_precip_Y.nc contains precipitation in mm/yr for 1980-1999 over Antarctica from RACMO2 run forced with HadCM3 data. HadCM3_c20_I2S_t2m_Y.nc contains temperature in Kelvin for 1980-1999 over Antarctica from RACMO2 run forced with HadCM3 data. (ANT55/HAD)
 
 Citation: Ligtenberg, S. R. M., van de Berg, W. J., van den Broeke, M. R.,
 Rae, J. G. L. & van Meijgaard, E. (2013). Future surface mass balance of the
@@ -137,6 +137,14 @@ a regional atmospheric climate model. Clim. Dynam. 41, 867–884
 Data was given for use in this paper:
 Frieler Katja; Clark Peter U.; He Feng; Buizert Christo; Reese Ronja; Ligtenberg Stefan R. M.; van den Broeke Michiel R.; Winkelmann Ricarda & Levermann Anders Consistent evidence of increasing Antarctic accumulation with warming. Nature Clim. Change, 2015, 5, 348-352
 
+
+Racmo data (v.2.4)
+
+The latest RACMO2.4 data (ANT27/2) forced by ERA-Interim provide yearly mean air temperature (t2m) and surface mass balance (smb) for the years 1979-2016. 
+
+Citation: Van Wessem et al., 2014. Improved representation of East Antarctica surface mass balance in a regional climate model. J. Glac., 60(222), 761-770, doi: 10.3189/2014JoG14J051.
+
+see also overview: https://www.projects.science.uu.nl/iceclimate/models/antarctica.php
 
 
 #### Mean annual temperature
