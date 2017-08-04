@@ -4,7 +4,7 @@
 # This script is specific for the PIK cluster, which uses SLURM for job scheduling.
 # and the module system.
 #SBATCH --qos=short
-#SBATCH --job-name=cdo_remap_{{resolution}}km
+#SBATCH --job-name=cdo_remap_{{grid_id}}
 #SBATCH --account=ice
 #SBATCH --output=cdo_remap.out
 #SBATCH --error=cdo_remap.err
