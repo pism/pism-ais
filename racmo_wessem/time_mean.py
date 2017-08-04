@@ -14,11 +14,10 @@ if project_root not in sys.path: sys.path.append(project_root)
 import config as cf; reload(cf)
 
 dataset = "racmo_wessem"
-# resolution for the output file
-resolution = cf.resolution # in km
+grid = cf.grid_id
 
 data_path = os.path.join(cf.output_data_path, dataset)
-inputfile = os.path.join(data_path, dataset+"_"+str(resolution)+"km.nc")
+inputfile = os.path.join(data_path, dataset+"_"+grid+".nc")
 timemean_file = inputfile.rstrip(".nc")+"_timemean.nc"
 
 

@@ -13,7 +13,7 @@ resolution = 16 # in km
 
 grid_id = "initmip8km"
 grid_id = "initmip16km"
-grid_id = "pism15km"
+#grid_id = "pism15km"
 
 # grids, as inferred from PISM output
 grids={
