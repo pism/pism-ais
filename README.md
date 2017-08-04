@@ -63,9 +63,9 @@ pism_input
 |   +-- preprocess_netcdf.py
 |   +-- remap.py
 +-- initmip
-|   +-- preprocess.sh
-|   +-- remap.py (asmb)
-|   +-- postprocess.sh (incl. cdo remapnn abmb)
+|   +-- preprocess.py (incl. create_anomalies.py)
+|   +-- remap.py (if not on 32,16,8,1km grid)
+|   +-- postprocessing (make data ISMIP6 compatible)
 +-- merge_dataset.py
 +-- pism_input
     +-- pism_input.py (tools)

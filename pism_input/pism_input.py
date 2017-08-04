@@ -23,7 +23,7 @@ def get_path_to_data(output_data_path,dataset,resolution,
     return path_to_data
 
 
-def write_regrid_command_file(config, data_path, dataset, inputfile, resolution,
+def write_regrid_command_file(config, data_path, dataset, inputfile, grid_id,
                                  cdo_targetgrid_file, regridded_file, use_conservative_regridding):
 
     """ This writes a SLURM submission file for the CPU heavy task of regridding.
@@ -45,7 +45,8 @@ def write_regrid_command_file(config, data_path, dataset, inputfile, resolution,
                                targetgrid = cdo_targetgrid_file,
                                inputfile = inputfile,
                                mapweights = mapweights,
-                               regridded_file = regridded_file)
+                               regridded_file = regridded_file,
+                               grid_id = grid_id)
 
     with open("cdo_remap.sh", 'w') as f:
         f.write(out)

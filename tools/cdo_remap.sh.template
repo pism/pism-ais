@@ -3,17 +3,13 @@
 {% if cluster_regridding %}
 # This script is specific for the PIK cluster, which uses SLURM for job scheduling.
 # and the module system.
-# Use sbatch cdo_remap.sh to submit to the compute nodes.
-
 #SBATCH --qos=short
-#SBATCH --job-name=cdo_remap
+#SBATCH --job-name=cdo_remap_{{resolution}}km
 #SBATCH --account=ice
 #SBATCH --output=cdo_remap.out
 #SBATCH --error=cdo_remap.err
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
-#SBATCH --profile=energy
-#SBATCH --acctg-freq=energy=5
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user={{user}}@pik-potsdam.de
 

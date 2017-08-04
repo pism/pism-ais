@@ -37,11 +37,13 @@ cluster_regridding = True
 #torsten local and tumble
 #output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
 #output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/python/pism_input/")
+# output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/data/")
 
 # matthias
 #output_data_path = os.path.expanduser("~/data/20170316_PismInputData/")
 #output_data_path = "/p/projects/tumble/mengel/pismInputData/20170316_PismInputData"
 output_data_path = os.path.expanduser("/p/projects/pism/mengel/pism_input/")
+
 
 # RACMO data is not freely available and cannot be downloaded,
 # so we have to provide an explicit path here
@@ -58,6 +60,15 @@ racmo_wessem_data_path = "/p/projects/tumble/mengel/pismSourceData/20170626_Racm
 # for now, we rely on an inversion run from Torsten on 15km.
 # The code here allows to remap the 15km to other resolutions.
 tillphi_data_path = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2300_TPSO/results/result_fit_15km_50000yrs.nc"
+
+# anomaly data used for initMIP experiments
+# Downloaded dBasalMelt and dSMB anomaly fields from
+# ftp searise@cryoftp1.gsfc.nasa.gov initMIP directory /ISMIP6/initMIP/AIS
+initmip_data_path = "/p/projects/tumble/pism_input/ISMIP6/initMIP/AIS/"
+# PISM initial (background) state for initMIP experiments
+#initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2308_TPSO/results/result_forcing_16km_205000yrs.nc"
+initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2294f_LGM/results/result_forcing_16km_205000yrs.nc"
+
 
 # merge the follwing dataset into one PISM-ready file.
 # datasets should be named here as the subfolder of its preprocessing.
