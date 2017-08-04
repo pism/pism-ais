@@ -11,6 +11,7 @@ import subprocess
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path: sys.path.append(project_root)
 import config as cf; reload(cf)
+import pism_input.pism_input as pi; reload(pi)
 
 dataset = "albmap"
 data_path = os.path.join(cf.output_data_path, dataset)
@@ -67,7 +68,9 @@ subprocess.check_call('ncks -O -x -v t '+ final_filename+' '+final_filename,shel
 # create netcdf4 format
 subprocess.check_call('ncks -O -4 '+ final_filename+' '+final_filename,shell=True)
 
- 
+pi.prepare_ncfile_for_cdo(final_filename)
+
+
 # projection metadata
 #subprocess.check_call('ncatted -O -a proj4,global,a,c,"+lon_0=0.0 +ellps=WGS84 +datum=WGS84 +lat_ts=-71.0 +proj=stere +x_0=0.0 +units=m +y_0=0.0 +lat_0=-90.0"'+ final_filename,shell=True)
 

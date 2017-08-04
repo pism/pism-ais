@@ -7,18 +7,42 @@ import pwd
 
 authors="matthias.mengel@pik-potsdam.de and torsten.albrecht@pik-potsdam.de"
 
-# the resolution of the final output files.
+# the resolution of the final output files. Deprecated, should be removed, as resolution is
+# taken  from grid_id.
 resolution = 16 # in km
+
+grid_id = "initmip8km"
+
+# grids, as inferred from PISM output
+grids={
+    # grids, as inferred from PISM output
+    "pism50km":[120,120,-2777500,-2777500,3172500,3172500],
+    "pism30km":[200,200,-2787500,-2787500,3182500,3182500],
+    "pism20km":[300,300,-2792500,-2792500,3187500,3187500],
+    "pism15km":[400,400,-2795000,-2795000,3190000,3190000],
+    "pism12km":[500,500,-2796500,-2796500,3191500,3191500],
+    "pism10km":[600,600,-2797500,-2797500,3192500,3192500],
+    "pism7km":[800,800,-2798750,-2798750,3193750,3193750],
+    "pism5km":[1200,1200,-2800000,-2800000,3195000,3195000], # 5km standard Albmap input grid
+    "pism3km":[2000,2000,-2801000,-2801000,3196000,3196000],
+    "pism2km":[3000,3000,-2801500,-2801500,3196500,3196500],
+    "pism1km":[6000,6000,-2802000,-2802000,3197000,3197000],
+     # only corners are relevant for initMIP
+    "initmip8km":[761,761,-3040000,-3040000,3040000,3040000],
+}
+
+# if true, prepare regridding bash grid to be submitted and not run interactively.
+cluster_regridding = True
 
 #torsten local and tumble
 #output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
 #output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/python/pism_input/")
-output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/data/")
+# output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/data/")
 
 # matthias
 #output_data_path = os.path.expanduser("~/data/20170316_PismInputData/")
 #output_data_path = "/p/projects/tumble/mengel/pismInputData/20170316_PismInputData"
-#output_data_path = os.path.expanduser("/p/projects/pism/mengel/pism_input/")
+output_data_path = os.path.expanduser("/p/projects/pism/mengel/pism_input/")
 
 
 # RACMO data is not freely available and cannot be downloaded,
@@ -27,6 +51,8 @@ output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/da
 # get in contact with the racmo authors before.
 # deprecated: RACMO v2.1 i2s data. not suggested to use in PISM runs
 racmo_i2s_data_path = "/p/projects/tumble/mengel/pismSourceData/20170328_RacmoHadCM3_Ice2Sea"
+
+# updated and driven by Reanalysis. Preferred to use:
 racmo_wessem_data_path = "/p/projects/tumble/mengel/pismSourceData/20170626_RacmoData_Wessem_etal"
 
 
@@ -36,10 +62,10 @@ racmo_wessem_data_path = "/p/projects/tumble/mengel/pismSourceData/20170626_Racm
 tillphi_data_path = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2300_TPSO/results/result_fit_15km_50000yrs.nc"
 
 # anomaly data used for initMIP experiments
-# Downloaded dBasalMelt and dSMB anomaly fields from 
+# Downloaded dBasalMelt and dSMB anomaly fields from
 # ftp searise@cryoftp1.gsfc.nasa.gov initMIP directory /ISMIP6/initMIP/AIS
 initmip_data_path = "/p/projects/tumble/pism_input/ISMIP6/initMIP/AIS/"
-# PISM initial (background) state for initMIP experiments 
+# PISM initial (background) state for initMIP experiments
 #initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2308_TPSO/results/result_forcing_16km_205000yrs.nc"
 initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2294f_LGM/results/result_forcing_16km_205000yrs.nc"
 
@@ -48,16 +74,16 @@ initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2294f_LGM/resu
 # datasets should be named here as the subfolder of its preprocessing.
 # TODO: merging schmidtko data does not work yet due to subtle grid differences.
 #       it can be supplied through -ocean cavity -ocean_cavity_file $file directly.
-datasets_to_merge = ["bedmap2","albmap","racmo_hadcm3_I2S",
-                     "schmidtko",
+datasets_to_merge = ["bedmap2","albmap","racmo_wessem",
+                     # "schmidtko",
                      "tillphi_pism"]
 
 # choose here which variables should be taken from which dataset
 # The basins variable for the PICO model can be passed with the Schmidtko dataset.
 variables = {"bedmap2":["thk","topg","usurf"],
              "albmap":["bheatflx"],
-             "racmo_hadcm3_I2S":["precipitation","air_temp"],
-             "schmidtko":["theta_ocean","salinity_ocean","basins"],
+             "racmo_wessem":["smb","air_temp"],
+             # "schmidtko":["theta_ocean","salinity_ocean","basins"],
              "tillphi_pism":["tillphi"]}
 
 #### No edits needed below that line. ####

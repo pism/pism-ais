@@ -6,6 +6,7 @@ from optparse import OptionParser
 import netCDF4
 from netCDF4 import Dataset as CDF
 import jinja2
+import re
 
 
 def get_path_to_data(output_data_path,dataset,resolution,
@@ -22,7 +23,7 @@ def get_path_to_data(output_data_path,dataset,resolution,
     return path_to_data
 
 
-def write_regrid_submission_file(config, data_path, dataset, inputfile, resolution,
+def write_regrid_command_file(config, data_path, dataset, inputfile, grid_id,
                                  cdo_targetgrid_file, regridded_file, use_conservative_regridding):
 
     """ This writes a SLURM submission file for the CPU heavy task of regridding.
@@ -39,108 +40,78 @@ def write_regrid_submission_file(config, data_path, dataset, inputfile, resoluti
     mapweights = os.path.join(data_path, "mapweights_"+str(resolution)+"km.nc")
 
     out = scen_template.render(user=config.username,
+                               cluster_regridding=config.cluster_regridding,
                                use_conservative_regridding = use_conservative_regridding,
                                targetgrid = cdo_targetgrid_file,
                                inputfile = inputfile,
                                mapweights = mapweights,
                                regridded_file = regridded_file,
-                               resolution = resolution,
-                              )
+                               grid_id = grid_id)
 
     with open("cdo_remap.sh", 'w') as f:
         f.write(out)
-    print "Wrote cdo_remap.sh, submit with sbatch cdo_remap.sh to compute nodes."
+    print "Wrote cdo_remap.sh."
+    if config.cluster_regridding:
+        print "Submit with sbatch cdo_remap.sh to compute nodes."
 
 
-def create_grid_for_cdo_remap(path_to_write,use_PISM_grid,use_initMIP_grid,resolution=15.0):
+def create_grid_for_cdo_remap(path_to_write, name, grid):
 
 
     """
     Create a netcdf file holding the target grid for cdo in folder path_to_write.
-    If use_PISM_grid is true, we create the grid exactly as PISM would do it,
+    If pism in name, we create the grid exactly as PISM would do it,
     so PISM will not regrid internally when such grid is used as input.
-    Else, and for any resolution, grid spacing will be calculated by equal
-    distancing between domain boundaries.
     """
-
-    # hardcoded grids, as inferred from PISM output
-    PISM_grid_set={}
-    PISM_grid_set[50]=[120,120,-2777500,-2777500,3172500,3172500]
-    PISM_grid_set[30]=[200,200,-2787500,-2787500,3182500,3182500]
-    PISM_grid_set[20]=[300,300,-2792500,-2792500,3187500,3187500]
-    PISM_grid_set[15]=[400,400,-2795000,-2795000,3190000,3190000]
-    PISM_grid_set[12]=[500,500,-2796500,-2796500,3191500,3191500]
-    PISM_grid_set[10]=[600,600,-2797500,-2797500,3192500,3192500]
-    PISM_grid_set[7]=[800,800,-2798750,-2798750,3193750,3193750]
-    PISM_grid_set[5]=[1200,1200,-2800000,-2800000,3195000,3195000] # 5km standard Albmap input grid
-    PISM_grid_set[3]=[2000,2000,-2801000,-2801000,3196000,3196000]
-    PISM_grid_set[2]=[3000,3000,-2801500,-2801500,3196500,3196500]
-    PISM_grid_set[1]=[6000,6000,-2802000,-2802000,3197000,3197000]
-
-    initmip_grid_set={}
-    initmip_grid_set[8]=[761,761,-3040000,-3040000,3040000,3040000] # only corners are relevant for initMIP
 
     ## create output directory if it does not exist.
     if not os.path.exists(path_to_write): os.makedirs(path_to_write)
-    nc_outfile = os.path.join(path_to_write,'grid_'+str(int(resolution))+'km.nc')
-    grid_spacing = resolution * 1.e3 # convert km -> m
-
+    nc_outfile = os.path.join(path_to_write, name+'.nc')
+    # a bit dirty way to get the resolution from the name
+    grid_spacing = int(re.findall('\d+', name)[-1]) * 1.e3 # convert km -> m
+    print grid_spacing
     # define output grid
     de = dn =  grid_spacing # m
 
-    if (use_PISM_grid):
+    print grid
+
+    if "pism" in name:
 
         dxy = int(grid_spacing/1e3)
 
-        e0 = PISM_grid_set[int(dxy)][2]
-        n0 = PISM_grid_set[int(dxy)][3]
+        e0 = grid[2]
+        n0 = grid[3]
 
-        M = PISM_grid_set[int(dxy)][0]
-        N = PISM_grid_set[int(dxy)][1]
+        M = grid[0]
+        N = grid[1]
 
         easting  = np.linspace(e0, e0+(M-1)*de, M)
         northing = np.linspace(n0, n0+(N-1)*dn, N)
 
-        print PISM_grid_set[int(dxy)]
+    elif "initmip" in name:
 
-        nc_outfile = nc_outfile.replace('grid_', 'pism_')
+        e0 = grid[2]
+        n0 = grid[3]
+        e1 = grid[4]
+        n1 = grid[5]
+
+        M = int((e1 - e0)/de) + 1
+        N = int((n1 - n0)/dn) + 1
+
+        easting  = np.linspace(e0, e1, M)
+        northing = np.linspace(n0, n1, N)
 
     else:
 
-      if (use_initMIP_grid):
-
-        e0 = initmip_grid_set[8][2]
-        n0 = initmip_grid_set[8][3]
-        e1 = initmip_grid_set[8][4]
-        n1 = initmip_grid_set[8][5]
-
-        nc_outfile = nc_outfile.replace('grid_', 'initmip_')
-
-      else:
-
-        dxy_albmap=5
-        e0 = PISM_grid_set[dxy_albmap][2]
-        n0 = PISM_grid_set[dxy_albmap][3]
-        e1 = PISM_grid_set[dxy_albmap][4]
-        n1 = PISM_grid_set[dxy_albmap][5]
-        #x: -2800000 to 3195000
-        #y: -2800000 to 3195000
-
-      M = int((e1 - e0)/de) + 1
-      N = int((n1 - n0)/dn) + 1
-
-      easting  = np.linspace(e0, e1, M)
-      northing = np.linspace(n0, n1, N)
-
+        raise NotImplementedError
 
     ee, nn = np.meshgrid(easting,northing)
 
-    print "Grid is created for "+str(int(resolution))+"km resolution:"
+    print "Grid is created for "+name
     print M,N,easting[0],northing[0],easting[-1],northing[-1],np.diff(easting)[0],np.diff(northing)[0]
 
     #projection = "+proj=stere +ellps=WGS84 +datum=WGS84 +lon_0=0 +lat_0=-90 +lat_ts=-71 +units=m"
     projection = "+lon_0=0.0 +ellps=WGS84 +datum=WGS84 +lat_ts=-71.0 +proj=stere +x_0=0.0 +units=m +y_0=0.0 +lat_0=-90.0"
-
 
     proj = Proj(projection)
 
@@ -413,3 +384,18 @@ def prepare_ncfile_for_cdo(nc_outfile):
     nc.close()
 
     print "Prepared file",nc_outfile,"for cdo."
+
+
+def get_filenames_for_cdo(cdo_remapgridpath, data_path, dataset, grid_id):
+
+    cdo_targetgrid_file = os.path.join(cdo_remapgridpath, grid_id+'.nc')
+
+    regrid_destination_file = os.path.join(data_path,
+        dataset+"_"+grid_id+".nc")
+
+    if not os.path.isfile(cdo_targetgrid_file):
+        print "cdo target grid file", cdo_targetgrid_file," does not exist."
+        print "run grids/create_cdo_grid.py first."
+        raise IOError
+
+    return cdo_targetgrid_file, regrid_destination_file

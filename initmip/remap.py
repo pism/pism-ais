@@ -18,8 +18,6 @@ import config as cf; reload(cf)
 import pism_input.pism_input as pi; reload(pi)
 
 dataset="initmip"
-# resolution for the output file, set from config.
-resolution = cf.resolution # in km
 # conservative regridding for bedmap2 and albmap data. does
 # not yet work for the other datasets.
 use_conservative_regridding = True
@@ -31,24 +29,14 @@ data_path = os.path.join(cf.output_data_path, dataset)
 inputfile = os.path.join(data_path, 'initmip_data/initmip_1km_input.nc')
 pi.prepare_ncfile_for_cdo(inputfile)
 
-regridded_file = os.path.join(data_path, dataset+"_"+str(resolution)+"km.nc")
+cdo_targetgrid_file, regridded_file = pi.get_filenames_for_cdo(
+    cf.cdo_remapgridpath, data_path, dataset, cf.grid_id)
 
-# check if target grid is present.
-# the cdo target grids are independent of the specific input dataset.
-# they are therefore created beforehand by grids/create_cdo_grid.py
-cdo_targetgrid_file = os.path.join(cf.cdo_remapgridpath,'pism_'+str(int(resolution))+'km.nc')
-
-if not os.path.isfile(cdo_targetgrid_file):
-    print "cdo target grid file", cdo_targetgrid_file," does not exist."
-    print "run grids/create_cdo_grid.py first."
-    sys.exit(0)
-
-# Regridding is generally a CPU-heavy task. We therefore do not regrid interactively,
-# but prepare a script that can be submitted to compute-clusters. The example is specific
-# for PIK's cluster using SLURM.
+# Create a bash script that handles the regridding.
+# Regridding can be a CPU-heavy task. Choose cluster_regridding=True in config.py
+# If you want to submit to the cluster using SLURM.
 # use 'sbatch cdo_remap.sh' to submit your job.
 # Conservative regridding does not work for all datasets yet, use it for bedmap2 or albmap.
 # We use cdo, see https://code.zmaw.de/projects/cdo/embedded/index.html
-
-pi.write_regrid_submission_file(cf, data_path, dataset, inputfile, resolution,
+pi.write_regrid_submission_file(cf, data_path, dataset, inputfile, cf.grid_id,
                                 cdo_targetgrid_file, regridded_file, use_conservative_regridding)

@@ -14,7 +14,7 @@ import datetime, math
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path: sys.path.append(project_root)
 import config as cf; reload(cf)
-
+import pism_input.pism_input as pi; reload(pi)
 
 dataset="zwally_basins"
 
@@ -181,37 +181,37 @@ if (getData==1):
         done = 1
 
 
-# TODO: remove plotting from data processing scripts.
-print '\nPlotting... '
+# # TODO: remove plotting from data processing scripts.
+# print '\nPlotting... '
 
-import matplotlib.pyplot as plt
-import matplotlib.cm as cm
-import pylab as p
+# import matplotlib.pyplot as plt
+# import matplotlib.cm as cm
+# import pylab as p
 
-from matplotlib.patches import Rectangle
-plt.rcParams['font.size']=30
-plt.rcParams['legend.fontsize']=30
-plt.rcParams['figure.figsize'] = 15, 15
-plt.close('all')
+# from matplotlib.patches import Rectangle
+# plt.rcParams['font.size']=30
+# plt.rcParams['legend.fontsize']=30
+# plt.rcParams['figure.figsize'] = 15, 15
+# plt.close('all')
 
 
-fig=plt.figure()
-ax = plt.subplot(1,1,1)
-plt.contourf(basins)
+# fig=plt.figure()
+# ax = plt.subplot(1,1,1)
+# plt.contourf(basins)
 
-plt.contour(mask,mask_grounded,colors='gray',linewidths=2) # GROUNDING LINE
-plt.contour(mask,mask_floating,colors='gray',linewidths=2) # CALVING FRONT
-#cbar = plt.colorbar(ticks=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19])
+# plt.contour(mask,mask_grounded,colors='gray',linewidths=2) # GROUNDING LINE
+# plt.contour(mask,mask_floating,colors='gray',linewidths=2) # CALVING FRONT
+# #cbar = plt.colorbar(ticks=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19])
 
-ax.set_xticks([])
-ax.set_yticks([])
-p.axis('equal')
+# ax.set_xticks([])
+# ax.set_yticks([])
+# p.axis('equal')
 
-#plt.show()
-if not os.path.exists(os.path.join(basins_data_path,"plots")):
-  os.system("mkdir "+os.path.join(basins_data_path,"plots"))
-plt.savefig(os.path.join(basins_data_path,"plots/ZwallyBasins.png"))
-plt.clf()
+# #plt.show()
+# if not os.path.exists(os.path.join(basins_data_path,"plots")):
+#   os.system("mkdir "+os.path.join(basins_data_path,"plots"))
+# plt.savefig(os.path.join(basins_data_path,"plots/ZwallyBasins.png"))
+# plt.clf()
 
 
 """
@@ -465,22 +465,22 @@ ncout.close()
 pi.prepare_ncfile_for_cdo(ncout_ocean)
 
 
-print '\nPlotting... '
-fig=plt.figure()
-ax = plt.subplot(1,1,1)
-plt.contourf(basins)
+# print '\nPlotting... '
+# fig=plt.figure()
+# ax = plt.subplot(1,1,1)
+# plt.contourf(basins)
 
-plt.contour(mask,mask_grounded,colors='gray',linewidths=2) # GROUNDING LINE
-plt.contour(mask,mask_floating,colors='gray',linewidths=2) # CALVING FRONT
-#cbar = plt.colorbar(ticks=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19])
+# plt.contour(mask,mask_grounded,colors='gray',linewidths=2) # GROUNDING LINE
+# plt.contour(mask,mask_floating,colors='gray',linewidths=2) # CALVING FRONT
+# #cbar = plt.colorbar(ticks=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19])
 
-ax.set_xticks([])
-ax.set_yticks([])
-p.axis('equal')
+# ax.set_xticks([])
+# ax.set_yticks([])
+# p.axis('equal')
 
-#plt.show()
-plt.savefig(os.path.join(basins_data_path,"plots/ZwallyBasinsWithOcean.png"))
-plt.clf()
+# #plt.show()
+# plt.savefig(os.path.join(basins_data_path,"plots/ZwallyBasinsWithOcean.png"))
+# plt.clf()
 
-print "\nDone"
+# print "\nDone"
 
