@@ -46,6 +46,7 @@ def write_regrid_command_file(config, data_path, dataset, inputfile, grid_id,
                                inputfile = inputfile,
                                mapweights = mapweights,
                                regridded_file = regridded_file,
+                               use_cdo_extrapolation = config.use_cdo_extrapolation,
                                grid_id = grid_id)
 
     with open("cdo_remap.sh", 'w') as f:

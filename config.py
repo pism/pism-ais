@@ -35,6 +35,8 @@ grids={
 
 # if true, prepare regridding bash grid to be submitted and not run interactively.
 cluster_regridding = True
+# cdo has a feature to
+use_cdo_extrapolation=True
 
 #torsten local and tumble
 #output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
