@@ -12,6 +12,8 @@ authors="matthias.mengel@pik-potsdam.de and torsten.albrecht@pik-potsdam.de"
 resolution = 16 # in km
 
 grid_id = "initmip8km"
+grid_id = "initmip16km"
+grid_id = "pism15km"
 
 # grids, as inferred from PISM output
 grids={
@@ -29,7 +31,7 @@ grids={
     "pism1km":[6000,6000,-2802000,-2802000,3197000,3197000],
      # only corners are relevant for initMIP
     "initmip8km":[761,761,-3040000,-3040000,3040000,3040000],
-}
+    "initmip16km":[381,381,-3040000,-3040000,3040000,3040000]}
 
 # if true, prepare regridding bash grid to be submitted and not run interactively.
 cluster_regridding = True
@@ -37,12 +39,12 @@ cluster_regridding = True
 #torsten local and tumble
 #output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
 #output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/python/pism_input/")
-# output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/data/")
+output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/data/")
 
 # matthias
 #output_data_path = os.path.expanduser("~/data/20170316_PismInputData/")
 #output_data_path = "/p/projects/tumble/mengel/pismInputData/20170316_PismInputData"
-output_data_path = os.path.expanduser("/p/projects/pism/mengel/pism_input/")
+#output_data_path = os.path.expanduser("/p/projects/pism/mengel/pism_input/")
 
 
 # RACMO data is not freely available and cannot be downloaded,
