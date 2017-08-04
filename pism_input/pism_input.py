@@ -37,7 +37,7 @@ def write_regrid_command_file(config, data_path, dataset, inputfile, grid_id,
 
     scen_template_file = "GENERATED_SCENARIO.SCEN.template"
     scen_template = jinja_env.get_template("cdo_remap.sh.template")
-    mapweights = os.path.join(data_path, "mapweights_"+str(resolution)+"km.nc")
+    mapweights = os.path.join(data_path, "mapweights_"+grid_id+".nc")
 
     out = scen_template.render(user=config.username,
                                cluster_regridding=config.cluster_regridding,
@@ -46,6 +46,7 @@ def write_regrid_command_file(config, data_path, dataset, inputfile, grid_id,
                                inputfile = inputfile,
                                mapweights = mapweights,
                                regridded_file = regridded_file,
+                               use_cdo_extrapolation = config.use_cdo_extrapolation,
                                grid_id = grid_id)
 
     with open("cdo_remap.sh", 'w') as f:

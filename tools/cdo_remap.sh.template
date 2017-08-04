@@ -21,6 +21,10 @@ cdocmd=cdo
 module load cdo
 module load nco
 
+{% if use_cdo_extrapolation %}
+export REMAP_EXTRAPOLATE=on
+{% endif %}
+
 {% if use_conservative_regridding %}
 # calculate the weights and save to mapweights
 # TODO: if not already exist.
