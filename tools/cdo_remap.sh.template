@@ -17,7 +17,7 @@
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user={{user}}@pik-potsdam.de
 
-cdocmd=srun -n $SLURM_NTASKS cdo -P $SLURM_NTASKS
+cdocmd="srun -n $SLURM_NTASKS cdo -P $SLURM_NTASKS"
 {% else %}
 cdocmd=cdo
 {% endif %}

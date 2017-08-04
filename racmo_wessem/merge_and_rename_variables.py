@@ -4,6 +4,9 @@ matthias.mengel@pik, torsten.albrecht@pik, ronja.reese@pik
 
 import os, sys
 import subprocess
+import netCDF4 as nc
+import numpy as np
+import shutil
 ## this hack is needed to import config.py from the project root
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path: sys.path.append(project_root)
@@ -22,7 +25,10 @@ source_file = {"t2m": os.path.join(cf.racmo_wessem_data_path,"t2m_RACMO2.4_yearl
 process_file = {var:os.path.join(data_path, dataset+"_"+var+".nc") for var in ["t2m","smb"]}
 
 for var,fl in process_file.iteritems():
-    subprocess.check_call("rm -v "+fl,shell=True)
+    try:
+        os.remove(fl)
+    except OSError:
+        pass
 
 for var in ["t2m","smb"]:
 
@@ -44,6 +50,21 @@ for var in ["t2m","smb"]:
 # Converting SMB units: Not needed probably.
 # subprocess.check_call("ncap2 -O -s 'smb=smb*1000.0/910.0' "+output_file+" "+output_file,shell=True)
 
+# Set SMB on ocean to missing, so it does not disturb the remapping at the ice sheet boundary.
+# subprocess.check_call('cdo -O setrtomiss,-9999,0 '+process_file["smb"]+" "+smb_omask_file, shell=True)
+
+smb_omask_file = os.path.join(data_path, dataset+"_smb_omask.nc")
+shutil.copyfile(process_file["smb"], smb_omask_file)
+smb_msk_data = nc.Dataset(smb_omask_file,"a")
+# be aware: this is only valid for this dataset and timestep zero.
+mask = smb_msk_data.variables["smb"][0,:,:] < -0.009
+shape = smb_msk_data.variables["smb"].shape
+smb_masked = np.ma.masked_array(smb_msk_data.variables["smb"][:],
+                                mask=np.tile(mask,(shape[0],1,1)))
+smb_msk_data.variables["smb"][:] = smb_masked
+smb_msk_data.close()
+process_file["smb"] = smb_omask_file
+
 subprocess.check_call('cdo -O merge '+process_file["smb"]+" "+process_file["t2m"]+" "+ output_file, shell=True)
 
 # make all variables double (some already are).
@@ -52,6 +73,6 @@ subprocess.check_call("ncap2 -O -s 't2m=double(t2m);smb=double(smb)' "+
 
 # prepare the input file for cdo remapping
 # this step takes a while for high resolution data (i.e. 1km)
-pi.prepare_ncfile_for_cdo(process_file[var])
+# pi.prepare_ncfile_for_cdo(output_file)
 
 print " RACMO file",output_file,"successfully preprocessed."

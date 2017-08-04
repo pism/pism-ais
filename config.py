@@ -7,7 +7,8 @@ import pwd
 
 authors="matthias.mengel@pik-potsdam.de and torsten.albrecht@pik-potsdam.de"
 
-# the resolution of the final output files.
+# the resolution of the final output files. Deprecated, should be removed, as resolution is
+# taken  from grid_id.
 resolution = 16 # in km
 
 grid_id = "initmip8km"
@@ -31,7 +32,7 @@ grids={
 }
 
 # if true, prepare regridding bash grid to be submitted and not run interactively.
-cluster_regridding = False
+cluster_regridding = True
 
 #torsten local and tumble
 #output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
