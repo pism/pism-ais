@@ -21,8 +21,12 @@ if not os.path.exists(data_path): os.makedirs(data_path)
 output_file = os.path.join(data_path, dataset+"_input.nc")
 
 source_file = {"t2m": os.path.join(cf.racmo_wessem_data_path,"t2m_RACMO2.4_yearly_ANT27_1979_2016.nc"),
-                "smb": os.path.join(cf.racmo_wessem_data_path,"SMB_RACMO2.4_yearly_ANT27_1979_2016.nc")}
-process_file = {var:os.path.join(data_path, dataset+"_"+var+".nc") for var in ["t2m","smb"]}
+                "smb": os.path.join(cf.racmo_wessem_data_path,"SMB_RACMO2.4_yearly_ANT27_1979_2016.nc"),
+                "evap": os.path.join(cf.racmo_wessem_data_path,"evap_RACMO2.3p2_yearly_ANT27_1979_2016.nc"),
+                "precip": os.path.join(cf.racmo_wessem_data_path,"precip_RACMO2.3p2_yearly_ANT27_1979_2016.nc")
+                }
+
+process_file = {var:os.path.join(data_path, dataset+"_"+var+".nc") for var in ["t2m","smb","evap","precip"]}
 
 for var,fl in process_file.iteritems():
     try:
@@ -30,7 +34,7 @@ for var,fl in process_file.iteritems():
     except OSError:
         pass
 
-for var in ["t2m","smb"]:
+for var in ["t2m","smb","evap","precip"]:
 
     subprocess.check_call("ncks -A -v "+var+",lon,lat "+source_file[var]+" "+process_file[var],shell=True)
 
@@ -39,7 +43,6 @@ for var in ["t2m","smb"]:
     subprocess.check_call("ncatted -O -a grid_mapping,"+var+",d,, "+process_file[var],shell=True)
 
     subprocess.check_call('ncatted -O -a proj4,global,o,c,"+lon_0=10.0 +ellps=WGS84 +datum=WGS84 +lat_ts=-71.0 +proj=stere +x_0=0.0 +units=m +y_0=0.0 +lat_0=-90.0" '+process_file[var], shell=True)
-
 
     subprocess.check_call('ncwa -O -a height '+process_file[var]+" "+process_file[var], shell=True) #delete the height dimension!
     subprocess.check_call('ncks -O -x -v height '+process_file[var]+" "+process_file[var], shell=True) #delete the height dimension!
@@ -65,7 +68,9 @@ smb_msk_data.variables["smb"][:] = smb_masked
 smb_msk_data.close()
 process_file["smb"] = smb_omask_file
 
-subprocess.check_call('cdo -O merge '+process_file["smb"]+" "+process_file["t2m"]+" "+ output_file, shell=True)
+merge_these_files = " ".join([process_file[var] for var in ["t2m","smb","evap","precip"]])
+
+subprocess.check_call('cdo -O merge '+merge_these_files+" "+output_file, shell=True)
 
 # make all variables double (some already are).
 subprocess.check_call("ncap2 -O -s 't2m=double(t2m);smb=double(smb)' "+
