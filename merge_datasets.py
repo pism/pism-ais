@@ -19,13 +19,13 @@ data_path = os.path.join(cf.output_data_path, "merged")
 # set your custom name here if standard naming is not used
 # (for example if you applied a time mean in between)
 custom_file_names = {"racmo_wessem":
-                     "racmo_wessem_"+str(cf.resolution)+"km_timemean.nc",
-                     "schmidtko":"schmidtko_"+str(cf.resolution)+"km_means.nc"}
+                     "racmo_wessem_"+cf.grid_id+"_mean1986_2005.nc",
+                     "schmidtko":"schmidtko_"+cf.grid_id+"_means.nc"}
 
-merged_filename = ("_").join(cf.datasets_to_merge)+"_"+str(cf.resolution)+"km.nc"
+merged_filename = ("_").join(cf.datasets_to_merge)+"_"+cf.grid_id+".nc"
 merged_filename = os.path.join(data_path,merged_filename)
 # created beforehand by grids/create_cdo_grid.py
-cdo_targetgrid_file = os.path.join(cf.cdo_remapgridpath,'pism_'+str(cf.resolution)+'km.nc')
+cdo_targetgrid_file = os.path.join(cf.cdo_remapgridpath, cf.grid_id+'.nc')
 
 if not os.path.exists(data_path): os.makedirs(data_path)
 
@@ -37,11 +37,11 @@ for ds in cf.datasets_to_merge:
 
     custom_file_name = custom_file_names[ds] if ds in custom_file_names else None
 
-    input_datapath = pi.get_path_to_data(cf.output_data_path,ds,cf.resolution,
+    input_datapath = pi.get_path_to_data(cf.output_data_path,ds,cf.grid_id,
                                          custom_file_name=custom_file_name)
 
     # data with selected variables will be written to /merged directory
-    preselected_datapath = pi.get_path_to_data(cf.output_data_path,ds,cf.resolution,
+    preselected_datapath = pi.get_path_to_data(cf.output_data_path,ds,cf.grid_id,
                                 custom_data_path=data_path)
     selected_variables = ",".join(cf.variables[ds])
 

@@ -24,16 +24,14 @@ import pism_input.pism_input as pi; reload(pi)
 
 # save data path
 dataset="schmidtko"
-# resolution for the output file, set from config.
-resolution = cf.resolution # in km
 
 data_path = os.path.join(cf.output_data_path, dataset)
-infile = os.path.join(data_path, 'schmidtko_'+str(resolution)+'km.nc')
-outfile = os.path.join(data_path, 'schmidtko_'+str(resolution)+'km_means.nc')
+infile = os.path.join(data_path, 'schmidtko_'+cf.grid_id+'.nc')
+outfile = os.path.join(data_path, 'schmidtko_'+cf.grid_id+'_means.nc')
 print infile
 
 zwally_data_path = os.path.join(cf.output_data_path,"zwally_basins")
-basinfile = os.path.join(zwally_data_path, 'zwally_basins_'+str(resolution)+'km.nc')
+basinfile = os.path.join(zwally_data_path, 'zwally_basins_'+cf.grid_id+'.nc')
 
 
 # Load data

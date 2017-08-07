@@ -80,7 +80,8 @@ initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2294f_LGM/resu
 # datasets should be named here as the subfolder of its preprocessing.
 # TODO: merging schmidtko data does not work yet due to subtle grid differences.
 #       it can be supplied through -ocean cavity -ocean_cavity_file $file directly.
-datasets_to_merge = ["bedmap2","albmap","racmo_wessem",
+datasets_to_merge = [#"bedmap2",
+"albmap","racmo_wessem",
                      # "schmidtko",
                      "tillphi_pism"]
 
