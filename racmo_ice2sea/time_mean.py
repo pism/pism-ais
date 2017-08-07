@@ -15,15 +15,15 @@ import config as cf; reload(cf)
 
 scenario = "c20" # A1B or c20
 dataset = "racmo_hadcm3_I2S"
-# resolution for the output file
-resolution = cf.resolution # in km
+tap = [str(t) for t in cf.time_averaging_period]
 
 data_path = os.path.join(cf.output_data_path, dataset)
-inputfile = os.path.join(data_path, dataset+"_"+scenario+"_"+str(resolution)+"km.nc")
-timemean_file = inputfile.rstrip(".nc")+"_timemean.nc"
+inputfile = os.path.join(data_path, dataset+"_"+scenario+"_"+cf.grid_id+".nc")
+timemean_file = os.path.join(data_path, dataset+"_"+scenario+"_"+cf.grid_id+
+    "_mean"+tap[0]+"_"+tap[1]+".nc")
 
 
-cmd = "cdo -O -f nc4c timmean "+inputfile+" "+timemean_file
+cmd = "cdo -O -f nc4c timmean -selyear,"+tap[0]+"/"+tap[1]+" "+inputfile+" "+timemean_file
 print cmd
 # if you see "cdo: error while loading shared libraries:",
 # 'module load cdo'

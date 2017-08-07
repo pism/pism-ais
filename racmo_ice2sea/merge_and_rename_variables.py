@@ -31,8 +31,8 @@ for scen in scenarios:
 
     output_file = os.path.join(data_path,"racmo_hadcm3_"+scen+"_input.nc")
 
-    source_t2m_file = os.path.join(cf.racmo_data_path,"HadCM3_"+scen+"_I2S_t2m_Y.nc")
-    source_smb_file = os.path.join(cf.racmo_data_path,"HadCM3_"+scen+"_I2S_"+accumvar[scen]+"_Y.nc")
+    source_t2m_file = os.path.join(cf.racmo_i2s_data_path,"HadCM3_"+scen+"_I2S_t2m_Y.nc")
+    source_smb_file = os.path.join(cf.racmo_i2s_data_path,"HadCM3_"+scen+"_I2S_"+accumvar[scen]+"_Y.nc")
     subprocess.check_call("cp "+source_t2m_file+" "+output_file,shell=True)
 
     #add temperature
