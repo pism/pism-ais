@@ -12,7 +12,7 @@ authors="matthias.mengel@pik-potsdam.de and torsten.albrecht@pik-potsdam.de"
 resolution = 16 # in km
 
 grid_id = "initmip8km"
-# grid_id = "initmip16km"
+grid_id = "initmip16km"
 #grid_id = "pism15km"
 
 # grids, as inferred from PISM output

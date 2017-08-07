@@ -22,7 +22,7 @@ import pism_input.pism_input as pi; reload(pi)
 if __name__ == "__main__":
 
     for name, grid in cf.grids.iteritems():
-
+	if "initmip" not in name: continue
         # cdo_targetgrid_file = os.path.join(cf.cdo_remapgridpath,
         #                         'pism_'+str(int(resolution))+'km.nc')
         gridfile = pi.create_grid_for_cdo_remap(cf.cdo_remapgridpath, name, grid)
