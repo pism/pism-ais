@@ -86,7 +86,7 @@ smb = ncf.variables["smb"][:]
 mask_ocean = smb[0,:,:] < -0.009
 mask_ocean_expanded = np.tile(mask_ocean,(smb.shape[0],1,1))
 # a proxy for smb
-smb_over_ocean = ncf.variables["precip"][:] - ncf.variables["evap"][:]
+smb_over_ocean = ncf.variables["precip"][:] + ncf.variables["evap"][:]
 smb[mask_ocean_expanded] = smb_over_ocean[mask_ocean_expanded]
 ncf.variables["smb"][:] = smb
 ncf.smb_comment = "SMB is approximated by precip-evap over the ocean."
