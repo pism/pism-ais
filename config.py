@@ -65,7 +65,7 @@ racmo_wessem_data_path = "/p/projects/tumble/mengel/pismSourceData/20170626_Racm
 # the till friction angle (tillphi) can be infered from PISM inversion.
 # for now, we rely on an inversion run from Torsten on 15km.
 # The code here allows to remap the 15km to other resolutions.
-tillphi_data_path = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2300_TPSO/results/result_fit_15km_50000yrs.nc"
+tillphi_data_path = "/p/projects/tumble/mengel/pismSourceData/20170807_PismTillPhiFromTorsten/result_fit_16km_50000yrs.nc"
 
 # anomaly data used for initMIP experiments
 # Downloaded dBasalMelt and dSMB anomaly fields from
@@ -80,8 +80,8 @@ initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2294f_LGM/resu
 # datasets should be named here as the subfolder of its preprocessing.
 # TODO: merging schmidtko data does not work yet due to subtle grid differences.
 #       it can be supplied through -ocean cavity -ocean_cavity_file $file directly.
-datasets_to_merge = [#"bedmap2",
-"albmap","racmo_wessem",
+datasets_to_merge = ["bedmap2",
+                     "albmap","racmo_wessem",
                      # "schmidtko",
                      "tillphi_pism"]
 
