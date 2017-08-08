@@ -34,7 +34,7 @@ grids={
     "initmip16km":[381,381,-3040000,-3040000,3040000,3040000]}
 
 # if true, prepare regridding bash grid to be submitted and not run interactively.
-cluster_regridding = False
+cluster_regridding = True
 # cdo has a feature to
 use_cdo_extrapolation=True
 
@@ -89,7 +89,7 @@ datasets_to_merge = ["bedmap2",
 # The basins variable for the PICO model can be passed with the Schmidtko dataset.
 variables = {"bedmap2":["thk","topg","usurf"],
              "albmap":["bheatflx"],
-             "racmo_wessem":["smb","air_temp"],
+             "racmo_wessem":["climatic_mass_balance","ice_surface_temp"],
              # "schmidtko":["theta_ocean","salinity_ocean","basins"],
              "tillphi_pism":["tillphi"]}
 

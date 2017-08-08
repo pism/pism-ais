@@ -77,7 +77,7 @@ subprocess.check_call('cdo -O merge '+merge_these_files+" "+output_file, shell=T
 subprocess.check_call("ncap2 -O -s 't2m=double(t2m);smb=double(smb);evap=double(evap);precip=double(precip)' "+
                       output_file+" "+output_file,shell=True)
 
-subprocess.check_call("ncrename -v t2m,air_temp -O "+output_file+" "+output_file,shell=True)
+subprocess.check_call("ncrename -v t2m,ice_surface_temp -O "+output_file+" "+output_file,shell=True)
 
 # Fill the missing SMB field over ocean with the proxy precip - evaporation
 ncf = nc.Dataset(output_file,"a")
@@ -92,6 +92,8 @@ ncf.variables["smb"][:] = smb
 ncf.smb_comment = "SMB is approximated by precip-evap over the ocean."
 ncf.close()
 
+subprocess.check_call('ncatted -a units,smb,o,c,"kg m-2 year-1" '+output_file,shell=True)
+subprocess.check_call("ncrename -v smb,climatic_mass_balance -O "+output_file+" "+output_file,shell=True)
 # prepare the input file for cdo remapping
 # this step takes a while for high resolution data (i.e. 1km)
 # pi.prepare_ncfile_for_cdo(output_file)
