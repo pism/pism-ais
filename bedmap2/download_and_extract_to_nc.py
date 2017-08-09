@@ -26,7 +26,7 @@ ncout_name = os.path.join(bedmap2_data_path, 'bedmap2_1km_input.nc')
 if not os.path.exists(os.path.join(bedmap2_data_path,"bedmap2_bin")):
   print "Downloading bedmap2 binary data."
   os.system("mkdir " + bedmap2_data_path)
-  os.system("wget -N " + bedmap2_link + " -P " + bedmap2_data_path)
+  os.system("wget -N --no-check-certificate " + bedmap2_link + " -P " + bedmap2_data_path)
   os.system("cd "+bedmap2_data_path+" && unzip bedmap2_bin.zip")
 
 data_files = {"topg":"bedmap2_bed.flt",
