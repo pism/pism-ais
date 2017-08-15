@@ -6,7 +6,7 @@
 #Prepare data for initMIP Antarctica
 #Wiki: http://www.climate-cryosphere.org/wiki/index.php?title=InitMIP-Antarctica
 
-#Downloaded dBasalMelt and dSMB anomaly fields from 
+#Downloaded dBasalMelt and dSMB anomaly fields from
 #ftp searise@cryoftp1.gsfc.nasa.gov initMIP directory /ISMIP6/initMIP/AIS
 
 #Password personal communication with Sophie Nowicki <sophie.nowicki@nasa.gov>
@@ -29,7 +29,6 @@ import config as cf; reload(cf)
 
 dataset = "initmip"
 data_path = os.path.join(cf.output_data_path, dataset)
-resolution = cf.resolution
 
 data_resolution = 16 # or: 8,1
 IM_filename = os.path.join(data_path,'initmip_'+str(data_resolution)+'km_input.nc')
@@ -37,7 +36,7 @@ IM_data_path = cf.initmip_data_path
 
 PD_pism_out = cf.initmip_pism_out
 try:
-  pism_experiment=PD_pism_out.split("/")[-3].split("_")[0] #specific naming 
+  pism_experiment=PD_pism_out.split("/")[-3].split("_")[0] #specific naming
 except:
   pism_experiment='climate'
 PD_pism_climate = os.path.join(data_path,'pism_'+pism_experiment+'_'+str(resolution)+'km.nc')
@@ -58,7 +57,7 @@ if not os.path.isfile(IM_filename):
     cmd_cp = ['cp', dsmb_file, IM_filename]
     sub.call(cmd_cp)
 
-    cmd_ncks = ['ncks', '-A', '-v' , 'abmb', 
+    cmd_ncks = ['ncks', '-A', '-v' , 'abmb',
              dbmb_file, IM_filename]
 
     sub.call(cmd_ncks)
@@ -73,7 +72,7 @@ cmd_ncks = ['ncks', '-A', '-v' , var_list,
              PD_pism_out, PD_pism_climate]
 sub.call(cmd_ncks)
 
-cmd_ncre = ['ncrename', '-O', 
+cmd_ncre = ['ncrename', '-O',
              '-v' , 'effective_climatic_mass_balance,climatic_mass_balance',
              '-v' , 'effective_ice_surface_temp,ice_surface_temp',
              '-v' , 'effective_shelf_base_mass_flux,shelfbmassflux',
@@ -83,7 +82,7 @@ cmd_ncre = ['ncrename', '-O',
 
 #add step forcing
 ca_cmd = ['python','create_anomalies.py', '--force_file', IM_filename,
-         '--background_file', PD_pism_climate, 
+         '--background_file', PD_pism_climate,
          '{}'.format(final_filename)]
 #print ca_cmd
 sub.call(ca_cmd)
@@ -108,12 +107,12 @@ except:
 nc.close()
 
 #change units
-ncatted_cmd = ['ncatted', 
+ncatted_cmd = ['ncatted',
                '-a', '''units,climatic_mass_balance,o,c,kg m-2 year-1''',
-               '-a', '''standard_name,climatic_mass_balance,o,c,"land_ice_surface_specific_mass_balance"''', 
-               '-a', '''grid_mapping,climatic_mass_balance,o,c,"mapping"''', 
-               '-a', '''grid_mapping,ice_surface_temp,o,c,"mapping"''', 
-               '-a', '''grid_mapping,shelfbmassflux,o,c,"mapping"''', 
+               '-a', '''standard_name,climatic_mass_balance,o,c,"land_ice_surface_specific_mass_balance"''',
+               '-a', '''grid_mapping,climatic_mass_balance,o,c,"mapping"''',
+               '-a', '''grid_mapping,ice_surface_temp,o,c,"mapping"''',
+               '-a', '''grid_mapping,shelfbmassflux,o,c,"mapping"''',
                '-a', '''grid_mapping,shelfbtemp,o,c,"mapping"''',
                '{}'.format(final_filename)]
 sub.call(ncatted_cmd)
@@ -124,3 +123,4 @@ cmd_ncks = ['ncks', '-O', '-d' , 'time,0',
             final_filename, final_filename_ctrl]
 sub.call(cmd_ncks)
 
+print final_filename, "created."

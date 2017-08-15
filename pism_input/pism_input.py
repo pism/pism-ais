@@ -51,7 +51,7 @@ def write_regrid_command_file(config, data_path, dataset, inputfile, grid_id,
 
     with open("cdo_remap.sh", 'w') as f:
         f.write(out)
-    print "Wrote cdo_remap.sh."
+    print "Wrote cdo_remap.sh. Now run 'bash cdo_remap.sh'"
     if config.cluster_regridding:
         print "Submit with sbatch cdo_remap.sh to compute nodes."
 

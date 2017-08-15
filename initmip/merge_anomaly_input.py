@@ -30,7 +30,7 @@ import shutil
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path: sys.path.append(project_root)
 import config as cf; reload(cf)
-# import pism_input.pism_input as pi; reload(pi)
+import pism_input.pism_input as pi; reload(pi)
 
 dataset = "initmip"
 data_path = os.path.join(cf.output_data_path, dataset)
@@ -38,14 +38,27 @@ data_path = os.path.join(cf.output_data_path, dataset)
 if not os.path.exists(data_path): os.makedirs(data_path)
 
 for grid_id in ["1km","16km"]:
+
     output_file = os.path.join(data_path, dataset+"_"+grid_id+"_input.nc")
 
-    source_file = {"bmr": os.path.join(cf.initmip_data_path,'dSMB/smb_anomaly_'+grid_id+'.nc'),
-                   "smb": os.path.join(cf.initmip_data_path,'dBasalMelt/basal_melt_anomaly_'+grid_id+'.nc')
+    source_file = {"smb": os.path.join(cf.initmip_data_path,'dSMB/smb_anomaly_'+grid_id+'.nc'),
+                   "bmr": os.path.join(cf.initmip_data_path,'dBasalMelt/basal_melt_anomaly_'+grid_id+'.nc')
                    }
 
-    merge_these_files = " ".join([source_file[var] for var in source_file.keys()])
+    shutil.copyfile(source_file["smb"], output_file)
+    # merge_these_files = " ".join([source_file[var] for var in source_file.keys()])
 
-    # 'module load cdo' if this fails
-    subprocess.check_call('cdo -O merge '+merge_these_files+" "+output_file, shell=True)
+    subprocess.check_call('ncks -A -v abmb '+source_file["bmr"]+" "+output_file, shell=True)
+
     print output_file, "created."
+
+# for one kilometer file, correct the value at the sout pole to lat=-90
+grid_id = "1km"
+output_file = os.path.join(data_path, dataset+"_"+grid_id+"_input.nc")
+ncf = nc.Dataset(output_file,"a")
+# south pole point
+ncf.variables["lat"][3040,3040] = -90.
+ncf.close()
+
+# also prepare for the 1km file remapping to 4km, 8km etc.
+pi.prepare_ncfile_for_cdo(output_file)
