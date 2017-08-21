@@ -99,9 +99,9 @@ if __name__ == "__main__":
     sub.call(ncks_cmd)
 
     #"total over ice domain of top surface ice mass flux = sub_shelf_ice_flux + grounded_basal_ice_flux" ;
-    print "  Add variable 'tendlibmassbf' and 'tendligroundf'"
+    print "  Add variable 'tendlibmassbf' "
     ncap2_cmd = ['ncap2', '-O', '-s',
-            'tendlibmassbf = sub_shelf_ice_flux + grounded_basal_ice_flux; tendligroundf = (-2e9 * discharge_flux/discharge_flux);',
+            'tendlibmassbf = sub_shelf_ice_flux + grounded_basal_ice_flux;',
             infile_ismip6,
             infile_ismip6]
     sub.call(ncap2_cmd)
@@ -115,7 +115,7 @@ if __name__ == "__main__":
     nc.close()
     print('  Removing times < 0 in file {}'.format(out_file))
     cmd = ['ncks', '-O',
-           '-d', 'time,9,-1',
+           '-d', 'time,4,-1',
            '-v', '{}'.format(','.join(pism_copy_vars)),
            infile_ismip6, out_file]
     sub.call(cmd)

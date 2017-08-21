@@ -43,7 +43,7 @@ time_averaging_period = [1986,2005]
 #torsten local and tumble
 #output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
 #output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/python/pism_input/")
-# output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/data/")
+#output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/data/")
 
 # matthias
 #output_data_path = os.path.expanduser("~/data/20170316_PismInputData/")

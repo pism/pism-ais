@@ -10,7 +10,7 @@
 #-w searise_grid_16000m_bil_weights.nc
 
 # all 16km grid
-pism_run=initmip2207
+pism_run=initmip2206
 pism_init_file=/p/tmp/albrecht/pism17/pismOut/initmip/${pism_run}/initdata/bedmap2_albmap_racmo_hadcm3_I2S_schmidtko_uplift_lgmokill_fttmask_16km.nc
 
 for res in 16000 # 32000 8000
