@@ -94,6 +94,7 @@ ncf.close()
 
 subprocess.check_call('ncatted -a units,smb,o,c,"kg m-2 year-1" '+output_file,shell=True)
 subprocess.check_call("ncrename -v smb,climatic_mass_balance -O "+output_file+" "+output_file,shell=True)
+subprocess.check_call('ncatted -a units,precip,o,c,"kg m-2 year-1" '+output_file,shell=True)
 subprocess.check_call("ncrename -v precip,precipitation -O "+output_file+" "+output_file,shell=True)
 subprocess.check_call("ncap2 -O -s 'air_temp=ice_surface_temp' "+output_file+" "+output_file,shell=True)
 
