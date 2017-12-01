@@ -89,17 +89,18 @@ y_new = np.sort(np.unique(yval))
 print "Create a "+ str(len(x_new)) +" x " + str(len(y_new)) +" grid on 15km resolution"
 
 #create array for these dimensions and fill in values:
-fillvalue = 70.0
-fillvalueu = np.nan
+#fillvalue = 70.0
+#fillvalue = np.nan
+fillvalue = -9.e+33
 bheatflx = np.zeros((len(y_new), len(x_new))) + fillvalue
-bheatflxu = np.zeros((len(y_new), len(x_new))) + fillvalueu
+bheatflxu = np.zeros((len(y_new), len(x_new))) + fillvalue
 
 for i in range(len(bhflx)):
     # go through all vals and fill them into the right place
     ix = np.in1d(x_new.ravel(), xval[i]).reshape(x_new.shape)
     iy = np.in1d(y_new.ravel(), yval[i]).reshape(y_new.shape)
-    bheatflx[iy,ix] = bhflx[i]
-    bheatflxu[iy,ix] = bhflxu[i]
+    bheatflx[iy,ix] = bhflx[i]*1.0e-3
+    bheatflxu[iy,ix] = bhflxu[i]*1.0e-3
 
 # Save data as NetCDF file
 wrtfile = nc.Dataset(final_filename, 'w', format='NETCDF4_CLASSIC')
@@ -108,16 +109,17 @@ wrtfile.createDimension('y', size=len(y_new))
 
 ncx   = wrtfile.createVariable('x', 'f4', ('x',))
 ncy   = wrtfile.createVariable('y', 'f4', ('y',))
-ncbhflx  = wrtfile.createVariable('bheatflx', 'f4', ('y', 'x'))
-ncbhflxu  = wrtfile.createVariable('bheatflx_uncertainty', 'f4', ('y', 'x'))
+ncbhflx  = wrtfile.createVariable('bheatflx', 'f4', ('y', 'x'),fill_value=fillvalue)
+ncbhflxu  = wrtfile.createVariable('bheatflx_uncertainty', 'f4', ('y', 'x'),fill_value=fillvalue)
 
-ncbhflx[:] = bheatflx*1.0e-3
+ncbhflx[:] = bheatflx
 ncbhflx.long_name = "geothermal heat flux - Martos et al., 2017" ;
 ncbhflx.units = "W m-2" 
 ncbhflx.source = data_file+" downloaded from https://doi.pangaea.de/10.1594/PANGAEA.882503" ;
 ncbhflx.reference = "Martos, Yasmina M; Catalan, Manuel; Jordan, Tom A; Golynsky, Alexander V; Golynsky, Dmitry A; Eagles, Graeme; Vaughan, David G (accepted): Heat flux distribution of Antarctica unveiled. Geophysical Research Letters, https://doi.org/10.1002/2017GL075609"
+ncbhflx.missing_value = fillvalue
 
-ncbhflxu[:] = bheatflxu*1.0e-3
+ncbhflxu[:] = bheatflxu
 ncbhflxu.units = ncbhflx.units
 ncbhflx.long_name = "uncertainty of " + ncbhflx.long_name
 
@@ -130,5 +132,7 @@ wrtfile.proj4 = "+lon_0=0.0 +ellps=WGS84 +datum=WGS84 +lat_ts=-71.0 +proj=stere 
 
 wrtfile.close()
 
-print 'Data successfully saved to', final_filename
 
+subprocess.check_call('python ../tools/nc2cdo.py '+final_filename,shell=True)
+
+print 'Data successfully saved to', final_filename
