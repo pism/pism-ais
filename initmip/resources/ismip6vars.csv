@@ -20,7 +20,6 @@ strbasemag    , taub_mag              , Pa, magnitude_of_land_ice_basal_drag, 2,
 tendacabf     , surface_ice_flux      , kg s-1, tendency_of_land_ice_mass_due_to_surface_mass_balance, 1, 0, 0
 tendlibmassbf , tendlibmassbf         , kg s-1, tendency_of_land_ice_mass_due_to_basal_mass_balance, 1, 0, 0
 tendlicalvf   , discharge_flux        , kg s-1, tendency_of_land_ice_mass_due_to_calving, 1, 0, 0
-tendligroundf , tendligroundf         , kg s-1, tendency_of_grounded_ice_mass, 1, 0, 0
 topg          , topg                  , m, bedrock_altitude, 2, 0, 0
 uvelbase      , uvelbase              , m s-1, land_ice_basal_x_velocity, 2, 0, 1
 uvelmean      , ubar                  , m s-1, land_ice_vertical_mean_x_velocity, 2, 0, 1
