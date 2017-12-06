@@ -7,12 +7,10 @@ import pwd
 
 authors="matthias.mengel@pik-potsdam.de and torsten.albrecht@pik-potsdam.de"
 
-# the resolution of the final output files. Deprecated, should be removed, as resolution is
-# taken  from grid_id.
-resolution = 16 # in km
-
-grid_id = "initmip8km"
-grid_id = "initmip16km"
+# grid_id determines also the resolution
+#grid_id = "initmip8km"
+grid_id = "initmip4km"
+#grid_id = "initmip16km"
 #grid_id = "pism15km"
 
 # grids, as inferred from PISM output
@@ -30,6 +28,7 @@ grids={
     "pism2km":[3000,3000,-2801500,-2801500,3196500,3196500],
     "pism1km":[6000,6000,-2802000,-2802000,3197000,3197000],
      # only corners are relevant for initMIP
+    "initmip4km":[1521,1521,-3040000,-3040000,3040000,3040000],
     "initmip8km":[761,761,-3040000,-3040000,3040000,3040000],
     "initmip16km":[381,381,-3040000,-3040000,3040000,3040000]}
 
@@ -71,7 +70,8 @@ tillphi_data_path = "/p/projects/tumble/mengel/pismSourceData/20170807_PismTillP
 # Downloaded dBasalMelt and dSMB anomaly fields from
 # ftp searise@cryoftp1.gsfc.nasa.gov initMIP directory /ISMIP6/initMIP/AIS
 initmip_data_path = "/p/projects/tumble/pism_input/ISMIP6/initMIP/AIS/"
-# PISM initial (background) state for initMIP experiments
+# PISM initial (background) state for initMIP experiments.
+# Note: this depends on the PISM ice sheet state.
 #initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2308_TPSO/results/result_forcing_16km_205000yrs.nc"
 initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2294f_LGM/results/result_forcing_16km_205000yrs.nc"
 
@@ -82,7 +82,7 @@ initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2294f_LGM/resu
 #       it can be supplied through -ocean cavity -ocean_cavity_file $file directly.
 datasets_to_merge = ["bedmap2",
                      "albmap","racmo_wessem",
-                     # "schmidtko",
+                     #"schmidtko",
                      "tillphi_pism"]
 
 # choose here which variables should be taken from which dataset
@@ -90,7 +90,7 @@ datasets_to_merge = ["bedmap2",
 variables = {"bedmap2":["thk","topg","usurf"],
              "albmap":["bheatflx"],
              "racmo_wessem":["climatic_mass_balance","ice_surface_temp"],
-             # "schmidtko":["theta_ocean","salinity_ocean","basins"],
+             #"schmidtko":["theta_ocean","salinity_ocean","basins"],
              "tillphi_pism":["tillphi"]}
 
 #### No edits needed below that line. ####
