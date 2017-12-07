@@ -27,10 +27,12 @@ import pism_input.pism_input as pi; reload(pi)
 dataset="icesat4_basins"
 data_link="https://icesat4.gsfc.nasa.gov/cryo_data/drainage_divides/Ant_ICESat_MODIS_Mask_1km.ascii.gz"
 
-## such file definitions should go to config.py, so that other functions can access them.
+# exclude floating ice and icy islands from drainage basins
+exclude_shelves_and_islands = True
+
 basins_data_path = os.path.join(cf.output_data_path, dataset)
 basins_ascii_file = os.path.join(basins_data_path, 'Ant_ICESat_MODIS_Mask_1km.ascii')
-ncout_file = os.path.join(basins_data_path,dataset+".nc")
+ncout_file = os.path.join(basins_data_path,dataset+"_1km_input.nc")
 
 # if data is not yet extracted in basins_ascii
 if not os.path.exists(basins_ascii_file):
@@ -74,35 +76,40 @@ for i in raw_data.index[::1]:
     drainage_id_grid[yi,xi] = ds_id[i]
     surface_code_grid[yi,xi] = surface_code[i]
 
+if exclude_shelves_and_islands:
+
+    shelves_or_islands = surface_code_grid > 4
+    drainage_id_grid[shelves_or_islands] = 0
 
 ncout = nc.Dataset(ncout_file, 'w')
 #ncout.createDimension('time',size=None)
 ncout.createDimension('x',size=len(x))
 ncout.createDimension('y',size=len(y))
-ncx = ncout.createVariable(varname="x",datatype='int',dimensions=('x'))
-ncy = ncout.createVariable(varname="y",datatype='int',dimensions=('y'))
+ncx = ncout.createVariable(varname="x",datatype='float_',dimensions=('x'))
+ncy = ncout.createVariable(varname="y",datatype='float_',dimensions=('y'))
 ncx[:] = x*1.e3
 ncy[:] = y*1.e3
 ncx.units = "m"
 ncy.units = "m"
 
-ncv = ncout.createVariable(varname="lat",datatype='float32',dimensions=('y','x') )
+ncv = ncout.createVariable(varname="lat",datatype='float_',dimensions=('y','x') )
 ncv[:] = np.flipud(latgrid)
-ncv = ncout.createVariable(varname="lon",datatype='float32',dimensions=('y','x') )
+ncv = ncout.createVariable(varname="lon",datatype='float_',dimensions=('y','x') )
 ncv[:] = np.flipud(longrid)
-ncv = ncout.createVariable(varname="mask",datatype='int',dimensions=('y','x') )
+ncv = ncout.createVariable(varname="mask",datatype='int_',dimensions=('y','x') )
 ncv[:] = np.flipud(surface_code_grid)
-ncv = ncout.createVariable(varname="basins",datatype='int',dimensions=('y','x') )
+ncv = ncout.createVariable(varname="basins",datatype='int_',dimensions=('y','x') )
 ncv[:] = np.flipud(drainage_id_grid)
 
 now = datetime.datetime.now().strftime("%B %d, %Y")
-#ncout.created  = "created based on reese@pik at " + now
+
 ncout.data_origin = "https://icesat4.gsfc.nasa.gov/cryo_data/ant_grn_drainage_systems.php"
 ncout.proj4 = "+lon_0=0.0 +ellps=WGS84 +datum=WGS84 +lat_ts=-70.0 +proj=stere +x_0=0.0 +units=m +y_0=0.0 +lat_0=-90.0"
-# ncout.comment  = cf.authors+" created netcdf basins file at " + now
-
+ncout.comment  = cf.authors+" created netcdf basins file at " + now
 ncout.close()
 
 # prepare the input file for cdo remapping
 # this step takes a while for high resolution data (i.e. 1km)
 pi.prepare_ncfile_for_cdo(ncout_file)
+
+print "Preprocessed and wrote netcdf file", ncout_file
