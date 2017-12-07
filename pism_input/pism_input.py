@@ -24,7 +24,7 @@ def get_path_to_data(output_data_path,dataset,grid_id,
 
 
 def write_regrid_command_file(config, data_path, dataset, inputfile, grid_id,
-                                 cdo_targetgrid_file, regridded_file, use_conservative_regridding):
+                                 cdo_targetgrid_file, regridded_file, regridding_method):
 
     """ This writes a SLURM submission file for the CPU heavy task of regridding.
         Regridding is done via CDO.
@@ -41,7 +41,7 @@ def write_regrid_command_file(config, data_path, dataset, inputfile, grid_id,
 
     out = scen_template.render(user=config.username,
                                cluster_regridding=config.cluster_regridding,
-                               use_conservative_regridding = use_conservative_regridding,
+                               regridding_method = regridding_method,
                                targetgrid = cdo_targetgrid_file,
                                inputfile = inputfile,
                                mapweights = mapweights,

@@ -25,17 +25,20 @@ module load nco
 export REMAP_EXTRAPOLATE=on
 {% endif %}
 
-{% if use_conservative_regridding %}
+{% if regridding_method == "conservative" %}
 # calculate the weights and save to mapweights
 # TODO: if not already exist.
 # conservative regridding:
 # heavier, but preferred for bed topography and ice thickness
 $cdocmd genycon,{{targetgrid}} {{inputfile}} {{mapweights}}
 $cdocmd -b F64 -f nc4c remap,{{targetgrid}},{{mapweights}} {{inputfile}} {{regridded_file}}
-{% else %}
+{% elif regridding_method == "integer" %}
+$cdocmd -b F64 -f nc4c remapnn,{{targetgrid}} {{inputfile}} {{regridded_file}}
+{% elif regridding_method == "bilinear" %}
 # bilinear interpolation, an option if conservative methods fail.
-export REMAP_EXTRAPOLATE=on
 $cdocmd -b F64 -f nc4c remapbil,{{targetgrid}} {{inputfile}} {{regridded_file}}
+{% else %}
+echo "No regridding method found. Stop here."
 {% endif %}
 
 # add x and y variables to output file.

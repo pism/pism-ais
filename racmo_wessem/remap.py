@@ -18,9 +18,10 @@ import config as cf; reload(cf)
 import pism_input.pism_input as pi; reload(pi)
 
 dataset = "racmo_wessem"
-# conservative regridding for bedmap2 and albmap data. does
-# not yet work for the other datasets.
-use_conservative_regridding = False
+
+# regridding_method: choose "bilinear", "integer" or "conservative"
+regridding_method = "bilinear"
+
 
 data_path = os.path.join(cf.output_data_path, dataset)
 inputfile = os.path.join(data_path, dataset+'_input.nc')
@@ -35,5 +36,5 @@ cdo_targetgrid_file, regridded_file = pi.get_filenames_for_cdo(
 # Conservative regridding does not work for all datasets yet, use it for bedmap2 or albmap.
 # We use cdo, see https://code.zmaw.de/projects/cdo/embedded/index.html
 pi.write_regrid_command_file(cf, data_path, dataset, inputfile, cf.grid_id,
-                     cdo_targetgrid_file, regridded_file, use_conservative_regridding)
+                     cdo_targetgrid_file, regridded_file, regridding_method)
 

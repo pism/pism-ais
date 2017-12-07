@@ -18,11 +18,6 @@ import config as cf; reload(cf)
 import pism_input.pism_input as pi; reload(pi)
 
 dataset="zwally_basins"
-# resolution for the output file, set from config.
-resolution = cf.resolution # in km
-# conservative regridding for bedmap2 and albmap data. does
-# not yet work for the other datasets.
-use_conservative_regridding = False
 
 data_path = os.path.join(cf.output_data_path, dataset)
 inputfile = os.path.join(data_path, 'basins_zwally_5km_input.nc')
