@@ -10,8 +10,10 @@ authors="matthias.mengel@pik-potsdam.de and torsten.albrecht@pik-potsdam.de"
 # grid_id determines also the resolution
 #grid_id = "initmip8km"
 grid_id = "initmip4km"
-#grid_id = "initmip16km"
+grid_id = "initmip16km"
+grid_id = "initmip8km"
 #grid_id = "pism15km"
+
 
 # grids, as inferred from PISM output
 grids={
@@ -47,12 +49,12 @@ time_averaging_period = [1986,2005]
 #torsten local and tumble
 #output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
 #output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/python/pism_input/")
-# output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/data/")
+output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/data/")
 
 # matthias
 #output_data_path = os.path.expanduser("~/data/20170316_PismInputData/")
 #output_data_path = "/p/projects/tumble/mengel/pismInputData/20170316_PismInputData"
-output_data_path = os.path.expanduser("/p/projects/pism/mengel/pism_input/")
+#output_data_path = os.path.expanduser("/p/projects/pism/mengel/pism_input/")
 
 
 # RACMO data is not freely available and cannot be downloaded,
@@ -79,7 +81,7 @@ initmip_data_path = "/p/projects/tumble/pism_input/ISMIP6/initMIP/AIS/"
 # Note: this depends on the PISM ice sheet state.
 #initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2308_TPSO/results/result_forcing_16km_205000yrs.nc"
 initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2294f_LGM/results/result_forcing_16km_205000yrs.nc"
-
+#initmip_pism_out = "/p/tmp/albrecht/pism18/pismOut/pism_paleo/pism1.0_paleo05_5073/paleo.nc"
 
 # merge the follwing dataset into one PISM-ready file.
 # datasets should be named here as the subfolder of its preprocessing.
