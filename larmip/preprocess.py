@@ -24,7 +24,7 @@ data_path = os.path.join(cf.output_data_path, dataset)
 data_resolution = 16 # or: 8,1
 LM_filename = os.path.join(data_path,'LARMIP_regions_initMIPgrid_'+str(data_resolution)+'.nc')
 vername="1p0"
-vername="0p7"
+#vername="0p7"
 
 PD_pism_out = cf.initmip_pism_out
 try:
@@ -59,6 +59,7 @@ if not os.path.isfile(PD_pism_climate):
              PD_pism_climate]
   sub.call(cmd_ncre)
 
+PD_ocean_file = os.path.join(cf.output_data_path,"schmidtko/schmidtko_"+str(data_resolution)+"km_means_11+12.nc" )
 
 for melt in [1,2,4,8,16,32]:
 #for melt in [2]:
@@ -77,6 +78,16 @@ for melt in [1,2,4,8,16,32]:
                 '{}'.format(final_filename)]
       #print ca_cmd
       sub.call(ca_cmd)
+
+      # include schmidtko ocean data
+      cmd_ncks = ['ncks', '-A', '-v' , 'salinity_ocean,theta_ocean,basins',
+                  PD_ocean_file, final_filename]
+      sub.call(cmd_ncks)
+
+
+      cmd_ncap2 = ['ncap2','-O','-s',"x=float(x);y=float(y)",
+                  final_filename, final_filename]
+      sub.call(cmd_ncap2)
 
       #add x and y and mapping
       ncks_cmd = ['ncks', '-A', '-v' , 'x,y',

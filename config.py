@@ -11,7 +11,7 @@ authors="matthias.mengel@pik-potsdam.de and torsten.albrecht@pik-potsdam.de"
 #grid_id = "initmip8km"
 grid_id = "initmip4km"
 grid_id = "initmip16km"
-grid_id = "initmip8km"
+#grid_id = "initmip8km"
 #grid_id = "pism15km"
 
 
@@ -81,7 +81,7 @@ initmip_data_path = "/p/projects/tumble/pism_input/ISMIP6/initMIP/AIS/"
 # Note: this depends on the PISM ice sheet state.
 #initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2308_TPSO/results/result_forcing_16km_205000yrs.nc"
 initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2294f_LGM/results/result_forcing_16km_205000yrs.nc"
-#initmip_pism_out = "/p/tmp/albrecht/pism18/pismOut/pism_paleo/pism1.0_paleo05_5073/paleo.nc"
+initmip_pism_out = "/p/tmp/albrecht/pism18/pismOut/pism_paleo/pism1.0_paleo05_5073/paleo.nc"
 
 # merge the follwing dataset into one PISM-ready file.
 # datasets should be named here as the subfolder of its preprocessing.

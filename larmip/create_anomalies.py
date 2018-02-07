@@ -16,6 +16,8 @@ parser.add_argument("--region_file", dest="region_file",
                     help='''LARMIP regions file''')
 parser.add_argument("--background_file", dest="background_file",
                     help='''Background mass balance file''')
+#parser.add_argument("--ocean_file", dest="oceanfile",
+#                    help='''Ocean input file''')
 parser.add_argument("--region", dest="region",
                     help='''LARMIP region index''')
 parser.add_argument("--meltrate", dest="meltrate",
@@ -24,6 +26,7 @@ parser.add_argument("OUTFILE", nargs=1)
 options = parser.parse_args()
 region_file = options.region_file
 background_file = options.background_file
+#ocean_file = options.ocean_file
 
 larmip_region = np.float(options.region)
 mrate_anomaly = np.float(options.meltrate)
@@ -139,10 +142,12 @@ btemp_background = nc_b.variables['shelfbtemp']
 larmip_regs = nc_a.variables['regions']
 larmip_regid = np.squeeze(larmip_regs[:]) 
 
-smb_var = nc.createVariable('climatic_mass_balance', 'float64', dimensions=(tdim, ydim, xdim))
-temp_var = nc.createVariable('ice_surface_temp', 'float64', dimensions=(tdim, ydim, xdim))
-bmb_var = nc.createVariable('shelfbmassflux', 'float64', dimensions=(tdim, ydim, xdim))
-btemp_var = nc.createVariable('shelfbtemp', 'float64', dimensions=(tdim, ydim, xdim))
+smb_var = nc.createVariable('climatic_mass_balance', 'float64', dimensions=(ydim, xdim))
+temp_var = nc.createVariable('ice_surface_temp', 'float64', dimensions=(ydim, xdim))
+btemp_var = nc.createVariable('shelfbtemp', 'float64', dimensions=(ydim, xdim))
+
+bmb_var = nc.createVariable('shelfbmassflux', 'float64', dimensions=(tdim,ydim, xdim))
+dbmb_var = nc.createVariable('bmb_anomaly', 'float64', dimensions=(tdim, ydim, xdim))
 
 temp_var.units = "Kelvin"
 temp_var.long_name = "temperature of the ice at the ice surface but below firn processes, as seen by the ice dynamics code"
@@ -152,16 +157,19 @@ btemp_var.units = "Kelvin"
 btemp_var.long_name = "shelf base temperature, as seen by the ice dynamics code"
 bmb_var.units = "kg m-2 year-1"
 bmb_var.long_name = "shelf base mass flux (positive flux is loss from ice shelf), as seen by the ice dynamics code"
+dbmb_var.units = "kg m-2 year-1"
+dbmb_var.long_name = "shelf base mass flux anomaly (positive flux is loss from ice shelf), as seen by the ice dynamics code"
+
 
 larmip_regs = np.squeeze(nc_a.variables['regions'][:])
 
+temp_var[::] = np.squeeze(temp_background[:])
+btemp_var[::] = np.squeeze(btemp_background[:])
+smb_var[::] = np.squeeze(smb_background[:])
+
 for k,t in enumerate(time_steps):
-#for k in range(nt):
-    #t = k + start
-    temp_var[k,::] = np.squeeze(temp_background[:])
-    btemp_var[k,::] = np.squeeze(btemp_background[:])
-    smb_var[k,::] = np.squeeze(smb_background[:])
     bmb_var[k,::] = np.squeeze(bmb_background[:])
+    dbmb_var[k,::] = np.zeros_like(bmb_var[k,::])
     if (t >= 0):
         if larmip_region == 5:
           bmelt_anomaly = np.ones_like(bmb_var[k,::])*mrate_anomaly*rho_ice
@@ -169,9 +177,11 @@ for k,t in enumerate(time_steps):
           bmelt_anomaly = np.zeros_like(bmb_var[k,::])
           bmelt_anomaly[ (larmip_regs==larmip_region) ] = mrate_anomaly*rho_ice
         bmb_var[k,::] += bmelt_anomaly
+        dbmb_var[k,::] = bmelt_anomaly
         #bmb_var[k,::][ larmip_regs==larmip_region ] += mrate_anomaly*rho_ice
-    if smb_background.units=='kg m-2 s-1':
-      smb_var[k,::]*=secperyear
+
+if smb_background.units=='kg m-2 s-1':
+    smb_var[::]*=secperyear
         
 nc.close()
 nc_a.close()
