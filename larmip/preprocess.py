@@ -25,6 +25,8 @@ data_resolution = 16 # or: 8,1
 LM_filename = os.path.join(data_path,'LARMIP_regions_initMIPgrid_'+str(data_resolution)+'.nc')
 vername="1p0"
 #vername="0p7"
+#vername='1p0_2304'
+vername='1p0_5073'
 
 PD_pism_out = cf.initmip_pism_out
 try:
@@ -32,6 +34,7 @@ try:
 except:
   pism_experiment='climate'
 PD_pism_climate = os.path.join(data_path,'pism_'+pism_experiment+'_'+str(data_resolution)+'km.nc')
+print PD_pism_climate
 
 final_filename_ctrl = os.path.join(data_path,'larmip_'+str(data_resolution)+'km_control'+vername+'.nc')
 
@@ -59,14 +62,15 @@ if not os.path.isfile(PD_pism_climate):
              PD_pism_climate]
   sub.call(cmd_ncre)
 
-PD_ocean_file = os.path.join(cf.output_data_path,"schmidtko/schmidtko_"+str(data_resolution)+"km_means_11+12.nc" )
+PD_ocean_file = os.path.join(cf.output_data_path,"schmidtko/schmidtko_initmip"+str(data_resolution)+"km_means_11+12.nc" )
 
 for melt in [1,2,4,8,16,32]:
 #for melt in [2]:
-  for reg in xrange(6):
+  for reg in xrange(7):
+  #for reg in [5]:
     print melt,reg
     final_filename = os.path.join(data_path,'larmip_'+str(data_resolution)+'km_forcing'+vername+'_reg'+str(reg)+'_m'+str(melt)+'.nc')
-    if reg==5:
+    if reg==6:
       final_filename = os.path.join(data_path,'larmip_'+str(data_resolution)+'km_forcing'+vername+'_all_m'+str(melt)+'.nc')
 
     if True:

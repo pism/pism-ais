@@ -55,7 +55,8 @@ def preprocess_ice_velocity():
                 #"ncrename -d nx,x -d ny,y -O %s %s" % (input_filename, input_filename),
                 "cp %s %s" % (input_filename,output_filename),
                 "ncrename -v VX,vx -v VY,vy " + output_filename,
-                "ncks -O -v vx,vy,x,y,mapping %s %s" % (output_filename, output_filename)
+                #"ncks -O -v vx,vy,x,y,mapping %s %s" % (output_filename, output_filename)
+                "ncks -O -v vx,vy,x,y,mapping,STDX,STDY %s %s" % (output_filename, output_filename)
                 ]
 
 
@@ -103,7 +104,7 @@ def preprocess_ice_velocity():
 
 
     y_var = nc.variables['y']
-    print y_var[:],np.flipud(y_var[:])
+    #print y_var[:],np.flipud(y_var[:])
     y_var[:] = np.flipud(y_var[:])
 
 
@@ -123,12 +124,22 @@ def preprocess_ice_velocity():
             magnitude[:] = v_magnitude
 
 
+            sx = nc.variables['STDX'][:]
+            sy = nc.variables['STDY'][:]
+            v_deviation = np.zeros_like(vx)
+            v_deviation = np.sqrt(sx**2 + sy**2)
+            #v_deviation = 0.5*(sx+sy)/np.sqrt(vx**2 + vy**2)
+            uncertainty = nc.createVariable('v_std', 'f8', ('y', 'x'))
+            uncertainty.units = "meter/year"
+            uncertainty[:] = v_deviation
+
+
     nc.close()
 
     subprocess.check_call('ncatted -O -a proj4,global,a,c,"+lon_0=0.0 +ellps=WGS84 +datum=WGS84 +lat_ts=-71.0 +proj=stere +x_0=0.0 +units=m +y_0=0.0 +lat_0=-90.0 +init=epsg:3031" '+output_filename,shell=True)
 
     # make all variables double (some already are).
-    subprocess.check_call('ncap2 -O -s "vx=double(vx);vy=double(vy);v_magnitude=double(v_magnitude);x=double(x);y=double(y)" '+
+    subprocess.check_call('ncap2 -O -s "vx=double(vx);vy=double(vy);v_magnitude=double(v_magnitude);x=double(x);y=double(y);v_std=double(v_std)" '+
                           output_filename+" "+output_filename,shell=True)
 
 if __name__ == "__main__":

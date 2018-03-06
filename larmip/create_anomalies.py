@@ -35,7 +35,7 @@ outfile = options.OUTFILE[0]
 
 
 rho_ice=910.0 #kg/m^3
-secperyear=31556926.0 #s/yr. FIXME: which calendar?
+#secperyear=31556926.0 #s/yr. FIXME: which calendar?
 secperyear=365.0*24.0*3600.0
 
 def get_dims(nc): #from https://github.com/pism/pypismtools/blob/master/pypismtools.py
@@ -171,7 +171,7 @@ for k,t in enumerate(time_steps):
     bmb_var[k,::] = np.squeeze(bmb_background[:])
     dbmb_var[k,::] = np.zeros_like(bmb_var[k,::])
     if (t >= 0):
-        if larmip_region == 5:
+        if larmip_region == 6: #all
           bmelt_anomaly = np.ones_like(bmb_var[k,::])*mrate_anomaly*rho_ice
         else:
           bmelt_anomaly = np.zeros_like(bmb_var[k,::])

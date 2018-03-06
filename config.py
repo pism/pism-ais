@@ -12,7 +12,7 @@ authors="matthias.mengel@pik-potsdam.de and torsten.albrecht@pik-potsdam.de"
 grid_id = "initmip4km"
 grid_id = "initmip16km"
 #grid_id = "initmip8km"
-#grid_id = "pism15km"
+#grid_id = "pism7km"
 
 
 # grids, as inferred from PISM output
@@ -50,6 +50,7 @@ time_averaging_period = [1986,2005]
 #output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
 #output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/python/pism_input/")
 output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/data/")
+#output_data_path = os.path.expanduser("/p/tmp/garbe/projects/LARMIP/forcingData/")
 
 # matthias
 #output_data_path = os.path.expanduser("~/data/20170316_PismInputData/")
@@ -82,6 +83,11 @@ initmip_data_path = "/p/projects/tumble/pism_input/ISMIP6/initMIP/AIS/"
 #initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2308_TPSO/results/result_forcing_16km_205000yrs.nc"
 initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2294f_LGM/results/result_forcing_16km_205000yrs.nc"
 initmip_pism_out = "/p/tmp/albrecht/pism18/pismOut/pism_paleo/pism1.0_paleo05_5073/paleo.nc"
+#initmip_pism_out = "/p/tmp/albrecht/pism18/pismOut/larmip/larmip2302/results/snap_constant_8km_100000yrs.nc_-50000.000.nc"
+#initmip_pism_out = "/p/tmp/garbe/projects/AIS_Equilibrium/pismpik_ant_equi_larmip8km_1.0_10/snapshots_29000.000.nc"
+#initmip_pism_out = "/p/tmp/garbe/projects/AIS_Equilibrium/pismpik_ant_equi_larmip8km_1.0_10/snapshots_58000.000.nc"
+#initmip_pism_out = "/p/tmp/albrecht/pism18/pismOut/larmip/larmip2304/results/result_constant_8km_100000yrs.nc"
+
 
 # merge the follwing dataset into one PISM-ready file.
 # datasets should be named here as the subfolder of its preprocessing.
