@@ -1,25 +1,30 @@
 #!/usr/bin/env python 
 
 ########################################################################
-## This file downloads the global sea-level reconstructions from 
-## Bintanja et al., 2008
+## This file downloads the global sea-level reconstructions 
+## from Bintanja et al., 2008
 ## by torsten.albrecht@pik-potsdam.de
 ########################################################################
 
 from numpy import zeros
-from pylab import figure, plot, axis, xlabel, ylabel, show, legend
 from netCDF4 import Dataset as NC
-import os
+import os, sys
 
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if project_root not in sys.path: sys.path.append(project_root)
+import config as cf; reload(cf)
 
+datain = cf.paleo_time_input
 datfile = "bintanja2008.txt"
 link = "ftp://ftp.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/bintanja2008/"+datfile
 cmd = 'wget -r '+link+' -O '+datfile
-os.system(cmd)
-
+if not os.path.isfile(datain+datfile): 
+  print "Downloading "+datfile
+  os.system(cmd)
+  os.system("mv "+datfile+" "+datain)
 
 ############################################################################
-f = open(datfile)
+f = open(datain+datfile)
 
 datalength=30110
 datastart=109
@@ -37,20 +42,6 @@ for linecount,line in enumerate(f.readlines()):
       elif entrycount==8:
         slev[linecount-datastart] = float(entry)*(-1.0)
 f.close()
-
-
-#####################################################################################
-
-# temperature
-fig2=figure(2, figsize=(10,5));
-ax2 = fig2.add_subplot(111)
-ax2.plot(time[:],slev[:], linewidth=2, alpha=0.9, color='b',label="Bintanja:ESL08")
-ax2.axis([-35000,0,-140,40])
-ax2.legend()
-ylabel("dSL (m)")
-xlabel("age (y BP)")
-show()
-
 
 #########################################################################
 

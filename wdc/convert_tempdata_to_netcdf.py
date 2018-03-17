@@ -7,19 +7,26 @@
 ########################################################################
 
 from numpy import zeros
-from pylab import figure, plot, axis, xlabel, ylabel, show, legend
 from netCDF4 import Dataset as NC
-import os
+import os, sys
 
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if project_root not in sys.path: sys.path.append(project_root)
+import config as cf; reload(cf)
 
+datain = cf.paleo_time_input
 datfile = "WDT_cuffey2016Eq2.txt"
 link = "http://www.usap-dc.org/dataset/ldeo/NSF-ANT05-39232/2017-01-12_10-26-36/"+datfile
 cmd = 'wget -r '+link+' -O '+datfile
-#os.system(cmd)
+
+if not os.path.isfile(datain+datfile): 
+  print "Please downloading "+datfile+" from "+link+" and save to "+datain
+  #os.system(cmd)
+  #os.system("mv "+datfile+" "+datain)
 
 
 # jouzel_07 T ###########################################################################
-f = open(datfile)
+f = open(datain+datfile)
 
 datalength=39141
 datastart=24
@@ -38,21 +45,8 @@ for linecount,line in enumerate(f.readlines()):
 f.close()
 
 timeBP = 32
-print temp[timeBP],time[timeBP]
+#print temp[timeBP],time[timeBP]
 temp -= temp[timeBP]
-
-
-#####################################################################################
-
-# temperature
-fig2=figure(2, figsize=(10,5));
-ax2 = fig2.add_subplot(111)
-ax2.plot(time[3:-3],temp[3:-3], linewidth=2, alpha=0.9, color='b',label="WDC:cuffey16")
-ax2.axis([0,35000,-12,8])
-ax2.legend()
-ylabel("dT_AA (C)")
-xlabel("age (y BP, EDC3)")
-show()
 
 
 #########################################################################
@@ -72,8 +66,8 @@ setattr(temperature, 'units', 'Kelvin')
 setattr(temperature, 'interpolation', 'linear')
 temperature.long_name = 'Antarctic Temperature Anomaly'
 
-yearvar[:] = time[0:-3] #+50.0
-temperature[:] = temp[0:-3]
+yearvar[:] = time[:] #+50.0
+temperature[:] = temp[:]
 # close
 ncf.close()
 

@@ -74,7 +74,7 @@ pism_input
 +-- sealevel
 |   +--download_specmap_and_rename.py
 |   +--convert_ice6g_to_netcdf.py
-|   +--download_bintanja_and_convert_to_netcdf.py
+|   +--download_bintanja_and_convert_to_nc.py
 |   +--convert_lambeck_to_netcdf.py
 +-- wdc
 |   +--convert_tempdata_to_netcdf.py

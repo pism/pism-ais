@@ -7,19 +7,26 @@
 ########################################################################
 
 from numpy import zeros, concatenate
-from pylab import figure, plot, axis, xlabel, ylabel, show, legend, axhline
 from netCDF4 import Dataset as NC
-import os
+import os, sys
 
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if project_root not in sys.path: sys.path.append(project_root)
+import config as cf; reload(cf)
 
+datain = cf.paleo_time_input
 datfile = "WDC_accumulation_combined_movavg.csv"
-#link = "http://www.usap-dc.org/dataset/usap-dc/601004/2018-01-16T22:27:48.0Z/"+datfile
-#cmd = 'wget -r '+link+' -O '+datfile
-#os.system(cmd)
+link = "http://www.usap-dc.org/dataset/usap-dc/601004/2018-01-16T22:27:48.0Z/"+datfile
+cmd = 'wget -r '+link+' -O '+datfile
+
+if not os.path.isfile(datain+datfile): 
+  print "Please downloading "+datfile+" from "+link+" and save to "+datain
+  #os.system(cmd)
+  #os.system("mv "+datfile+" "+datain)
 
 
 # fudge 16 P ###########################################################################
-f = open(datfile)
+f = open(datain+datfile)
 
 datalength=1358
 datastart=3
@@ -44,25 +51,6 @@ print accum[timeBP],time[timeBP]
 
 frac = accum/accum[timeBP]
 anomaly = accum-accum[timeBP]
-
-
-
-#####################################################################################
-
-# accum
-fig2=figure(2, figsize=(10,5));
-ax2 = fig2.add_subplot(111)
-ax2.axhline(1,linestyle='dashed')
-#ax2.plot(time,accum, linewidth=2, alpha=0.9, color='b',label="WDC:fudge16")
-#ax2.plot(time,anomaly, linewidth=2, alpha=0.9, color='b',label="WDC:fudge16")
-#ax2.plot(time2,accum2, linewidth=2, alpha=0.9, color='g',label="WDC:fudge16")
-ax2.plot(time,frac, linewidth=2, alpha=0.9, color='g',label="WDC:fudge16")
-#ax2.axis([0,35000,0.,0.5])
-#ax2.axis([0,35000,-1,1])
-ax2.legend()
-ylabel("P (m ice a-1)")
-xlabel("age (y BP)")
-show()
 
 
 #########################################################################

@@ -51,6 +51,7 @@ time_averaging_period = [1986,2005]
 #output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/python/pism_input/")
 output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/data/")
 #output_data_path = os.path.expanduser("/p/tmp/garbe/projects/LARMIP/forcingData/")
+output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/data/pism-ais/")
 
 # matthias
 #output_data_path = os.path.expanduser("~/data/20170316_PismInputData/")
@@ -73,6 +74,9 @@ racmo_wessem_data_path = "/p/projects/tumble/mengel/pismSourceData/20170626_Racm
 # for now, we rely on an inversion run from Torsten on 15km.
 # The code here allows to remap the 15km to other resolutions.
 tillphi_data_path = "/p/projects/tumble/mengel/pismSourceData/20170807_PismTillPhiFromTorsten/result_fit_16km_50000yrs.nc"
+
+paleo_time_input = "/home/albrecht/Documents/pism/data/paleo_timeseries/"
+
 
 # anomaly data used for initMIP experiments
 # Downloaded dBasalMelt and dSMB anomaly fields from

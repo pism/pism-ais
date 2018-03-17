@@ -5,20 +5,25 @@
 ## Jouzel et al., 2007, by torsten.albrecht@pik-potsdam.de
 ########################################################################
 
-from numpy import zeros #, squeeze
-from pylab import figure, plot, axis, xlabel, ylabel, show, legend
+from numpy import zeros
 from netCDF4 import Dataset as NC
-import os
+import os, sys
 
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if project_root not in sys.path: sys.path.append(project_root)
+import config as cf; reload(cf)
 
+datain = cf.paleo_time_input
 datfile = "edc3deuttemp2007.txt"
 link = "ftp://ftp.ncdc.noaa.gov/pub/data/paleo/icecore/antarctica/epica_domec/"+datfile
 cmd = 'wget -r '+link+' -O '+datfile
-os.system(cmd)
-
+if not os.path.isfile(datain+datfile): 
+  print "Downloading "+datfile
+  os.system(cmd)
+  os.system("mv "+datfile+" "+datain)
 
 # jouzel_07 T ###########################################################################
-f = open(datfile)
+f = open(datain+datfile)
 
 datalength=5892
 datastart=104
@@ -43,20 +48,6 @@ for linecount,line in enumerate(f.readlines()):
         temp[linecount-datastart-count] = float(entry)
 f.close()
 
-
-#####################################################################################
-
-# temperature
-fig2=figure(2, figsize=(10,5));
-ax2 = fig2.add_subplot(111)
-ax2.plot(time[3:-3],temp[3:-3], linewidth=2, alpha=0.9, color='b',label="EDC:jouzel07")
-ax2.axis([0,35000,-12,8])
-ax2.legend()
-ylabel("dT_AA (C)")
-xlabel("age (y BP, EDC3)")
-show()
-
-
 #########################################################################
 
 timeseries = 'timeseries_jouzel07_temp.nc'
@@ -74,8 +65,8 @@ setattr(temperature, 'units', 'Kelvin')
 setattr(temperature, 'interpolation', 'linear')
 temperature.long_name = 'Antarctic Temperature Anomaly'
 
-yearvar[:] = time[0:-3] #+50.0
-temperature[:] = temp[0:-3]
+yearvar[:] = time[:-3]
+temperature[:] = temp[:-3]
 # close
 ncf.close()
 
