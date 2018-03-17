@@ -51,7 +51,7 @@ time_averaging_period = [1986,2005]
 #output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/python/pism_input/")
 output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/data/")
 #output_data_path = os.path.expanduser("/p/tmp/garbe/projects/LARMIP/forcingData/")
-output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/data/pism-ais/")
+i#output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/data/pism-ais/")
 
 # matthias
 #output_data_path = os.path.expanduser("~/data/20170316_PismInputData/")
@@ -75,8 +75,8 @@ racmo_wessem_data_path = "/p/projects/tumble/mengel/pismSourceData/20170626_Racm
 # The code here allows to remap the 15km to other resolutions.
 tillphi_data_path = "/p/projects/tumble/mengel/pismSourceData/20170807_PismTillPhiFromTorsten/result_fit_16km_50000yrs.nc"
 
-paleo_time_input = "/home/albrecht/Documents/pism/data/paleo_timeseries/"
-
+#paleo_time_input = "/home/albrecht/Documents/pism/data/paleo_timeseries/"
+paleo_time_input = "/p/projects/tumble/pism_input/Paleo/"
 
 # anomaly data used for initMIP experiments
 # Downloaded dBasalMelt and dSMB anomaly fields from
@@ -85,7 +85,7 @@ initmip_data_path = "/p/projects/tumble/pism_input/ISMIP6/initMIP/AIS/"
 # PISM initial (background) state for initMIP experiments.
 # Note: this depends on the PISM ice sheet state.
 #initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2308_TPSO/results/result_forcing_16km_205000yrs.nc"
-initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2294f_LGM/results/result_forcing_16km_205000yrs.nc"
+#initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2294f_LGM/results/result_forcing_16km_205000yrs.nc"
 initmip_pism_out = "/p/tmp/albrecht/pism18/pismOut/pism_paleo/pism1.0_paleo05_5073/paleo.nc"
 #initmip_pism_out = "/p/tmp/albrecht/pism18/pismOut/larmip/larmip2302/results/snap_constant_8km_100000yrs.nc_-50000.000.nc"
 #initmip_pism_out = "/p/tmp/garbe/projects/AIS_Equilibrium/pismpik_ant_equi_larmip8km_1.0_10/snapshots_29000.000.nc"
