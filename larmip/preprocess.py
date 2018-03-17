@@ -24,9 +24,6 @@ data_path = os.path.join(cf.output_data_path, dataset)
 data_resolution = 16 # or: 8,1
 LM_filename = os.path.join(data_path,'LARMIP_regions_initMIPgrid_'+str(data_resolution)+'.nc')
 vername="1p0"
-#vername="0p7"
-#vername='1p0_2304'
-vername='1p0_5073'
 
 PD_pism_out = cf.initmip_pism_out
 try:
@@ -73,8 +70,7 @@ for melt in [1,2,4,8,16,32]:
     if reg==6:
       final_filename = os.path.join(data_path,'larmip_'+str(data_resolution)+'km_forcing'+vername+'_all_m'+str(melt)+'.nc')
 
-    if True:
-    #if not os.path.isfile(final_filename):
+    if not os.path.isfile(final_filename):
 
       #add step forcing
       ca_cmd = ['python','create_anomalies.py','--background_file', PD_pism_climate,

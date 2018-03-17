@@ -51,6 +51,9 @@ pism_input
 +-- zwally_basins
 |   +-- download_and_extend_to_ocean.py
 |   +-- remap.py (with local cdo rempnn)
++-- icesat4_basins
+|   +-- download_and_write_to_netcdf.py
+|   +-- remap.py (FIXME: cdo rempnn)
 +-- schmidtko
 |   +-- download_and_write_to_netcdf.py
 |   +-- calculate_potential_temps.py
@@ -59,13 +62,18 @@ pism_input
 +-- accum
 |   +-- download_and_extract_to_nc.py
 |   +-- remap.py
-+-- rignotvel
++-- rignot_vel
 |   +-- preprocess_netcdf.py
 |   +-- remap.py
++-- mouginot_vel
+|   +-- preprocess_netcdf.py
 +-- initmip
 |   +-- preprocess.py (incl. create_anomalies.py)
 |   +-- remap.py (if not on 32,16,8,1km grid)
 |   +-- postprocessing (make data ISMIP6 compatible)
++-- larmip
+|   +-- preprocess.py (incl. create_anomalies.py)
+|   +-- postprocessing (extract slvol anomalies)
 +-- merge_dataset.py
 +-- pism_input
     +-- pism_input.py (tools)
@@ -139,11 +147,11 @@ Data was given for use in this paper:
 Frieler Katja; Clark Peter U.; He Feng; Buizert Christo; Reese Ronja; Ligtenberg Stefan R. M.; van den Broeke Michiel R.; Winkelmann Ricarda & Levermann Anders Consistent evidence of increasing Antarctic accumulation with warming. Nature Clim. Change, 2015, 5, 348-352
 
 
-Racmo data (v.2.4)
+Racmo data (v.2.3p2)
 
-The latest RACMO2.4 data (ANT27/2) forced by ERA-Interim provide yearly mean air temperature (t2m) and surface mass balance (smb) for the years 1979-2016. 
+The latest RACMO2.3p2 data (ANT27/2) forced by ERA-Interim provide yearly mean air temperature (t2m) and surface mass balance (smb) for the years 1979-2016. 
 
-Citation: Van Wessem et al., 2014. Improved representation of East Antarctica surface mass balance in a regional climate model. J. Glac., 60(222), 761-770, doi: 10.3189/2014JoG14J051.
+Citation: Van Wessem, J. M., van de Berg, W. J., Noël, B. P., van Meijgaard, E., Birnbaum, G., Jakobs, C. L., ... & Medley, B. (2017). Modelling the climate and surface mass balance of polar ice sheets using RACMO2, part 2: Antarctica (1979–2016). Cryosph. Discuss., 1-35.
 
 see also overview: https://www.projects.science.uu.nl/iceclimate/models/antarctica.php
 
@@ -181,6 +189,13 @@ Documentation: <http://homepages.see.leeds.ac.uk/~earkhb/Basins_page.html>
 Citation: Zwally, H. J., Giovinetto, M. B., Beckley, M. A., & Saba, J. L. (2012). Antarctic and Greenland drainage systems. GSFC Cryospheric Sciences Laboratory.
 
 
+
+Icesat4 dataset
+
+Documentation:
+
+Citation:
+
 #### Surface Velocity
 Rignotvel data.
 
@@ -189,6 +204,26 @@ Citation: Rignot, E., J. Mouginot, and B. Scheuchl. 2017. MEaSUREs InSAR-Based A
 More infos: http://nsidc.org/data/nsidc-0484
 
 
+
+Mouginotvel data
+
+Citation: Mouginot, J., E. Rignot, B. Scheuchl, and R. Millan. 2017. Comprehensive Annual Ice Sheet Velocity Mapping Using Landsat-8, Sentinel-1, and RADARSAT-2 Data, Remote Sensing. 9. Art. #364. https://doi.org/10.3390/rs9040364
+
+More infos: https://nsidc.org/data/NSIDC-0720/
+
+
+
+#### Model intercomparisons
+InitMIP
+
+Wiki: http://www.climate-cryosphere.org/wiki/index.php?title=InitMIP-Antarctica
+
+
+Larmip
+
+Wiki: https://www.pik-potsdam.de/research/earth-system-analysis/models/larmip
+
+
 ### License
 
-This code is licensed under GPLv3, see the LICENSE.txt. See the commit history for authors.
+	
