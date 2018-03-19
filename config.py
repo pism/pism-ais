@@ -51,7 +51,7 @@ time_averaging_period = [1986,2005]
 #output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/python/pism_input/")
 output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/data/")
 #output_data_path = os.path.expanduser("/p/tmp/garbe/projects/LARMIP/forcingData/")
-i#output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/data/pism-ais/")
+#output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/data/pism-ais/")
 
 # matthias
 #output_data_path = os.path.expanduser("~/data/20170316_PismInputData/")
@@ -77,6 +77,8 @@ tillphi_data_path = "/p/projects/tumble/mengel/pismSourceData/20170807_PismTillP
 
 #paleo_time_input = "/home/albrecht/Documents/pism/data/paleo_timeseries/"
 paleo_time_input = "/p/projects/tumble/pism_input/Paleo/"
+
+raised_data_path = "/p/projects/tumble/pism_input/Raised/data/" 
 
 # anomaly data used for initMIP experiments
 # Downloaded dBasalMelt and dSMB anomaly fields from

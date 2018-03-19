@@ -71,6 +71,9 @@ pism_input
 |   +-- remap.py
 +-- mouginot_vel
 |   +-- preprocess_netcdf.py
++-- raised
+|   +-- convert_to_netcdf.py
+|   +-- remap.py
 +-- sealevel
 |   +--download_specmap_and_rename.py
 |   +--convert_ice6g_to_netcdf.py
@@ -245,6 +248,19 @@ More infos: http://nsidc.org/data/nsidc-0484
 Citation: Mouginot, J., E. Rignot, B. Scheuchl, and R. Millan. 2017. Comprehensive Annual Ice Sheet Velocity Mapping Using Landsat-8, Sentinel-1, and RADARSAT-2 Data, Remote Sensing. 9. Art. #364. https://doi.org/10.3390/rs9040364
 
 More infos: https://nsidc.org/data/NSIDC-0720/
+
+
+### Grounding line
+
+#### RAISED
+
+Citation: Bentley, Michael J., et al. "A community-based geological reconstruction of Antarctic Ice Sheet deglaciation since the Last Glacial Maximum." Quaternary Science Reviews 100 (2014): 1-9.
+
+
+Vetices downloaded and converted to csv as publication [supplement](https://www.sciencedirect.com/science/article/pii/S0277379114002546#appsec1) from:
+
+https://ars.els-cdn.com/content/image/1-s2.0-S0277379114002546-mmc1.xlsx
+
 
 
 ### Temperature forcing
