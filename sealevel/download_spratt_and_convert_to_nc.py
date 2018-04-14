@@ -28,7 +28,7 @@ f = open(datain+datfile)
 print datain+datfile
 
 datalength=527
-datastart=97
+datastart=96
 
 time = zeros([datalength-datastart])
 slev = zeros([datalength-datastart])
@@ -69,5 +69,11 @@ ncf.close()
 ncattedcommand='ncatted -O -a calendar,time,c,c,"365_day" '+timeseries
 # set calendar convention as PISM
 os.system(ncattedcommand)
+
+ncpdqcommand="ncpdq -O --rdr=-time "+timeseries+" "+timeseries
+# reverse time dimension
+os.system(ncpdqcommand)
+
+
 
 print " time series written into NetCDF file ",timeseries
