@@ -30,6 +30,7 @@ grids={
     "pism2km":[3000,3000,-2801500,-2801500,3196500,3196500],
     "pism1km":[6000,6000,-2802000,-2802000,3197000,3197000],
      # only corners are relevant for initMIP
+    "initmip2km":[3041,3041,-3040000,-3040000,3040000,3040000],
     "initmip4km":[1521,1521,-3040000,-3040000,3040000,3040000],
     "initmip8km":[761,761,-3040000,-3040000,3040000,3040000],
     "initmip16km":[381,381,-3040000,-3040000,3040000,3040000]}
@@ -49,14 +50,12 @@ time_averaging_period = [1986,2005]
 #torsten local and tumble
 #output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
 #output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/python/pism_input/")
-output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/data/")
+# output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/data/")
 #output_data_path = os.path.expanduser("/p/tmp/garbe/projects/LARMIP/forcingData/")
 #output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/data/pism-ais/")
 
 # matthias
-#output_data_path = os.path.expanduser("~/data/20170316_PismInputData/")
-#output_data_path = "/p/projects/tumble/mengel/pismInputData/20170316_PismInputData"
-#output_data_path = os.path.expanduser("/p/projects/pism/mengel/pism_input/")
+output_data_path = os.path.expanduser("/p/projects/pism/mengel/pism_input/")
 
 
 # RACMO data is not freely available and cannot be downloaded,
@@ -69,6 +68,10 @@ racmo_i2s_data_path = "/p/projects/tumble/mengel/pismSourceData/20170328_RacmoHa
 # updated and driven by Reanalysis. Preferred to use:
 racmo_wessem_data_path = "/p/projects/tumble/mengel/pismSourceData/20170626_RacmoData_Wessem_etal"
 
+# data is from Keisha Shimada, personal communication, based on
+# DOI: 10.1175/JTECH-D-16-0075.1
+# please du not use in publications (yet)
+shimada_socean_data_path = "/p/projects/tumble/mengel/pismSourceData/20180424_Shimada_SouthernOceanClimatology"
 
 # the till friction angle (tillphi) can be infered from PISM inversion.
 # for now, we rely on an inversion run from Torsten on 15km.
@@ -78,7 +81,7 @@ tillphi_data_path = "/p/projects/tumble/mengel/pismSourceData/20170807_PismTillP
 #paleo_time_input = "/home/albrecht/Documents/pism/data/paleo_timeseries/"
 paleo_time_input = "/p/projects/tumble/pism_input/Paleo/"
 
-raised_data_path = "/p/projects/tumble/pism_input/Raised/data/" 
+raised_data_path = "/p/projects/tumble/pism_input/Raised/data/"
 
 # anomaly data used for initMIP experiments
 # Downloaded dBasalMelt and dSMB anomaly fields from
