@@ -20,7 +20,8 @@ import pism_input.pism_input as pi; reload(pi)
 dataset="rignotvel"
 
 # regridding_method: choose "bilinear", "integer" or "conservative"
-regridding_method = "bilinear"
+#regridding_method = "bilinear"
+regridding_method = "integer"
 
 data_path = os.path.join(cf.output_data_path, dataset)
 inputfile = os.path.join(data_path, 'rignotvel_450m_input.nc')

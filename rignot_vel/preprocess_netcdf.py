@@ -56,7 +56,7 @@ def preprocess_ice_velocity():
                 "cp %s %s" % (input_filename,output_filename),
                 "ncrename -v VX,vx -v VY,vy " + output_filename,
                 #"ncks -O -v vx,vy,x,y,mapping %s %s" % (output_filename, output_filename)
-                "ncks -O -v vx,vy,x,y,mapping,STDX,STDY %s %s" % (output_filename, output_filename)
+                "ncks -O -v vx,vy,x,y,mapping,STDX,STDY %s %s" % (output_filename, output_filename),
                 ]
 
 
@@ -149,6 +149,10 @@ if __name__ == "__main__":
     # prepare the input file for cdo remapping
     # this step takes a while for high resolution data (i.e. 1km)
     pi.prepare_ncfile_for_cdo(output_filename)
+
+    # workaround to flip y-axis up-side down
+    subprocess.check_call('cdo invertlat '+output_filename+' '+output_filename+'.tmp',shell=True)
+    subprocess.check_call('mv '+output_filename+'.tmp '+output_filename,shell=True)
 
     print " Rignot file",output_filename,"successfully preprocessed."
 
