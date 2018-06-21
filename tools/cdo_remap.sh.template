@@ -14,6 +14,7 @@
 #SBATCH --mail-user={{user}}@pik-potsdam.de
 
 cdocmd="srun -n $SLURM_NTASKS cdo -P $SLURM_NTASKS"
+OMP_NUM_THREADS=$SLURM_NTASKS
 {% else %}
 cdocmd=cdo
 {% endif %}

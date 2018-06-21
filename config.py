@@ -8,12 +8,8 @@ import pwd
 authors="matthias.mengel@pik-potsdam.de and torsten.albrecht@pik-potsdam.de"
 
 # grid_id determines also the resolution
-#grid_id = "initmip8km"
-grid_id = "initmip4km"
-#grid_id = "initmip16km"
-#grid_id = "initmip8km"
+grid_id = "initmip8km"
 #grid_id = "pism7km"
-
 
 # grids, as inferred from PISM output
 grids={
@@ -39,12 +35,12 @@ grids={
 # if true, prepare regridding bash grid to be submitted and not run interactively.
 cluster_regridding = True
 # cdo has a feature to extrapolate data into data-empty regions
-use_cdo_extrapolation=False
+use_cdo_extrapolation=True
 
 # regridding_method: choose "bilinear", "integer" or "conservative"
 # use conservative remapping to remap fine bed topography to coarser grids,
 # works only for bedmap2 and albmap data.
-regridding_method = "integer"
+regridding_method = "bilinear"
 
 time_averaging_period = [1986,2005]
 
@@ -75,9 +71,8 @@ racmo_wessem_data_path = "/p/projects/tumble/mengel/pismSourceData/20170626_Racm
 shimada_socean_data_path = "/p/projects/tumble/mengel/pismSourceData/20180424_Shimada_SouthernOceanClimatology"
 
 # the till friction angle (tillphi) can be infered from PISM inversion.
-# for now, we rely on an inversion run from Torsten on 15km.
-# The code here allows to remap the 15km to other resolutions.
-tillphi_data_path = "/p/projects/tumble/mengel/pismSourceData/20170807_PismTillPhiFromTorsten/result_fit_16km_50000yrs.nc"
+# for now, we rely on an inversion run from Torsten on 16km.
+tillphi_data_path = "/p/projects/tumble/mengel/pismSourceData/20170807_PismTillPhiFromTorsten/result_fit_16km_50000yrs_2411_TPSO.nc"
 
 #paleo_time_input = "/home/albrecht/Documents/pism/data/paleo_timeseries/"
 paleo_time_input = "/p/projects/tumble/pism_input/Paleo/"
