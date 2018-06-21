@@ -10,7 +10,7 @@ authors="matthias.mengel@pik-potsdam.de and torsten.albrecht@pik-potsdam.de"
 # grid_id determines also the resolution
 #grid_id = "initmip8km"
 grid_id = "initmip4km"
-grid_id = "initmip16km"
+#grid_id = "initmip16km"
 #grid_id = "initmip8km"
 #grid_id = "pism7km"
 
@@ -30,6 +30,7 @@ grids={
     "pism2km":[3000,3000,-2801500,-2801500,3196500,3196500],
     "pism1km":[6000,6000,-2802000,-2802000,3197000,3197000],
      # only corners are relevant for initMIP
+    "initmip1km":[6081,6081,-3040000,-3040000,3040000,3040000],
     "initmip2km":[3041,3041,-3040000,-3040000,3040000,3040000],
     "initmip4km":[1521,1521,-3040000,-3040000,3040000,3040000],
     "initmip8km":[761,761,-3040000,-3040000,3040000,3040000],

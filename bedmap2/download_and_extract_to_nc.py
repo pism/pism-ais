@@ -106,6 +106,9 @@ ncout.comment  = cf.authors+" created netcdf bedmap2 file at " + now
 
 ncout.close()
 
+#remove inconsistency of ice thickness at Lake Wostok
+os.system("ncap2 -O -s 'where(mask==0) thk=usurf-topg' "+ncout_name+" "+ncout_name)
+
 # prepare the input file for cdo remapping
 # this step takes a while for high resolution data (i.e. 1km)
 pi.prepare_ncfile_for_cdo(ncout_name)
