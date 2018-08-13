@@ -21,9 +21,11 @@ import config as cf; reload(cf)
 dataset = "larmip"
 data_path = os.path.join(cf.output_data_path, dataset)
 
-data_resolution = 16 # or: 8,1
+data_resolution = 4 # or: 16,8,4,1
 LM_filename = os.path.join(data_path,'LARMIP_regions_initMIPgrid_'+str(data_resolution)+'.nc')
-vername="1p0"
+vername="1p0_0p37_f2543e6"
+vername="1p0_0p37"
+vername="1p0_0p37_yr2450"
 
 PD_pism_out = cf.initmip_pism_out
 try:
@@ -46,7 +48,8 @@ if not os.path.isfile(LM_filename):
 
 if not os.path.isfile(PD_pism_climate):
   # get PISM initial climate forcing
-  var_list = 'x,y,effective_climatic_mass_balance,effective_ice_surface_temp,effective_shelf_base_temperature,effective_shelf_base_mass_flux'
+  #var_list = 'x,y,effective_climatic_mass_balance,effective_ice_surface_temp,effective_shelf_base_temperature,effective_shelf_base_mass_flux'
+  var_list = 'x,y,climatic_mass_balance,ice_surface_temp,shelfbtemp,shelfbmassflux'
   cmd_ncks = ['ncks', '-A', '-v' , var_list,
              PD_pism_out, PD_pism_climate]
   sub.call(cmd_ncks)
@@ -57,14 +60,18 @@ if not os.path.isfile(PD_pism_climate):
              '-v' , 'effective_shelf_base_mass_flux,shelfbmassflux',
              '-v' , 'effective_shelf_base_temperature,shelfbtemp',
              PD_pism_climate]
-  sub.call(cmd_ncre)
+  #sub.call(cmd_ncre)
 
-PD_ocean_file = os.path.join(cf.output_data_path,"schmidtko/schmidtko_initmip"+str(data_resolution)+"km_means_11+12.nc" )
+#PD_ocean_file = os.path.join(cf.output_data_path,"schmidtko/schmidtko_initmip"+str(data_resolution)+"km_means_11+12.nc" )
+PD_ocean_file = os.path.join(cf.output_data_path,"schmidtko/schmidtko_initmip"+str(data_resolution)+"km_means.nc" )
+PD_ocean_file = "/p/projects/pism/mengel/pism_input/schmidtko/schmidtko_initmip4km_means_amundsen_m0p37.nc"
 
 for melt in [1,2,4,8,16,32]:
-#for melt in [2]:
+#for melt in [1,2,4,8,16]:
+#for melt in [16,4,2,1]:
   for reg in xrange(7):
-  #for reg in [5]:
+  #for reg in [3]:
+  #for reg in [6]:
     print melt,reg
     final_filename = os.path.join(data_path,'larmip_'+str(data_resolution)+'km_forcing'+vername+'_reg'+str(reg)+'_m'+str(melt)+'.nc')
     if reg==6:

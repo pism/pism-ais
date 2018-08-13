@@ -7,7 +7,8 @@ import netCDF4 as cdf
 
 def get_time():
     ncf = cdf.Dataset(ctrl_file,"r")
-    time = ncf.variables['time'][4:] # crop first 4 years (start at year 2000)
+    #time = ncf.variables['time'][4:] # crop first 4 years (start at year 2000)
+    time = ncf.variables['time'][:] #(start at year 2000)
     time = [y*1./(60*60*24*365) for y in time] # convert time: seconds -> years
     # time = [y+2000.0 for y in time]
     return time
@@ -18,7 +19,9 @@ def get_slvol(filename):
     except IOError as error:
         print filename, "not found."
         raise error
-    return ncf.variables['slvol'][4:] # crop first 4 years (start at year 2000)
+    return ncf.variables['slvol'][:] # (start at year 2000)
+    #return ncf.variables['slvol'][4:] # crop first 4 years (start at year 2000)
+
 
 def compute_anomaly(data):
     return -(data - data[0])
@@ -27,8 +30,10 @@ def compute_anomaly(data):
 
 def process_slvol(infile,region,drift_corr=True):
     
-    print infile
+  print infile
     
+  if os.path.exists(infile):    
+
     ## get slvol variable
     slvol = get_slvol(infile)
     slvol_diff = compute_anomaly(slvol)
@@ -56,7 +61,7 @@ def process_slvol(infile,region,drift_corr=True):
 
 ##################################################################
 
-case='paleo'
+case='highres'
 
 if case=='equi':
 
@@ -78,6 +83,14 @@ elif case=='paleo':
   # output_dir = "/home/garbe/PIK_Pism/garbe/larmip/postprocess/data/PISMPAL"+res
   output_dir = os.path.join(project_dir, experiment_dir, "PISMPAL"+res)
 
+elif case=='highres':
+
+  project_dir = '/p/projects/pism/albrecht/larmip/'
+  experiment_dir = 'f2543k/'
+  timeseries_dir = os.path.join(project_dir, experiment_dir, "results")
+  res='4'
+  dur='200'
+  output_dir = os.path.join(project_dir, experiment_dir, "PISMHRES"+res)
 
 
 os.system("mkdir -p "+output_dir)
@@ -85,9 +98,14 @@ os.system("mkdir -p "+output_dir)
 
 #### Changes should not be necessary in this section
 
-experiments = ["ADD0","ADD1","ADD2","ADD3","ADD4","ADD5","ADD6"]
+#experiments = ["ADD0","ADD1","ADD2","ADD3","ADD4","ADD5","ADD6"]
+#experiments = ["ADD4"]
+experiments = ["ADD2","ADD3","ADD4","ADD5","ADD6"]
 
-forcings = ['2','1','4','2','8','32','16'] # do not change!
+
+#forcings = ['2','1','4','2','8','32','16'] # do not change!
+#forcings = ['8']
+forcings = ['4','2','8','32','16']
 
 regions = ["reg1","reg2","reg3","reg4","reg5"]
 
@@ -124,8 +142,9 @@ for i,experiment in enumerate(experiments):
     
 
     if experiment=="ADD3":
-        infile = os.path.join(timeseries_dir, "ts_abmb_m2_all_"+res+"km_"+dur+"yrs.nc")
-        process_slvol(infile,"all",drift_corr=True)
+        for f in forcings:
+          infile = os.path.join(timeseries_dir, "ts_abmb_m"+f+"_all_"+res+"km_"+dur+"yrs.nc")
+          process_slvol(infile,f,drift_corr=True)
     
     
     else:
@@ -137,10 +156,11 @@ for i,experiment in enumerate(experiments):
     
     ## adjust global attributes
     from time import asctime
-    nc.history = 'Created on ' + asctime() + ' by Julius Garbe, PIK'
+    nc.history = 'Created on ' + asctime() + ' by Torsten Albrecht, PIK'
     nc.institution = 'Potsdam Institute for Climate Impact Research (PIK), Germany'
     nc.contact = 'torsten.albrecht@pik-potsdam.de and julius.garbe@pik-potsdam.de'
-    nc.source = 'PISM stable 1.0 (https://github.com/talbrecht/pism_pik; branch: pism_pik_1.0_larmip; commit: 3172d9b)'
+    #nc.source = 'PISM stable 1.0 (https://github.com/talbrecht/pism_pik; branch: pism_pik_1.0_larmip; commit: 3172d9b)'
+    nc.source = 'PISM stable 1.0 (https://github.com/talbrecht/pism_pik; branch: dev_larmip; commit: 4402963f)'    
     nc.Conventions = 'CF-1.6'
     
     nc.close()

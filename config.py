@@ -89,12 +89,14 @@ initmip_data_path = "/p/projects/tumble/pism_input/ISMIP6/initMIP/AIS/"
 # Note: this depends on the PISM ice sheet state.
 #initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2308_TPSO/results/result_forcing_16km_205000yrs.nc"
 #initmip_pism_out = "/p/tmp/albrecht/pism17/pismOut/forcing/forcing2294f_LGM/results/result_forcing_16km_205000yrs.nc"
-initmip_pism_out = "/p/tmp/albrecht/pism18/pismOut/pism_paleo/pism1.0_paleo05_5073/paleo.nc"
+#initmip_pism_out = "/p/tmp/albrecht/pism18/pismOut/pism_paleo/pism1.0_paleo05_5073/paleo.nc"
 #initmip_pism_out = "/p/tmp/albrecht/pism18/pismOut/larmip/larmip2302/results/snap_constant_8km_100000yrs.nc_-50000.000.nc"
 #initmip_pism_out = "/p/tmp/garbe/projects/AIS_Equilibrium/pismpik_ant_equi_larmip8km_1.0_10/snapshots_29000.000.nc"
 #initmip_pism_out = "/p/tmp/garbe/projects/AIS_Equilibrium/pismpik_ant_equi_larmip8km_1.0_10/snapshots_58000.000.nc"
 #initmip_pism_out = "/p/tmp/albrecht/pism18/pismOut/larmip/larmip2304/results/result_constant_8km_100000yrs.nc"
-
+initmip_pism_out = "/p/tmp/albrecht/pism18/pismOut/forcing/forcing2542_TPSO/results/snapshots_2000.000.nc"
+#initmip_pism_out = "/p/projects/pism/albrecht/abumip/results/forcing2543e6_TPSO/results/result_ctrl_4km_1000yrs.nc"
+initmip_pism_out = "/p/tmp/mengel/pism_out/opttphi_056_initmip4km_nomassoceanconst_amundsenm0p37/snapshots_2450.000.nc"
 
 # merge the follwing dataset into one PISM-ready file.
 # datasets should be named here as the subfolder of its preprocessing.
