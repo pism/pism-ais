@@ -11,6 +11,7 @@ def get_time():
     time = ncf.variables['time'][:] #(start at year 2000)
     time = [y*1./(60*60*24*365) for y in time] # convert time: seconds -> years
     # time = [y+2000.0 for y in time]
+    ncf.close()
     return time
 
 def get_slvol(filename):
@@ -19,7 +20,9 @@ def get_slvol(filename):
     except IOError as error:
         print filename, "not found."
         raise error
-    return ncf.variables['slvol'][:] # (start at year 2000)
+    slvol = ncf.variables['slvol'][:] # (start at year 2000)
+    ncf.close()
+    return slvol
     #return ncf.variables['slvol'][4:] # crop first 4 years (start at year 2000)
 
 
@@ -100,12 +103,12 @@ os.system("mkdir -p "+output_dir)
 
 #experiments = ["ADD0","ADD1","ADD2","ADD3","ADD4","ADD5","ADD6"]
 #experiments = ["ADD4"]
-experiments = ["ADD2","ADD3","ADD4","ADD5","ADD6"]
+experiments = ["ADD0","ADD2","ADD3","ADD4","ADD5","ADD6"]
 
 
 #forcings = ['2','1','4','2','8','32','16'] # do not change!
 #forcings = ['8']
-forcings = ['4','2','8','32','16']
+forcings = ['2','4','2','8','32','16']
 
 regions = ["reg1","reg2","reg3","reg4","reg5"]
 
@@ -142,7 +145,7 @@ for i,experiment in enumerate(experiments):
     
 
     if experiment=="ADD3":
-        for f in forcings:
+        for f in ['4','2','8','32','16']:
           infile = os.path.join(timeseries_dir, "ts_abmb_m"+f+"_all_"+res+"km_"+dur+"yrs.nc")
           process_slvol(infile,f,drift_corr=True)
     

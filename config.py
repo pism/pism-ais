@@ -8,7 +8,10 @@ import pwd
 authors="matthias.mengel@pik-potsdam.de and torsten.albrecht@pik-potsdam.de"
 
 # grid_id determines also the resolution
-grid_id = "initmip8km"
+#grid_id = "initmip16km"
+#grid_id = "initmip8km"
+#grid_id = "initmip32km"
+grid_id = "initmip1km"
 #grid_id = "pism7km"
 
 # grids, as inferred from PISM output
@@ -30,7 +33,9 @@ grids={
     "initmip2km":[3041,3041,-3040000,-3040000,3040000,3040000],
     "initmip4km":[1521,1521,-3040000,-3040000,3040000,3040000],
     "initmip8km":[761,761,-3040000,-3040000,3040000,3040000],
-    "initmip16km":[381,381,-3040000,-3040000,3040000,3040000]}
+    "initmip16km":[381,381,-3040000,-3040000,3040000,3040000],
+    "initmip32km":[191,191,-3040000,-3040000,3040000,3040000],
+    "initmip64km":[95,95,-3040000,-3040000,3040000,3040000]}
 
 # if true, prepare regridding bash grid to be submitted and not run interactively.
 cluster_regridding = True
@@ -47,12 +52,12 @@ time_averaging_period = [1986,2005]
 #torsten local and tumble
 #output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
 #output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/python/pism_input/")
-# output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/data/")
+output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/data/")
 #output_data_path = os.path.expanduser("/p/tmp/garbe/projects/LARMIP/forcingData/")
 #output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/data/pism-ais/")
 
 # matthias
-output_data_path = os.path.expanduser("/p/projects/pism/mengel/pism_input/")
+#output_data_path = os.path.expanduser("/p/projects/pism/mengel/pism_input/")
 
 
 # RACMO data is not freely available and cannot be downloaded,
@@ -69,6 +74,11 @@ racmo_wessem_data_path = "/p/projects/tumble/mengel/pismSourceData/20170626_Racm
 # DOI: 10.1175/JTECH-D-16-0075.1
 # please du not use in publications (yet)
 shimada_socean_data_path = "/p/projects/tumble/mengel/pismSourceData/20180424_Shimada_SouthernOceanClimatology"
+
+# Bedmachine Antarctica from Mathieu Morlighem, personal communication
+# please do not use in publications (yet)
+bedmachine_path = "/p/projects/pism/pism_input_data/BedMachine"
+
 
 # the till friction angle (tillphi) can be infered from PISM inversion.
 # for now, we rely on an inversion run from Torsten on 16km.

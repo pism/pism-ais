@@ -38,6 +38,8 @@ pism_input
 +-- bedmap2
 |   +-- download_and_extract_to_nc.py
 |   +-- remap.py
++-- bedmachine
+|   +-- remap.py
 +-- albmap
 |   +-- download_and_rename_variables.py
 |   +-- remap.py
@@ -131,6 +133,16 @@ Dataset describing surface elevation, ice-thickness and the sea ﬂoor and subgl
 Documentation: <https://www.bas.ac.uk/project/bedmap-2/>
 
 Citation: Fretwell, P., Pritchard, H. D., Vaughan, D. G., Bamber, J. L., Barrand, N. E., Bell, R., Bianchi, C., Bingham, R. G., Blankenship, D. D., Casassa, G., Catania, G., Callens, D., Conway, H., Cook, A. J., Corr, H. F. J., Damaske, D., Damm, V., Ferraccioli, F., Forsberg, R., Fujita, S., Gim, Y., Gogineni, P., Griggs, J. A., Hindmarsh, R. C. A., Holmlund, P., Holt, J. W., Jacobel, R. W., Jenkins, A., Jokat, W., Jordan, T., King, E. C., Kohler, J., Krabill, W., Riger-Kusk, M., Langley, K. A., Leitchenkov, G., Leuschen, C., Luyendyk, B. P., Matsuoka, K., Mouginot, J., Nitsche, F. O., Nogi, Y., Nost, O. A., Popov, S. V., Rignot, E., Rippin, D. M., Rivera, A., Roberts, J., Ross, N., Siegert, M. J., Smith, A. M., Steinhage, D., Studinger, M., Sun, B., Tinto, B. K., Welch, B. C., Wilson, D., Young, D. A., Xiangbin, C., and Zirizzotti, A.: Bedmap2: improved ice bed, surface and thickness datasets for Antarctica, The Cryosphere, 7, 375-393, doi:10.5194/tc-7-375-2013, 2013.
+
+
+### BedMachine Antarctica
+
+Dataset based on mass conservation, version = "24-Jan-2019 (v1.27), retrieved from Mathieu Morlighem, personal communication (not published yet, probably mid of 2019)
+
+Website: <https://sites.uci.edu/morlighem/bedmachine-antarctica/>
+
+Citation = M. Morlighem, E. Rignot, J. Mouginot, H. Seroussi and E. Larour, Deeply incised submarine glacial valleys beneath the Greenland Ice Sheet, Nat. Geosci., 7, 418-422, 2014, doi:10.1038/ngeo2167
+
 
 
 ### Accumulation
