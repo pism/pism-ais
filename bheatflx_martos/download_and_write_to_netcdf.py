@@ -132,7 +132,9 @@ wrtfile.proj4 = cf.proj4str
 
 wrtfile.close()
 
-
-subprocess.check_call('python ../tools/nc2cdo.py '+final_filename,shell=True)
+# prepare the input file for cdo remapping
+# this step takes a while for high resolution data (i.e. 1km)
+pi.prepare_ncfile_for_cdo(final_filename)
+#subprocess.check_call('python ../tools/nc2cdo.py '+final_filename,shell=True)
 
 print 'Data successfully saved to', final_filename

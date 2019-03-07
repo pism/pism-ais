@@ -68,6 +68,9 @@ pism_input
 +-- bheatflx_martos
 |   +-- download_and_write_to_netcdc.py
 |   +-- remap.py
++-- bheatflx_an
+|   +-- download_and_extract.py
+|   +-- remap.py
 +-- bheatflx_purucker
 |   +-- download_and_interpolate_to_netcdc.py
 +-- rignot_vel
@@ -124,7 +127,8 @@ Dataset describing surface elevation, ice-thickness and the sea ﬂoor and subgl
 
 Documentation: <https://www.bas.ac.uk/project/bedmap-2/>
 
-Citation: Fretwell, P., Pritchard, H. D., Vaughan, D. G., Bamber, J. L., Barrand, N. E., Bell, R., Bianchi, C., Bingham, R. G., Blankenship, D. D., Casassa, G., Catania, G., Callens, D., Conway, H., Cook, A. J., Corr, H. F. J., Damaske, D., Damm, V., Ferraccioli, F., Forsberg, R., Fujita, S., Gim, Y., Gogineni, P., Griggs, J. A., Hindmarsh, R. C. A., Holmlund, P., Holt, J. W., Jacobel, R. W., Jenkins, A., Jokat, W., Jordan, T., King, E. C., Kohler, J., Krabill, W., Riger-Kusk, M., Langley, K. A., Leitchenkov, G., Leuschen, C., Luyendyk, B. P., Matsuoka, K., Mouginot, J., Nitsche, F. O., Nogi, Y., Nost, O. A., Popov, S. V., Rignot, E., Rippin, D. M., Rivera, A., Roberts, J., Ross, N., Siegert, M. J., Smith, A. M., Steinhage, D., Studinger, M., Sun, B., Tinto, B. K., Welch, B. C., Wilson, D., Young, D. A., Xiangbin, C., and Zirizzotti, A.: Bedmap2: improved ice bed, surface and thickness datasets for Antarctica, The Cryosphere, 7, 375-393, doi:10.5194/tc-7-375-2013, 2013.
+Citation: 
+- Fretwell, P., Pritchard, H. D., Vaughan, D. G., Bamber, J. L., Barrand, N. E., Bell, R., Bianchi, C., Bingham, R. G., Blankenship, D. D., Casassa, G., Catania, G., Callens, D., Conway, H., Cook, A. J., Corr, H. F. J., Damaske, D., Damm, V., Ferraccioli, F., Forsberg, R., Fujita, S., Gim, Y., Gogineni, P., Griggs, J. A., Hindmarsh, R. C. A., Holmlund, P., Holt, J. W., Jacobel, R. W., Jenkins, A., Jokat, W., Jordan, T., King, E. C., Kohler, J., Krabill, W., Riger-Kusk, M., Langley, K. A., Leitchenkov, G., Leuschen, C., Luyendyk, B. P., Matsuoka, K., Mouginot, J., Nitsche, F. O., Nogi, Y., Nost, O. A., Popov, S. V., Rignot, E., Rippin, D. M., Rivera, A., Roberts, J., Ross, N., Siegert, M. J., Smith, A. M., Steinhage, D., Studinger, M., Sun, B., Tinto, B. K., Welch, B. C., Wilson, D., Young, D. A., Xiangbin, C., and Zirizzotti, A.: Bedmap2: improved ice bed, surface and thickness datasets for Antarctica, The Cryosphere, 7, 375-393, doi:10.5194/tc-7-375-2013, 2013.
 
 ### Bedrock topography
 
@@ -134,7 +138,8 @@ Dataset describing surface elevation, ice-thickness and the sea ﬂoor and subgl
 
 Documentation: <https://www.bas.ac.uk/project/bedmap-2/>
 
-Citation: Fretwell, P., Pritchard, H. D., Vaughan, D. G., Bamber, J. L., Barrand, N. E., Bell, R., Bianchi, C., Bingham, R. G., Blankenship, D. D., Casassa, G., Catania, G., Callens, D., Conway, H., Cook, A. J., Corr, H. F. J., Damaske, D., Damm, V., Ferraccioli, F., Forsberg, R., Fujita, S., Gim, Y., Gogineni, P., Griggs, J. A., Hindmarsh, R. C. A., Holmlund, P., Holt, J. W., Jacobel, R. W., Jenkins, A., Jokat, W., Jordan, T., King, E. C., Kohler, J., Krabill, W., Riger-Kusk, M., Langley, K. A., Leitchenkov, G., Leuschen, C., Luyendyk, B. P., Matsuoka, K., Mouginot, J., Nitsche, F. O., Nogi, Y., Nost, O. A., Popov, S. V., Rignot, E., Rippin, D. M., Rivera, A., Roberts, J., Ross, N., Siegert, M. J., Smith, A. M., Steinhage, D., Studinger, M., Sun, B., Tinto, B. K., Welch, B. C., Wilson, D., Young, D. A., Xiangbin, C., and Zirizzotti, A.: Bedmap2: improved ice bed, surface and thickness datasets for Antarctica, The Cryosphere, 7, 375-393, doi:10.5194/tc-7-375-2013, 2013.
+Citation: 
+- Fretwell, P., Pritchard, H. D., Vaughan, D. G., Bamber, J. L., Barrand, N. E., Bell, R., Bianchi, C., Bingham, R. G., Blankenship, D. D., Casassa, G., Catania, G., Callens, D., Conway, H., Cook, A. J., Corr, H. F. J., Damaske, D., Damm, V., Ferraccioli, F., Forsberg, R., Fujita, S., Gim, Y., Gogineni, P., Griggs, J. A., Hindmarsh, R. C. A., Holmlund, P., Holt, J. W., Jacobel, R. W., Jenkins, A., Jokat, W., Jordan, T., King, E. C., Kohler, J., Krabill, W., Riger-Kusk, M., Langley, K. A., Leitchenkov, G., Leuschen, C., Luyendyk, B. P., Matsuoka, K., Mouginot, J., Nitsche, F. O., Nogi, Y., Nost, O. A., Popov, S. V., Rignot, E., Rippin, D. M., Rivera, A., Roberts, J., Ross, N., Siegert, M. J., Smith, A. M., Steinhage, D., Studinger, M., Sun, B., Tinto, B. K., Welch, B. C., Wilson, D., Young, D. A., Xiangbin, C., and Zirizzotti, A.: Bedmap2: improved ice bed, surface and thickness datasets for Antarctica, The Cryosphere, 7, 375-393, doi:10.5194/tc-7-375-2013, 2013.
 
 
 ### BedMachine Antarctica
@@ -143,7 +148,8 @@ Dataset based on mass conservation, version = "24-Jan-2019 (v1.27), retrieved fr
 
 Website: <https://sites.uci.edu/morlighem/bedmachine-antarctica/>
 
-Citation = M. Morlighem, E. Rignot, J. Mouginot, H. Seroussi and E. Larour, Deeply incised submarine glacial valleys beneath the Greenland Ice Sheet, Nat. Geosci., 7, 418-422, 2014, doi:10.1038/ngeo2167
+Citation:
+- M. Morlighem, E. Rignot, J. Mouginot, H. Seroussi and E. Larour, Deeply incised submarine glacial valleys beneath the Greenland Ice Sheet, Nat. Geosci., 7, 418-422, 2014, doi:10.1038/ngeo2167
 
 
 
@@ -155,7 +161,8 @@ Antarctic surface accumulation map on the same grid, with the same projection an
 
 Documentation: <https://secure.antarctica.ac.uk/data/bedmap2/resources/Arthern_accumulation/Arthern_accumulation_bedmap2_grid_readme.rtf>
 
-Citation: Arthern, R. J., D. P. Winebrenner, and D. G. Vaughan (2006), Antarctic snow accumulation mapped using polarization of 4.3-cm wavelength microwave emission, J. Geophys. Res., 111, D06107, doi:10.1029/2004JD005667.
+Citation: 
+- Arthern, R. J., D. P. Winebrenner, and D. G. Vaughan (2006), Antarctic snow accumulation mapped using polarization of 4.3-cm wavelength microwave emission, J. Geophys. Res., 111, D06107, doi:10.1029/2004JD005667.
 
 
 #### Albmap data
@@ -164,7 +171,8 @@ Citation: Arthern, R. J., D. P. Winebrenner, and D. G. Vaughan (2006), Antarctic
 
 Documentation: <http://websrv.cs.umt.edu/isis/index.php/Present_Day_Antarctica>
 
-Citation: Vaughan, D. G., Bamber, J. L., Giovinetto, M., Russell, J., & Cooper, A. P. R. (1999). Reassessment of net surface mass balance in Antarctica. Journal of climate, 12(4), 933-946.
+Citation: 
+- Vaughan, D. G., Bamber, J. L., Giovinetto, M., Russell, J., & Cooper, A. P. R. (1999). Reassessment of net surface mass balance in Antarctica. Journal of climate, 12(4), 933-946.
 
 
 
@@ -174,11 +182,12 @@ Citation: Vaughan, D. G., Bamber, J. L., Giovinetto, M., Russell, J., & Cooper, 
 
 HadCM3_c20_I2S_precip_Y.nc contains precipitation in mm/yr for 1980-1999 over Antarctica from RACMO2 run forced with HadCM3 data. HadCM3_c20_I2S_t2m_Y.nc contains temperature in Kelvin for 1980-1999 over Antarctica from RACMO2 run forced with HadCM3 data. (ANT55/HAD)
 
-Citation: Ligtenberg, S. R. M., van de Berg, W. J., van den Broeke, M. R., Rae, J. G. L. & van Meijgaard, E. (2013). Future surface mass balance of the Antarctic Ice Sheet and its influence on sea level change, simulated by a regional atmospheric climate model. Clim. Dynam. 41, 867–884
+Citation: 
+- Ligtenberg, S. R. M., van de Berg, W. J., van den Broeke, M. R., Rae, J. G. L. & van Meijgaard, E. (2013). Future surface mass balance of the Antarctic Ice Sheet and its influence on sea level change, simulated by a regional atmospheric climate model. Clim. Dynam. 41, 867–884
 
 ###### Note:
 Data was given for use in this paper:
-Frieler Katja; Clark Peter U.; He Feng; Buizert Christo; Reese Ronja; Ligtenberg Stefan R. M.; van den Broeke Michiel R.; Winkelmann Ricarda & Levermann Anders Consistent evidence of increasing Antarctic accumulation with warming. Nature Clim. Change, 2015, 5, 348-352
+- Frieler Katja; Clark Peter U.; He Feng; Buizert Christo; Reese Ronja; Ligtenberg Stefan R. M.; van den Broeke Michiel R.; Winkelmann Ricarda & Levermann Anders Consistent evidence of increasing Antarctic accumulation with warming. Nature Clim. Change, 2015, 5, 348-352
 
 
 
@@ -186,7 +195,8 @@ Frieler Katja; Clark Peter U.; He Feng; Buizert Christo; Reese Ronja; Ligtenberg
 
 The latest RACMO2.3p2 data (ANT27/2) forced by ERA-Interim provide yearly mean air temperature (t2m) and surface mass balance (smb) for the years 1979-2016. 
 
-Citation: Van Wessem, J. M., van de Berg, W. J., Noël, B. P., van Meijgaard, E., Birnbaum, G., Jakobs, C. L., ... & Medley, B. (2017). Modelling the climate and surface mass balance of polar ice sheets using RACMO2, part 2: Antarctica (1979–2016). Cryosph. Discuss., 1-35.
+Citation: 
+- Van Wessem, J. M., van de Berg, W. J., Noël, B. P., van Meijgaard, E., Birnbaum, G., Jakobs, C. L., ... & Medley, B. (2017). Modelling the climate and surface mass balance of polar ice sheets using RACMO2, part 2: Antarctica (1979–2016). Cryosph. Discuss., 1-35.
 
 see also overview: https://www.projects.science.uu.nl/iceclimate/models/antarctica.php
 
@@ -200,7 +210,8 @@ see also overview: https://www.projects.science.uu.nl/iceclimate/models/antarcti
 
 Documentation: <http://websrv.cs.umt.edu/isis/index.php/Present_Day_Antarctica>
 
-Citation: Comiso, J. C. (2000). Variability and trends in Antarctic surface temperatures from in situ and satellite infrared measurements. Journal of Climate, 13(10), 1674-1696.
+Citation: 
+- Comiso, J. C. (2000). Variability and trends in Antarctic surface temperatures from in situ and satellite infrared measurements. Journal of Climate, 13(10), 1674-1696.
 
 
 ### Geothermal flux
@@ -211,30 +222,40 @@ Citation: Comiso, J. C. (2000). Variability and trends in Antarctic surface temp
 
 Documentation: <http://websrv.cs.umt.edu/isis/index.php/Present_Day_Antarctica>
 
-Citation: Shapiro, N. M., & Ritzwoller, M. H. (2004). Inferring surface heat flux distributions guided by a global seismic model: particular application to Antarctica. Earth and Planetary Science Letters, 223(1), 213-224.
+Citation: 
+- Shapiro, N. M., & Ritzwoller, M. H. (2004). Inferring surface heat flux distributions guided by a global seismic model: particular application to Antarctica. Earth and Planetary Science Letters, 223(1), 213-224.
 
-          Maule, C. F., Purucker, M. E., Olsen, N., & Mosegaard, K. (2005). Heat flux anomalies in Antarctica revealed by satellite magnetic data. Science, 309(5733), 464-467.
+- Maule, C. F., Purucker, M. E., Olsen, N., & Mosegaard, K. (2005). Heat flux anomalies in Antarctica revealed by satellite magnetic data. Science, 309(5733), 464-467.
 
 #### Martos data
 
 Documentation: https://doi.pangaea.de/10.1594/PANGAEA.882503
 
-Citation: Martos, Y. M., Catalán, M., Jordan, T. A., Golynsky, A., Golynsky, D., Eagles, G., & Vaughan, D. G. (2017). Heat flux distribution of Antarctica unveiled. Geophysical Research Letters, 44(22).
+Citation: 
+- Martos, Y. M., Catalán, M., Jordan, T. A., Golynsky, A., Golynsky, D., Eagles, G., & Vaughan, D. G. (2017). Heat flux distribution of Antarctica unveiled. Geophysical Research Letters, 44(22).
 
 #### Purucker data
 
 Documentation: https://core2.gsfc.nasa.gov/research/purucker/heatflux_updates.html
 
-Citation: Purucker, M. E.: Geothermal heat flux data set based on low res- olution observations collected by the CHAMP satellite between 2000 and 2010, and produced from the MF-6 model following the technique described in Fox Maule et al. (2005), 2013
+Citation: 
+- Purucker, M. E.: Geothermal heat flux data set based on low res- olution observations collected by the CHAMP satellite between 2000 and 2010, and produced from the MF-6 model following the technique described in Fox Maule et al. (2005), 2013
 
 
+#### An data
+
+Documentation: http://www.seismolab.org/model/antarctica/lithosphere/#an1-hf
+
+Citation:
+- An, M., Wiens, D.A., Zhao, Y., Feng, M., Nyblade, A., Kanao, M., Li, Y., Maggi, A. and Lévêque, J.J., 2015. Temperature, lithosphere‐asthenosphere boundary, and heat flux beneath the Antarctic Plate inferred from seismic velocities. Journal of Geophysical Research: Solid Earth, 120(12), pp.8720-8742.
 
 
 ### Southern Ocean
 
 #### Schmidtko dataset.
 
-Citation: Schmidtko, Sunke, Heywood, Karen J., Thompson, Andrew F. and Aoki, Shigeru (2014) Multidecadal warming of Antarctic waters Science, 346 (6214). pp. 1227-1231.
+Citation: 
+- Schmidtko, Sunke, Heywood, Karen J., Thompson, Andrew F. and Aoki, Shigeru (2014) Multidecadal warming of Antarctic waters Science, 346 (6214). pp. 1227-1231.
 
 
 
@@ -244,7 +265,8 @@ Citation: Schmidtko, Sunke, Heywood, Karen J., Thompson, Andrew F. and Aoki, Shi
 
 Documentation: <http://homepages.see.leeds.ac.uk/~earkhb/Basins_page.html>
 
-Citation: Zwally, H. J., Giovinetto, M. B., Beckley, M. A., & Saba, J. L. (2012). Antarctic and Greenland drainage systems. GSFC Cryospheric Sciences Laboratory.
+Citation: 
+- Zwally, H. J., Giovinetto, M. B., Beckley, M. A., & Saba, J. L. (2012). Antarctic and Greenland drainage systems. GSFC Cryospheric Sciences Laboratory.
 
 
 #### Icesat4 dataset
@@ -259,7 +281,8 @@ Citation:
 
 #### Rignot data.
 
-Citation: Rignot, E., J. Mouginot, and B. Scheuchl. 2017. MEaSUREs InSAR-Based Antarctica Ice Velocity Map, Version 2. [Indicate subset used]. Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. doi: http://dx.doi.org/10.5067/D7GK8F5J8M8R. [Date Accessed].
+Citation: 
+- Rignot, E., J. Mouginot, and B. Scheuchl. 2017. MEaSUREs InSAR-Based Antarctica Ice Velocity Map, Version 2. [Indicate subset used]. Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. doi: http://dx.doi.org/10.5067/D7GK8F5J8M8R. [Date Accessed].
 
 More infos: http://nsidc.org/data/nsidc-0484
 
@@ -267,7 +290,8 @@ More infos: http://nsidc.org/data/nsidc-0484
 
 #### Mouginot data
 
-Citation: Mouginot, J., E. Rignot, B. Scheuchl, and R. Millan. 2017. Comprehensive Annual Ice Sheet Velocity Mapping Using Landsat-8, Sentinel-1, and RADARSAT-2 Data, Remote Sensing. 9. Art. #364. https://doi.org/10.3390/rs9040364
+Citation: 
+- Mouginot, J., E. Rignot, B. Scheuchl, and R. Millan. 2017. Comprehensive Annual Ice Sheet Velocity Mapping Using Landsat-8, Sentinel-1, and RADARSAT-2 Data, Remote Sensing. 9. Art. #364. https://doi.org/10.3390/rs9040364
 
 More infos: https://nsidc.org/data/NSIDC-0720/
 
@@ -276,7 +300,8 @@ More infos: https://nsidc.org/data/NSIDC-0720/
 
 #### RAISED
 
-Citation: Bentley, Michael J., et al. "A community-based geological reconstruction of Antarctic Ice Sheet deglaciation since the Last Glacial Maximum." Quaternary Science Reviews 100 (2014): 1-9.
+Citation: 
+- Bentley, Michael J., et al. "A community-based geological reconstruction of Antarctic Ice Sheet deglaciation since the Last Glacial Maximum." Quaternary Science Reviews 100 (2014): 1-9.
 
 
 Vetices downloaded and converted to csv as publication [supplement](https://www.sciencedirect.com/science/article/pii/S0277379114002546#appsec1) from:
@@ -358,6 +383,9 @@ Wiki: http://www.climate-cryosphere.org/wiki/index.php?title=InitMIP-Antarctica
 Wiki: https://www.pik-potsdam.de/research/earth-system-analysis/models/larmip
 
 
+#### Abumip
+
+Wiki: http://www.climate-cryosphere.org/wiki/index.php?title=ABUMIP-Antarctica
 
 
 ## License
