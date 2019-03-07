@@ -7,11 +7,13 @@ import pwd
 
 authors="matthias.mengel@pik-potsdam.de and torsten.albrecht@pik-potsdam.de"
 
+proj4str="+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"
+
 # grid_id determines also the resolution
-#grid_id = "initmip16km"
+grid_id = "initmip16km"
 #grid_id = "initmip8km"
 #grid_id = "initmip32km"
-grid_id = "initmip1km"
+#grid_id = "initmip1km"
 #grid_id = "pism7km"
 
 # grids, as inferred from PISM output

@@ -100,8 +100,7 @@ for varname,data in bedm2_vars.iteritems():
 
 now = datetime.datetime.now().strftime("%B %d, %Y")
 #antarctica
-#ncout.proj4 = "+proj=stere +ellps=WGS84 +datum=WGS84 +lon_0=0 +lat_0=-90 +lat_ts=-71 +units=m"
-ncout.proj4 = "+lon_0=0.0 +ellps=WGS84 +datum=WGS84 +lat_ts=-71.0 +proj=stere +x_0=0.0 +units=m +y_0=0.0 +lat_0=-90.0"
+ncout.proj4 = cf.proj4str
 ncout.comment  = cf.authors+" created netcdf bedmap2 file at " + now
 
 ncout.close()

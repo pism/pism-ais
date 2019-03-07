@@ -65,9 +65,11 @@ pism_input
 +-- accum
 |   +-- download_and_extract_to_nc.py
 |   +-- remap.py
-+-- bheatflx
++-- bheatflx_martos
 |   +-- download_and_write_to_netcdc.py
 |   +-- remap.py
++-- bheatflx_purucker
+|   +-- download_and_interpolate_to_netcdc.py
 +-- rignot_vel
 |   +-- preprocess_netcdf.py
 |   +-- remap.py
@@ -211,12 +213,20 @@ Documentation: <http://websrv.cs.umt.edu/isis/index.php/Present_Day_Antarctica>
 
 Citation: Shapiro, N. M., & Ritzwoller, M. H. (2004). Inferring surface heat flux distributions guided by a global seismic model: particular application to Antarctica. Earth and Planetary Science Letters, 223(1), 213-224.
 
+          Maule, C. F., Purucker, M. E., Olsen, N., & Mosegaard, K. (2005). Heat flux anomalies in Antarctica revealed by satellite magnetic data. Science, 309(5733), 464-467.
 
 #### Martos data
 
 Documentation: https://doi.pangaea.de/10.1594/PANGAEA.882503
 
 Citation: Martos, Y. M., Catalán, M., Jordan, T. A., Golynsky, A., Golynsky, D., Eagles, G., & Vaughan, D. G. (2017). Heat flux distribution of Antarctica unveiled. Geophysical Research Letters, 44(22).
+
+#### Purucker data
+
+Documentation: https://core2.gsfc.nasa.gov/research/purucker/heatflux_updates.html
+
+Citation: Purucker, M. E.: Geothermal heat flux data set based on low res- olution observations collected by the CHAMP satellite between 2000 and 2010, and produced from the MF-6 model following the technique described in Fox Maule et al. (2005), 2013
+
 
 
 

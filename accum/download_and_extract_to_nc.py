@@ -94,8 +94,7 @@ for varname,data in accum_vars.iteritems():
 
 now = datetime.datetime.now().strftime("%B %d, %Y")
 #antarctica
-#ncout.proj4 = "+proj=stere +ellps=WGS84 +datum=WGS84 +lon_0=0 +lat_0=-90 +lat_ts=-71 +units=m"
-ncout.proj4 = "+lon_0=0.0 +ellps=WGS84 +datum=WGS84 +lat_ts=-71.0 +proj=stere +x_0=0.0 +units=m +y_0=0.0 +lat_0=-90.0"
+ncout.proj4 = cf.proj4str
 ncout.comment  = cf.authors+" created netcdf accumulation file at " + now
 ncout.citation = "Arthern, R. J., D. P. Winebrenner, and D. G. Vaughan (2006), Antarctic snow accumulation mapped using polarization of 4.3-cm wavelength microwave emission, J. Geophys. Res., 111, D06107, doi:10.1029/2004JD005667."
 

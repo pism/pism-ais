@@ -2,9 +2,9 @@
 """
 matthias.mengel@pik, torsten.albrecht@pik
 Regridding: bring your data to the grid we commonly use for PISM Antarctica
-simulations. This is equivalent to the ALBMAP grid.
+simulations. This is equivalent to the ALBMAP or initMIP grid.
 This step will take a while if high resolution data is processed.
-Regrid Bedmap2 data to various grid resolution using cdo remapcony.
+Regrid Bedmachine data to various grid resolution using cdo remapbil.
 
 """
 
