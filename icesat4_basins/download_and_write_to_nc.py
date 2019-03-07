@@ -104,7 +104,7 @@ ncv[:] = np.flipud(drainage_id_grid)
 now = datetime.datetime.now().strftime("%B %d, %Y")
 
 ncout.data_origin = "https://icesat4.gsfc.nasa.gov/cryo_data/ant_grn_drainage_systems.php"
-ncout.proj4 = "+lon_0=0.0 +ellps=WGS84 +datum=WGS84 +lat_ts=-70.0 +proj=stere +x_0=0.0 +units=m +y_0=0.0 +lat_0=-90.0"
+ncout.proj4 = cf.proj4str
 ncout.comment  = cf.authors+" created netcdf basins file at " + now
 ncout.close()
 

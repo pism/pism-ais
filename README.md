@@ -271,9 +271,10 @@ Citation:
 
 #### Icesat4 dataset
 
-Documentation:
+Documentation: https://icesat4.gsfc.nasa.gov/cryo_data/ant_grn_drainage_systems.php
 
 Citation:
+- Zwally, H. J., Giovinetto, M. B., Beckley, M. A., & Saba, J. L. (2012). Antarctic and Greenland drainage systems. GSFC Cryospheric Sciences Laboratory.
 
 
 
@@ -304,7 +305,7 @@ Citation:
 - Bentley, Michael J., et al. "A community-based geological reconstruction of Antarctic Ice Sheet deglaciation since the Last Glacial Maximum." Quaternary Science Reviews 100 (2014): 1-9.
 
 
-Vetices downloaded and converted to csv as publication [supplement](https://www.sciencedirect.com/science/article/pii/S0277379114002546#appsec1) from:
+Vertices downloaded and converted to csv as publication [supplement](https://www.sciencedirect.com/science/article/pii/S0277379114002546#appsec1) from:
 
 https://ars.els-cdn.com/content/image/1-s2.0-S0277379114002546-mmc1.xlsx
 
