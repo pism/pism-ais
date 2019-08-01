@@ -73,10 +73,12 @@ pism_input
 |   +-- remap.py
 +-- bheatflx_purucker
 |   +-- download_and_interpolate_to_netcdc.py
-+-- rignot_vel
++-- vel_rignot
 |   +-- preprocess_netcdf.py
 |   +-- remap.py
-+-- mouginot_vel
++-- vel_mouginot17_annual
+|   +-- preprocess_netcdf.py
++-- vel_mouginot19
 |   +-- preprocess_netcdf.py
 +-- raised
 |   +-- convert_to_netcdf.py
@@ -280,7 +282,7 @@ Citation:
 
 ### Surface Velocity
 
-#### Rignot data.
+#### Rignot data (2017)
 
 Citation: 
 - Rignot, E., J. Mouginot, and B. Scheuchl. 2017. MEaSUREs InSAR-Based Antarctica Ice Velocity Map, Version 2. [Indicate subset used]. Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. doi: http://dx.doi.org/10.5067/D7GK8F5J8M8R. [Date Accessed].
@@ -289,12 +291,21 @@ More infos: http://nsidc.org/data/nsidc-0484
 
 
 
-#### Mouginot data
+#### Mouginot annual data (2017)
 
 Citation: 
 - Mouginot, J., E. Rignot, B. Scheuchl, and R. Millan. 2017. Comprehensive Annual Ice Sheet Velocity Mapping Using Landsat-8, Sentinel-1, and RADARSAT-2 Data, Remote Sensing. 9. Art. #364. https://doi.org/10.3390/rs9040364
 
 More infos: https://nsidc.org/data/NSIDC-0720/
+
+
+
+#### Mouginot data (2019)
+
+Citation: 
+- Mouginot, J., E. Rignot, and B. Scheuchl. 2019. MEaSUREs Phase-Based Antarctica Ice Velocity Map, Version 1. [Indicate subset used]. doi: https://doi.org/10.5067/PZ3NJ5RXRH10. [Date Accessed].
+
+More infos: https://nsidc.org/data/NSIDC-0754/
 
 
 ### Grounding line
