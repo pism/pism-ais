@@ -286,7 +286,7 @@ def SP_from_SA_Antarctica(SA):
     I therefore compute the average saar value where availabe and used this as a proxy 
     '''
     
-    saar_for_Antarctica = 0.00023004095217 # from calculate_reference_saar.py
+    saar_for_Antarctica = 0.0002003450411891062 # from calculate_reference_saar.py
     SP = (35.0 / 35.16504) * SA / (1.0 + saar_for_Antarctica)
 
     return SP
