@@ -78,6 +78,8 @@ pism_input
 |   +-- remap.py
 +-- bheatflx_purucker
 |   +-- download_and_interpolate_to_netcdc.py
++-- bheatflx_shen
+|   +-- interpolate_to_netcdc.py
 +-- vel_rignot
 |   +-- preprocess_netcdf.py
 |   +-- remap.py
@@ -230,6 +232,9 @@ Citation:
 
 ### Geothermal flux
 
+overview white paper:
+- https://www.scar.org/scar-news/serce-news/scar-serce-ghf
+
 #### Albmap data
 
 5km resolution, NetCDF files of Antarctica gathered from various data sources and interpolated, when necessary, onto the same grid using polar stereographic projection
@@ -262,6 +267,15 @@ Documentation: http://www.seismolab.org/model/antarctica/lithosphere/#an1-hf
 
 Citation:
 - An, M., Wiens, D.A., Zhao, Y., Feng, M., Nyblade, A., Kanao, M., Li, Y., Maggi, A. and Lévêque, J.J., 2015. Temperature, lithosphere‐asthenosphere boundary, and heat flux beneath the Antarctic Plate inferred from seismic velocities. Journal of Geophysical Research: Solid Earth, 120(12), pp.8720-8742.
+
+
+#### Shen data
+
+Documentation: https://sites.google.com/view/weisen/research-products?authuser=0
+
+Citation:
+- Shen, W., Wiens, D., Lloyd, A. and Nyblade, A., 2020. A Geothermal heat flux map of Antarctica empirically constrained by seismic structure. Geophysical Research Letters, https://doi.org/10.1029/2020GL086955
+
 
 
 ### Southern Ocean
