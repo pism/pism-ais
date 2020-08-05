@@ -10,9 +10,10 @@ authors="matthias.mengel@pik-potsdam.de and torsten.albrecht@pik-potsdam.de"
 proj4str="+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"
 
 # grid_id determines also the resolution
+#grid_id = "initmip32km"
 grid_id = "initmip16km"
 #grid_id = "initmip8km"
-#grid_id = "initmip32km"
+#grid_id = "initmip4km"
 #grid_id = "initmip1km"
 #grid_id = "pism7km"
 
@@ -69,10 +70,17 @@ output_data_path = os.path.expanduser("/p/projects/pism/pism_input_data/Velocity
 # if racmo data is intended to be used in publications,
 # get in contact with the racmo authors before.
 # deprecated: RACMO v2.1 i2s data. not suggested to use in PISM runs
-racmo_i2s_data_path = "/p/projects/tumble/mengel/pismSourceData/20170328_RacmoHadCM3_Ice2Sea"
+racmo_i2s_data_path = "/p/projects/pism/pism_input_data/Racmo_Ice2Sea"
 
 # updated and driven by Reanalysis. Preferred to use:
-racmo_wessem_data_path = "/p/projects/tumble/mengel/pismSourceData/20170626_RacmoData_Wessem_etal"
+racmo_wessem_data_path = "/p/projects/pism/pism_input_data/Racmo_ERAInterim"
+
+# driven by HadCM3.
+racmo_hadcm3_data_path = "/p/projects/pism/pism_input_data/Racmo_HadCM3"
+
+# driven by CESM2
+racmo_cesm2_data_path = "/p/projects/pism/pism_input_data/Racmo_CESM2"
+
 
 # data is from Keisha Shimada, personal communication, based on
 # DOI: 10.1175/JTECH-D-16-0075.1

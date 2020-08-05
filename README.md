@@ -51,6 +51,11 @@ pism_input
 |   +-- merge_and_rename_variables.py
 |   +-- remap.py
 |   +-- time_mean.py
++-- racmo_cesm2
+|   +-- merge_and_rename_variables_hist/spp585.py
+|   +-- remap.py
+|   +-- time_mean.py
+|   +-- cdo_remap_yearly.sh (example)
 +-- zwally_basins
 |   +-- download_and_extend_to_ocean.py
 |   +-- remap.py (with local cdo rempnn)
@@ -197,10 +202,17 @@ Data was given for use in this paper:
 
 The latest RACMO2.3p2 data (ANT27/2) forced by ERA-Interim provide yearly mean air temperature (t2m) and surface mass balance (smb) for the years 1979-2016. 
 
-Citation: 
-- Van Wessem, J. M., van de Berg, W. J., Noël, B. P., van Meijgaard, E., Birnbaum, G., Jakobs, C. L., ... & Medley, B. (2017). Modelling the climate and surface mass balance of polar ice sheets using RACMO2, part 2: Antarctica (1979–2016). Cryosph. Discuss., 1-35.
+
+Citation:
+- Van Wessem, Jan Melchior, Willem Jan Van De Berg, Brice PY Noël, Erik Van Meijgaard, Charles Amory, Gerit Birnbaum, Constantijn L. Jakobs et al. "Modelling the climate and surface mass balance of polar ice sheets using racmo2: Part 2: Antarctica (1979-2016)." Cryosphere 12, no. 4 (2018): 1479-1498.
 
 see also overview: https://www.projects.science.uu.nl/iceclimate/models/antarctica.php
+
+
+RACMO2.3p2 data (ANT27/2) forced by CESM2 climate model provide monthly mean air temperature (tskin) and surface mass balance (smb) for the historical period 1950-2014 and the SPP585 projection period 2015-2100.
+
+not yet published, contact J.M.vanWessem[at]uu.nl
+
 
 
 
