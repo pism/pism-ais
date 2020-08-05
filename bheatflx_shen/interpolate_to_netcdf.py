@@ -1,11 +1,10 @@
 """
 torsten.albrecht@pik-potsdam.de
-Download geothermal heatflux data from Dhet et al., 2020 for given lon-lat points and triangulate to PISM compatible grid.
+Download geothermal heatflux data from Shen et al., 2020 for given lon-lat points and triangulate to PISM compatible grid.
 
 Shen, W., Wiens, D., Lloyd, A. and Nyblade, A., 2020. 
 A Geothermal heat flux map of Antarctica empirically constrained by seismic structure.
 Geophysical Research Letters, https://doi.org/10.1029/2020GL086955.
-
 
 Waveforms and metadata were accessed via the Incorporated Research Institutions for Seismology (IRIS) Data Management System, 
 specifically the IRIS Data Management Center. At the time of submission, the model, uncertainties, and the 3-D model used are 
