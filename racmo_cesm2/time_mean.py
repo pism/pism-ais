@@ -24,9 +24,9 @@ def run(commands):
 
 dataset = "racmo_cesm2"
 period = "hist"
-#period = "spp585"
+#period = "ssp585"
 period_years = "1950_2014" # hist
-#period_years = "2015_2099" # spp585
+#period_years = "2015_2099" # ssp585
 timestep = "monthly" # time step of RACMO input data ("monthly" or "yearly")
 grid = cf.grid_id
 tap = [str(t) for t in cf.time_averaging_period]

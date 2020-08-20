@@ -18,7 +18,7 @@ import config as cf; reload(cf)
 import pism_input.pism_input as pi; reload(pi)
 
 dataset = "racmo_cesm2"
-period = "hist" #spp585
+period = "hist" #ssp585
 
 
 # regridding_method: choose "bilinear", "integer" or "conservative"

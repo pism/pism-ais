@@ -31,10 +31,10 @@ inputdatadir=$datadir/racmo_cesm2/input
 outputdatadir=$datadir/racmo_cesm2/initmip8km
 
 # bilinear interpolation, an option if conservative methods fail.
-$cdocmd -b F64 -f nc4c remapbil,$griddatadir/initmip8km.nc $inputdatadir/racmo_cesm2_spp585.nc $outputdatadir/racmo_cesm2_spp585_initmip8km.nc
+$cdocmd -b F64 -f nc4c remapbil,$griddatadir/initmip8km.nc $inputdatadir/racmo_cesm2_ssp585.nc $outputdatadir/racmo_cesm2_ssp585_initmip8km.nc
 
 
 # add x and y variables to output file.
-ncks -A -v x,y $griddatadir/initmip8km.nc $outputdatadir/racmo_cesm2_spp585_initmip8km.nc
+ncks -A -v x,y $griddatadir/initmip8km.nc $outputdatadir/racmo_cesm2_ssp585_initmip8km.nc
 
-echo "regridded file is $outputdatadir/racmo_cesm2_spp585_initmip8km.nc"
+echo "regridded file is $outputdatadir/racmo_cesm2_ssp585_initmip8km.nc"
