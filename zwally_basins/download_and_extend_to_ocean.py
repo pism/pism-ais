@@ -1,4 +1,4 @@
-"""
+"
 matthias.mengel@pik, torsten.albrecht@pik
 Download Zwally basin data and save to (5km) netcdf file.
 """
@@ -453,7 +453,9 @@ ncv[:] = basins
 
 now = datetime.datetime.now().strftime("%B %d, %Y")
 #ncout.created  = "created based on reese@pik at " + now
-ncout.data_origin = "downloaded from http://homepages.see.leeds.ac.uk/~earkhb/Basins_page.html"
+#ncout.data_origin = "downloaded from http://homepages.see.leeds.ac.uk/~earkhb/Basins_page.html"
+ncout.Descricption = "Antarctic drainage basins mapped by NASA and modified." ;
+ncout.Reference = "Zwally, H. Jay, Mario B. Giovinetto, Matthew A. Beckley, and Jack L. Saba, 2012, Antarctic and Greenland Drainage  Systems, GSFC Cryospheric Sciences Laboratory, at http://icesat4.gsfc.nasa.gov/cryo_data/ant_grn_drainage_systems.php." ;
 ncout.regions = "regions follow the definition of Zwally et al. 2012"
 ncout.proj4 = "+lon_0=0.0 +ellps=WGS84 +datum=WGS84 +lat_ts=-71.0 +proj=stere +x_0=0.0 +units=m +y_0=0.0 +lat_0=-90.0"
 ncout.comment  = cf.authors+" created netcdf basins file at " + now

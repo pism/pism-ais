@@ -210,6 +210,8 @@ The latest RACMO2.3p2 data (ANT27/2) forced by *ERA-Interim* provide yearly mean
 Citation:
 - Van Wessem, Jan Melchior, Willem Jan Van De Berg, Brice PY Noël, Erik Van Meijgaard, Charles Amory, Gerit Birnbaum, Constantijn L. Jakobs et al. "Modelling the climate and surface mass balance of polar ice sheets using racmo2: Part 2: Antarctica (1979-2016)." Cryosphere 12, no. 4 (2018): 1479-1498.
 
+download link: https://www.projects.science.uu.nl/iceclimate/publications/data/2018/vwessem2018_tc/RACMO_Yearly/
+
 see also overview: https://www.projects.science.uu.nl/iceclimate/models/antarctica.php
 
 
