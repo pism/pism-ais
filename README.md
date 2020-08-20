@@ -57,6 +57,7 @@ pism_input
 |   +-- merge_and_rename_variables_hist/spp585.py
 |   +-- remap.py
 |   +-- time_mean.py
+|   +-- cdo_remap_hist/spp858.sh
 |   +-- cdo_remap_yearly.sh (example for year-wise processing)
 +-- zwally_basins
 |   +-- download_and_extend_to_ocean.py
