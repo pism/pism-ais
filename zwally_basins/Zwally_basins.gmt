@@ -1,0 +1,159 @@
+#!/bin/bash
+#
+# Author: Florence Colleoni, https://github.com/flocolleoni
+#
+# NOTES TO THE USERS -------------------------------------------------------------------------------------------------
+#
+# *** ONLY WORKS WITH GMT6 (grdfill function not available before) ***
+#
+# This scripts download Zwally Antarctic Drainage basins and set NetCDF
+# file of drainage basins extended offshore out of the continental shelves
+#
+#
+# Inputs:
+# https://icesat4.gsfc.nasa.gov/cryo_data/drainage_divides/Ant_ICESat_MODIS_Mask_1km.ascii.gz
+#
+# Outputs:
+# zwally_basins_5km.nc : in geographical coordinates
+# zwally_basins_5km_cart.nc : in cartesian coordinates just ot check if cdo remaping script provides correct results
+#--------------------------------------------------------------------------------------------------------------------
+ulimit unlimited
+
+gmt gmtset PS_MEDIA A4
+gmt gmtset FONT_TITLE 10p
+gmt gmtset MAP_FRAME_WIDTH 0.1
+gmt gmtset PROJ_LENGTH_UNIT c
+
+# DOWNLOAD FILE IF NEEDED -----------------------------------------------------
+
+wget https://icesat4.gsfc.nasa.gov/cryo_data/drainage_divides/Ant_ICESat_MODIS_Mask_1km.ascii.gz
+
+
+# USER FILES AND VARIABLES -----------------------------------------------------
+
+INIFILE=Ant_ICESat_MODIS_Mask_1km.ascii
+DATAFILE=ais_basins_imbie.z12.txt
+DATACART=ais_basins_imbie.z12_cartesian.txt
+
+FIGNAME=Zwally_Ant_basins.eps
+FIGCART=Zwally_Ant_basins_cartesian.eps
+
+FIGLABEL="Antarctic drainage basins"
+echo $FIGLABEL >> figlabel.txt
+
+
+# DATAFILE PROCESSING -----------------------------------------------------
+tail +41 $INIFILE >> temp.txt  ## Remove headers from file
+
+# Select Lon Lat and Basins coloumns
+awk '{print $4," ",$3," ",$5}' temp.txt > Ini_basins_file_1km.txt
+
+# Average over a 5 km grid
+gmt blockmean -R0/359.974341/-90/-63.215507 -I5k Ini_basins_file_1km.txt > $DATAFILE
+
+# Project in cartesian coordinate (south polar stereographic)
+awk '{print $1," ",$2}' $DATAFILE > coord.txt
+awk '{print $1}' $DATAFILE > lon.txt
+awk '{print $2}' $DATAFILE > lat.txt
+awk '{print $3}' $DATAFILE > basins.txt
+
+gmt mapproject coord.txt -R0/359.974341/-90/-63.215507 -Js0/-90/-71/1:1 -C -F > xy.txt
+awk '{print $1/1000.," ",$2/1000.}' xy.txt > xy_km.txt
+paste xy_km.txt basins.txt >> $DATACART
+
+# Clean temporary files
+rm Ini_basins_file_1km.txt temp.txt coord.txt basins.txt
+rm temp.txt xy.txt xy_km.txt lat.txt lon.txt
+
+# Get coordinates domains
+RDOMAIN=$(gmt gmtinfo $DATAFILE -I1/1)
+echo "RDOMAIN:" $RDOMAIN
+
+# Get coordinates domains
+CDOMAIN=$(gmt gmtinfo $DATACART -I1/1)
+echo "CDOMAIN:" $CDOMAIN
+
+
+
+# PROCESS BASINS -----------------------------------------------------
+# LonLat file
+echo "Process Lonlat basins file"
+gmt xyz2grd $DATAFILE -R0/359.974341/-90/-63.215507 -I5k -Gbasins_lonlat_5km.nc
+gmt grdfill basins_lonlat_5km.nc -An -f0x -f1y -Gbasins_lonlat_extended_5km.nc
+cp basins_lonlat_extended_5km.nc zwally_basins_5km.nc
+ncrename -v z,basins zwally_basins_5km.nc
+rm $DATAFILE
+
+# Cartesian file
+echo "Process Cartesian basins file"
+gmt xyz2grd $DATACART -R-2508/2744/-2144/2240 -I5 -Gbasins_cart_5km.nc
+gmt grdfill basins_cart_5km.nc -An -f0x -f1y -Gbasins_extended_5km_cart.nc
+rm $DATACART
+
+# Get lonlat coordinates from Cartesian file
+gmt grd2xyz basins_extended_5km_cart.nc > basins_extended_5km_cart.xyz
+awk '{print $1*1000.," ",$2*1000.}' basins_extended_5km_cart.xyz > coord_cart.xy
+awk '{print $1," ",$2}' basins_extended_5km_cart.xyz > coord_cart_km.xy
+
+gmt mapproject coord_cart.xy -R0/359.974341/-90/-63.215507 -Js0/-90/-71/1:1 -F -C -I > lonlat_cart.txt
+rm coord_cart.xy
+
+awk '{print $1}' lonlat_cart.txt >lon_cart.xy
+awk '{print $2}' lonlat_cart.txt >lat_cart.xy
+paste coord_cart_km.xy lat_cart.xy > lat_basins_cart.txt
+paste coord_cart_km.xy lon_cart.xy > lon_basins_cart.txt
+
+rm coord_cart_km.xy basins_extended_5km_cart.xyz lon_cart.xy lat_cart.xy lonlat_cart.txt
+
+gmt xyz2grd lat_basins_cart.txt -R-2508/2744/-2144/2240 -I5 -Glat_cart_5km.nc
+gmt xyz2grd lon_basins_cart.txt -R-2508/2744/-2144/2240 -I5 -Glon_cart_5km.nc
+ncrename -v z,lat lat_cart_5km.nc
+ncrename -v z,lon lon_cart_5km.nc
+rm lat_basins_cart.txt lon_basins_cart.txt
+
+cp basins_extended_5km_cart.nc basins_extended_5km_cart_for_plot.nc
+
+
+# Merge all cartesian files together
+ncrename -d lat,y -d lon,x -v lat,y -v lon,x basins_extended_5km_cart.nc
+ncrename -v z,basins basins_extended_5km_cart.nc
+cdo merge basins_extended_5km_cart.nc lat_cart_5km.nc lon_cart_5km.nc zwally_basins_5km_cart.nc
+
+
+
+# PLOT BASINS -----------------------------------------------------
+gmt makecpt -Crainbow -T1/27/1 > sed_gradient.cpt
+
+gmt grdview basins_lonlat_extended_5km.nc -R0/359.974341/-90/-63.215507 -JS0/-90/16c -Csed_gradient.cpt -Qs -P -K > $FIGNAME
+
+gmt pscoast -A10000 -Dh -R -JS -W0.5p,black -O -P -K >> $FIGNAME
+
+gmt pstext figlabel.txt -F+f10p,Helvetica,black+cTL -Gwhite -D0.2/-0.2 -R -JS -O -P -K>> $FIGNAME
+
+gmt psscale -Csed_gradient.cpt -Dx1c/1c+w4c/0.15c+h -V -F+gwhite -Bx+l"basins" --FONT_ANNOT_PRIMARY=5p,Helvetica,black --FONT_LABEL=6p,Helvetica,black -O -P>> $FIGNAME
+
+
+# BASINS IN CARTESIAN COORDINATES POLAR STEREO.
+gmt grdview basins_extended_5km_cart_for_plot.nc $CDOMAIN -JX15/15 -Csed_gradient.cpt -Qs -P -K > $FIGCART
+
+gmt pstext figlabel.txt -F+f10p,Helvetica,black+cTL -Gwhite -D0.2/-0.2 $CDOMAIN -JX -O -P -K>> $FIGCART
+
+gmt psscale -Csed_gradient.cpt -Dx1c/1c+w4c/0.15c+h -V -F+gwhite -Bx+l"basins" --FONT_ANNOT_PRIMARY=5p,Helvetica,black --FONT_LABEL=6p,Helvetica,black -O -P>> $FIGCART
+
+
+
+# CONVERT IN NETCDF3 convention -----------------------------------------------------
+#ncks -3 basins_lonlat_extended_5km.nc b.nc
+#mv b.nc basins_lonlat_extended_5m.nc
+
+
+# CONVERT EPS FIGURE INTO PNG --------------------------------------------------------
+gmt psconvert -A -Eprepress -Tg $FIGNAME
+gmt psconvert -A -Eprepress -Tg $FIGCART
+rm *.eps
+
+
+#### CLEAN REPOSITORY ####
+rm figlabel.txt *.cpt
+
+rm basins_*.nc lat_cart_5km.nc lon_cart_5km.nc
