@@ -6,7 +6,7 @@
 #SBATCH --qos=priority
 #SBATCH --partition=priority
 #SBATCH --time=0-00:30:00
-#SBATCH --job-name=cdo_remap_initmip8km
+#SBATCH --job-name=cdo_remap_hist
 #SBATCH --account=ice
 #SBATCH --output=cdo_remap.out
 #SBATCH --error=cdo_remap.err
@@ -25,16 +25,19 @@ module load nco
 
 export REMAP_EXTRAPOLATE=on
 
+grid='initmip8km'
+
 datadir=/p/projects/pism/garbe/2018_PISM_Input_Data
+
 griddatadir=$datadir/cdo_remapgrids
 inputdatadir=$datadir/racmo_cesm2/input
-outputdatadir=$datadir/racmo_cesm2/initmip8km
+outputdatadir=$datadir/racmo_cesm2/$grid
 
 # bilinear interpolation, an option if conservative methods fail.
-$cdocmd -b F64 -f nc4c remapbil,$griddatadir/initmip8km.nc $inputdatadir/racmo_cesm2_hist.nc $outputdatadir/racmo_cesm2_hist_initmip8km.nc
+$cdocmd -b F64 -f nc4c remapbil,$griddatadir/$grid.nc $inputdatadir/racmo_cesm2_hist.nc $outputdatadir/racmo_cesm2_hist_$grid.nc
 
 
 # add x and y variables to output file.
-ncks -A -v x,y $griddatadir/initmip8km.nc $outputdatadir/racmo_cesm2_hist_initmip8km.nc
+ncks -A -v x,y $griddatadir/$grid.nc $outputdatadir/racmo_cesm2_hist_$grid.nc
 
-echo "regridded file is $outputdatadir/racmo_cesm2_hist_initmip8km.nc"
+echo "regridded file is $outputdatadir/racmo_cesm2_hist_$grid.nc"
