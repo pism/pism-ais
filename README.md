@@ -70,6 +70,7 @@ pism_input
 |   +-- calculate_potential_temps.py
 |   +-- remap.py
 |   +-- compute_basin_means.py
+|   +-- fill_schmidtko_initmip8km_means_to_basins_on_different_resolution.py 
 +-- accum
 |   +-- download_and_extract_to_nc.py
 |   +-- remap.py
