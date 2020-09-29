@@ -60,7 +60,7 @@ pism_input
 |   +-- cdo_remap_hist/ssp858.sh
 |   +-- cdo_remap_yearly.sh (example for year-wise processing)
 +-- zwally_basins
-|   +-- download_and_extend_to_ocean.py
+|   +-- unzip_and_extend_to_ocean.py
 |   +-- remap.py (with local cdo rempnn)
 +-- icesat4_basins
 |   +-- download_and_write_to_netcdf.py
