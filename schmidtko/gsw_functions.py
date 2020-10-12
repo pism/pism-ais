@@ -102,17 +102,20 @@ def pt_from_CT(SA, CT):
     # 1.5 iterations through the modified Newton-Rapshon iterative method
     CT_diff = CT_from_pt(SA, pt) - CT
     pt_old = pt
-    pt = pt_old - CT_diff / dCT_dpt  # 1/2-way through the 1st modified N-R.
+    with np.errstate(invalid='ignore'):
+        pt = pt_old - CT_diff / dCT_dpt  # 1/2-way through the 1st modified N-R.
     ptm = 0.5 * (pt + pt_old)
 
     # This routine calls gibbs_pt0_pt0(SA, pt0) to get the second derivative of
     # the Gibbs function with respect to temperature at zero sea pressure.
 
     dCT_dpt = -(ptm + Kelvin) * gibbs_pt0_pt0(SA, ptm) / cp0
-    pt = pt_old - CT_diff / dCT_dpt  # End of 1st full modified N-R iteration.
+    with np.errstate(invalid='ignore'):
+        pt = pt_old - CT_diff / dCT_dpt  # End of 1st full modified N-R iteration.
     CT_diff = CT_from_pt(SA, pt) - CT
     pt_old = pt
-    pt = pt_old - CT_diff / dCT_dpt  # 1.5 iterations of the modified N-R.
+    with np.errstate(invalid='ignore'):
+        pt = pt_old - CT_diff / dCT_dpt  # 1.5 iterations of the modified N-R.
     # Abs max error of result is 1.42e-14 deg C.
     return np.ma.array(pt, mask=mask, copy=False)
 
@@ -153,7 +156,8 @@ def CT_from_pt(SA, pt):
 
     pot_enthalpy = pot_enthalpy_from_pt(SA, pt)
 
-    CT = pot_enthalpy / cp0
+    with np.errstate(invalid='ignore'):
+        CT = pot_enthalpy / cp0
 
     return np.ma.array(CT, mask=mask, copy=False)
 
@@ -287,7 +291,9 @@ def SP_from_SA_Antarctica(SA):
     '''
     
     saar_for_Antarctica = 0.0002003450411891062 # from calculate_reference_saar.py
-    SP = (35.0 / 35.16504) * SA / (1.0 + saar_for_Antarctica)
+      
+    with np.errstate(invalid='ignore'):
+        SP = (35.0 / 35.16504) * SA / (1.0 + saar_for_Antarctica)
 
     return SP
 
@@ -404,7 +410,8 @@ def strip_mask(*args):
     SA = args[0]
     if SA.shape:
         SA = np.ma.asarray(SA)
-        SA[SA < 0] = np.ma.masked
+        with np.errstate(invalid='ignore'):
+            SA[SA < 0] = np.ma.masked
         for a in args[:-1]:
             mask = np.ma.mask_or(mask, np.ma.getmask(a))
         newargs = [SA.filled(0)]

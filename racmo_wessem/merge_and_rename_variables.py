@@ -93,7 +93,7 @@ ncf.smb_comment = "SMB is approximated by precip-evap over the ocean."
 ncf.description = "RACMO2.3p2 data (ANT27/2) forced by ERA-Interim provide yearly mean air temperature (t2m) and surface mass balance (smb) for the years 1979-2016, here averaged over CMIP5 period 1985-2005"
 ncf.link= "https://www.projects.science.uu.nl/iceclimate/publications/data/2018/vwessem2018_tc/RACMO_Yearly/"
 ncf.overview = "https://www.projects.science.uu.nl/iceclimate/models/antarctica.php"
-ncf.reference = "Van Wessem, Jan Melchior, Willem Jan Van De Berg, Brice PY Noël, Erik Van Meijgaard, Charles Amory, Gerit Birnbaum, Constantijn L. Jakobs et al. Modelling the climate and surface mass balance of polar ice sheets using racmo2: Part 2: Antarctica (1979-2016). Cryosphere 12, no. 4 (2018): 1479-1498."
+ncf.reference = "Van Wessem, Jan Melchior, Willem Jan Van De Berg, Brice PY Noel, Erik Van Meijgaard, Charles Amory, Gerit Birnbaum, Constantijn L. Jakobs et al. Modelling the climate and surface mass balance of polar ice sheets using racmo2: Part 2: Antarctica (1979-2016). Cryosphere 12, no. 4 (2018): 1479-1498."
 
 ncf.close()
 
