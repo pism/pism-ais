@@ -24,8 +24,7 @@ dataset="bedmachine"
 regridding_method = "bilinear"
 
 data_path = os.path.join(cf.output_data_path, dataset)
-inputfile = os.path.join(data_path, 'bedmachine_500m_input.nc')
-
+inputfile = os.path.join(data_path, 'BedMachineAntarctica_2020-07-15_v02_ReadyForRemapping.nc')
 
 cdo_targetgrid_file, regridded_file = pi.get_filenames_for_cdo(
     cf.cdo_remapgridpath, data_path, dataset, cf.grid_id)
