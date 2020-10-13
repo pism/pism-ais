@@ -39,6 +39,9 @@ pism_input
 |   +-- download_and_extract_to_nc.py
 |   +-- remap.py
 +-- bedmachine
+|   +-- nsidc-download_NSIDC-0756.002_2020-10-12.py
+|   +-- move_and_prepare_for_pism.py
+|   +-- ready_for_cdo.py
 |   +-- remap.py
 +-- albmap
 |   +-- download_and_rename_variables.py
