@@ -64,7 +64,7 @@ output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/da
 #output_data_path = os.path.expanduser("/p/projects/pism/mengel/pism_input/")
 
 # julius
-output_data_path = os.path.expanduser("/p/projects/pism/garbe/2018_PISM_Input_Data")
+#output_data_path = os.path.expanduser("/p/projects/pism/garbe/2018_PISM_Input_Data")
 
 # RACMO data is not freely available and cannot be downloaded,
 # so we have to provide an explicit path here
