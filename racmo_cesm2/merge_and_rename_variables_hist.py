@@ -35,8 +35,12 @@ for var,fl in process_file.iteritems():
     except OSError:
         pass
 
+
+
 #for var in ["t2m","smb","evap","precip"]:
 for var in ["tskin","smb"]:
+
+
 
     subprocess.check_call("ncks -A -v "+var+",lon,lat "+source_file[var]+" "+process_file[var],shell=True)
 
@@ -54,6 +58,20 @@ for var in ["tskin","smb"]:
 
     subprocess.check_call('ncks -O -C -x -v nblock1 '+process_file[var]+" "+process_file[var], shell=True)
     subprocess.check_call('ncks -O -C -x -v nblock2 '+process_file[var]+" "+process_file[var], shell=True)
+
+
+    if var=="smb":
+          #356day calendar
+          months=np.array([31.0,28.0,31.0,30.0,31.0,30.0,31.0,31.0,30.0,31.0,30.0,31.0])
+
+          dat = nc.Dataset(process_file[var], 'a')
+          time = dat.variables["time"][:] #days
+          smbcum = dat.variables["smb"][:] #kg/m2
+          smbperyear = np.zeros_like(smbcum)
+          for i,t in enumerate(time):
+            smbperyear[i]=smbcum[i]*365.0/months[i%12] #kg/m2/yr
+          dat.variables["smb"][:]=smbperyear[:]  
+          dat.close()
 
 # Converting SMB units: Not needed probably.
 # subprocess.check_call("ncap2 -O -s 'smb=smb*1000.0/910.0' "+output_file+" "+output_file,shell=True)
@@ -101,6 +119,9 @@ subprocess.check_call("ncrename -v tskin,ice_surface_temp -O "+output_file+" "+o
 #ncf.variables["smb"][:] = smb
 #ncf.smb_comment = "SMB is approximated by precip-evap over the ocean."
 #ncf.close()
+
+
+
 
 subprocess.check_call('ncatted -a units,smb,o,c,"kg m-2 year-1" '+output_file,shell=True)
 subprocess.check_call("ncrename -v smb,climatic_mass_balance -O "+output_file+" "+output_file,shell=True)
