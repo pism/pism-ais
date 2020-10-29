@@ -51,6 +51,7 @@ use_cdo_extrapolation=True
 regridding_method = "bilinear"
 
 time_averaging_period = [1986,2005]
+#time_averaging_period = [1950,1979]
 
 #torsten local and tumble
 #output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
@@ -63,7 +64,7 @@ output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/da
 #output_data_path = os.path.expanduser("/p/projects/pism/mengel/pism_input/")
 
 # julius
-#output_data_path = os.path.expanduser("/p/projects/pism/pism_input_data/Velocity/")
+output_data_path = os.path.expanduser("/p/projects/pism/garbe/2018_PISM_Input_Data")
 
 # RACMO data is not freely available and cannot be downloaded,
 # so we have to provide an explicit path here

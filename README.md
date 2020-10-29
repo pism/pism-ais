@@ -39,6 +39,9 @@ pism_input
 |   +-- download_and_extract_to_nc.py
 |   +-- remap.py
 +-- bedmachine
+|   +-- nsidc-download_NSIDC-0756.002_2020-10-12.py
+|   +-- move_and_prepare_for_pism.py
+|   +-- ready_for_cdo.py
 |   +-- remap.py
 +-- albmap
 |   +-- download_and_rename_variables.py
@@ -54,12 +57,13 @@ pism_input
 +-- racmo_hadcm3
 |   +-- merge_and_rename_variables_c20/a1b.py
 +-- racmo_cesm2
-|   +-- merge_and_rename_variables_hist/spp585.py
+|   +-- merge_and_rename_variables_hist/ssp585.py
 |   +-- remap.py
 |   +-- time_mean.py
+|   +-- cdo_remap_hist/ssp858.sh
 |   +-- cdo_remap_yearly.sh (example for year-wise processing)
 +-- zwally_basins
-|   +-- download_and_extend_to_ocean.py
+|   +-- unzip_and_extend_to_ocean.py
 |   +-- remap.py (with local cdo rempnn)
 +-- icesat4_basins
 |   +-- download_and_write_to_netcdf.py
@@ -69,6 +73,7 @@ pism_input
 |   +-- calculate_potential_temps.py
 |   +-- remap.py
 |   +-- compute_basin_means.py
+|   +-- fill_schmidtko_initmip8km_means_to_basins_on_different_resolution.py 
 +-- accum
 |   +-- download_and_extract_to_nc.py
 |   +-- remap.py
@@ -89,6 +94,7 @@ pism_input
 |   +-- preprocess_netcdf.py
 +-- vel_mouginot19
 |   +-- preprocess_netcdf.py
+|   +-- remap.py
 +-- raised
 |   +-- convert_to_netcdf.py
 |   +-- remap.py
@@ -217,7 +223,7 @@ see also overview: https://www.projects.science.uu.nl/iceclimate/models/antarcti
 
 RACMO2.3p2 data (ANT27/2) forced by *HadCM3* climate model provide yearly mean air temperature (tskin) and surface mass balance (smb) for the historical period 1980-1999 and the A1B projection period 2000-2200.
 
-RACMO2.3p2 data (ANT27/2) forced by *CESM2* climate model provide monthly mean air temperature (tskin) and surface mass balance (smb) for the historical period 1950-2014 and the SPP585 projection period 2015-2100.
+RACMO2.3p2 data (ANT27/2) forced by *CESM2* climate model provide monthly mean air temperature (tskin) and surface mass balance (smb) for the historical period 1950-2014 and the SSP5-8.5 projection period 2015-2100.
 
 not yet published, contact J.M.vanWessem[at]uu.nl
 

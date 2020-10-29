@@ -5,7 +5,7 @@
 # and the module system.
 #SBATCH --qos=short
 #SBATCH --job-name=cdo_remap_{{grid_id}}
-#SBATCH --account=ice
+#SBATCH --account=pism
 #SBATCH --output=cdo_remap.out
 #SBATCH --error=cdo_remap.err
 #SBATCH --ntasks=1

@@ -219,6 +219,7 @@ def get_projection_from_file(nc):
 def prepare_ncfile_for_cdo(nc_outfile):
 
     """ This is a copy of the PISM nc2cdo.py code. """
+    print("Preparing {} for cdo...".format(nc_outfile))
 
     # open netCDF file in 'append' mode
     nc = CDF(nc_outfile, 'a')

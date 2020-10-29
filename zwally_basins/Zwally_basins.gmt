@@ -19,6 +19,12 @@
 #--------------------------------------------------------------------------------------------------------------------
 ulimit unlimited
 
+module purge
+module load intel/2018.1
+module load nco
+module load gmt/6.1.1
+module load cdo
+
 gmt gmtset PS_MEDIA A4
 gmt gmtset FONT_TITLE 10p
 gmt gmtset MAP_FRAME_WIDTH 0.1
@@ -43,7 +49,7 @@ echo $FIGLABEL >> figlabel.txt
 
 
 # DATAFILE PROCESSING -----------------------------------------------------
-tail +41 $INIFILE >> temp.txt  ## Remove headers from file
+tail -n +41 $INIFILE > temp.txt  ## Remove headers from file
 
 # Select Lon Lat and Basins coloumns
 awk '{print $4," ",$3," ",$5}' temp.txt > Ini_basins_file_1km.txt
@@ -63,7 +69,7 @@ paste xy_km.txt basins.txt >> $DATACART
 
 # Clean temporary files
 rm Ini_basins_file_1km.txt temp.txt coord.txt basins.txt
-rm temp.txt xy.txt xy_km.txt lat.txt lon.txt
+rm xy.txt xy_km.txt lat.txt lon.txt
 
 # Get coordinates domains
 RDOMAIN=$(gmt gmtinfo $DATAFILE -I1/1)

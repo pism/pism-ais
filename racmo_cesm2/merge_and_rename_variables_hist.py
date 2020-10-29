@@ -1,6 +1,6 @@
 
 """
-matthias.mengel@pik, torsten.albrecht@pik, ronja.reese@pik
+matthias.mengel@pik, torsten.albrecht@pik, ronja.reese@pik, julius.garbe@pik
 """
 
 import os, sys
@@ -21,11 +21,11 @@ if not os.path.exists(data_path): os.makedirs(data_path)
 
 output_file = os.path.join(data_path, dataset+"_input_hist.nc")
 
-source_file = {"tskin": os.path.join(cf.racmo_cesm2_data_path,"tskin_monthlyA_ANT27_CESM2_RACMO2.3p2_195001_201412.nc"),
-                "smb": os.path.join(cf.racmo_cesm2_data_path,"smb_monthlyS_ANT27_CESM2_RACMO2.3p2_195001_201412.nc")}
-#                "evap": os.path.join(cf.racmo_wessem_data_path,"evap_RACMO2.3p2_yearly_ANT27_1979_2016.nc"),
-#                "precip": os.path.join(cf.racmo_wessem_data_path,"precip_RACMO2.3p2_yearly_ANT27_1979_2016.nc")
-#                }
+source_file = {"tskin": os.path.join(cf.racmo_cesm2_data_path,"hist/tskin_monthlyA_ANT27_CESM2_RACMO2.3p2_195001_201412.nc"),
+               "smb": os.path.join(cf.racmo_cesm2_data_path,"hist/smb_monthlyS_ANT27_CESM2_RACMO2.3p2_195001_201412.nc")}
+               #"t2m": os.path.join(cf.racmo_cesm2_data_path,"hist/t2m_monthlyA_ANT27_CESM2_RACMO2.3p2_195001_201412.nc"),
+               #"precip": os.path.join(cf.racmo_cesm2_data_path,"hist/precip_monthlyS_ANT27_CESM2_RACMO2.3p2_195001_201412.nc"),
+               #}
 
 process_file = {var:os.path.join(data_path, dataset+"_"+var+"_hist.nc") for var in ["tskin","smb"]}
 
@@ -35,9 +35,8 @@ for var,fl in process_file.iteritems():
     except OSError:
         pass
 
-
-
 #for var in ["t2m","smb","evap","precip"]:
+#for var in ["tskin","smb","t2m","precip"]:
 for var in ["tskin","smb"]:
 
 
@@ -48,7 +47,7 @@ for var in ["tskin","smb"]:
 
     subprocess.check_call("ncatted -O -a grid_mapping,"+var+",d,, "+process_file[var],shell=True)
 
-    #Here any string could be used, if the ob_trans projection is not know by the proj version. For bilinear remapping only the lon lat values count.
+    # Here any string could be used, if the ob_trans projection is not know by the proj version. For bilinear remapping only the lon lat values count.
     subprocess.check_call('ncatted -O -a proj4,global,o,c,"+lon_0=10.0 +ellps=WGS84 +datum=WGS84 +lat_ts=-71.0 +proj=stere +x_0=0.0 +units=m +y_0=0.0 +lat_0=-90.0" '+process_file[var], shell=True)
     #subprocess.check_call('ncatted -O -a proj4,global,o,c,"-m 57.295779506 +proj=ob_tran +o_proj=latlon +o_lat_p=-180.0 +lon_0=10.0 +x_0=0.0 +units=m +y_0=0.0" '+process_file[var], shell=True)
 
@@ -92,7 +91,7 @@ for var in ["tskin","smb"]:
 
 # process_file["smb"] = smb_omask_file
 
-#merge_these_files = " ".join([process_file[var] for var in ["t2m","smb","evap","precip"]])
+#merge_these_files = " ".join([process_file[var] for var in ["tskin","smb","t2m","precip"]])
 merge_these_files = " ".join([process_file[var] for var in ["tskin","smb"]])
 
 subprocess.check_call('cdo -O merge '+merge_these_files+" "+output_file, shell=True)
@@ -100,12 +99,6 @@ subprocess.check_call('cdo -O merge '+merge_these_files+" "+output_file, shell=T
 # make all variables double (some already are).
 subprocess.check_call("ncap2 -O -s 'tskin=double(tskin);smb=double(smb);' "+
                       output_file+" "+output_file,shell=True)
-
-subprocess.check_call('ncatted -a units,x,o,c,"meters" '+output_file,shell=True)
-subprocess.check_call('ncatted -a units,y,o,c,"meters" '+output_file,shell=True)
-
-#subprocess.check_call("ncrename -v t2m,ice_surface_temp -O "+output_file+" "+output_file,shell=True)
-subprocess.check_call("ncrename -v tskin,ice_surface_temp -O "+output_file+" "+output_file,shell=True)
 
 # Fill the missing SMB field over ocean with the proxy precip - evaporation
 #ncf = nc.Dataset(output_file,"a")
@@ -120,14 +113,20 @@ subprocess.check_call("ncrename -v tskin,ice_surface_temp -O "+output_file+" "+o
 #ncf.smb_comment = "SMB is approximated by precip-evap over the ocean."
 #ncf.close()
 
-
-
+# attribute fixes
+subprocess.check_call('ncatted -a units,x,o,c,"meters" '+output_file,shell=True)
+subprocess.check_call('ncatted -a units,y,o,c,"meters" '+output_file,shell=True)
+#subprocess.check_call('ncatted -a units,time_bnds,o,c,"days since 1950-01-01 00:00:00.0" '+output_file,shell=True)
 
 subprocess.check_call('ncatted -a units,smb,o,c,"kg m-2 year-1" '+output_file,shell=True)
-subprocess.check_call("ncrename -v smb,climatic_mass_balance -O "+output_file+" "+output_file,shell=True)
 #subprocess.check_call('ncatted -a units,precip,o,c,"kg m-2 year-1" '+output_file,shell=True)
+
+# rename variables
+subprocess.check_call("ncrename -v tskin,ice_surface_temp -O "+output_file+" "+output_file,shell=True)
+subprocess.check_call("ncrename -v smb,climatic_mass_balance -O "+output_file+" "+output_file,shell=True)
+#subprocess.check_call("ncrename -v t2m,air_temp -O "+output_file+" "+output_file,shell=True)
 #subprocess.check_call("ncrename -v precip,precipitation -O "+output_file+" "+output_file,shell=True)
-#subprocess.check_call("ncap2 -O -s 'air_temp=ice_surface_temp' "+output_file+" "+output_file,shell=True)
+
 
 subprocess.check_call('ncks -O -C -x -v lon_2,lat_2,lon_3,lat_3 '+output_file+" "+output_file, shell=True)
 #RACMO grid actually comes on a lon lat coordinate, so multipliaction here provides values close to meters, but this is not important here

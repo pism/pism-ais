@@ -14,6 +14,9 @@ import config as cf; reload(cf)
 import pism_input.pism_input as pi; reload(pi)
 
 dataset = "racmo_wessem"
+data_reference = "Van Wessem et al., 2014. Improved representation of East Antarctica surface mass balance in a regional climate model. J. Glac., 60(222), 761-770, doi: 10.3189/2014JoG14J051."
+data_reference2 = "Van Wessem, Jan Melchior, Willem Jan Van De Berg, Brice PY Noel, Erik Van Meijgaard, Charles Amory, Gerit Birnbaum, Constantijn L. Jakobs et al. Modelling the climate and surface mass balance of polar ice sheets using racmo2: Part 2: Antarctica (1979-2016). Cryosphere 12, no. 4 (2018): 1479-1498."
+
 data_path = os.path.join(cf.output_data_path, dataset)
 
 if not os.path.exists(data_path): os.makedirs(data_path)
@@ -39,6 +42,9 @@ for var in ["t2m","smb","evap","precip"]:
     subprocess.check_call("ncks -A -v "+var+",lon,lat "+source_file[var]+" "+process_file[var],shell=True)
 
     subprocess.check_call("ncrename -d rlat,y -d rlon,x -v rlat,y -v rlon,x "+process_file[var],shell=True)
+    
+    subprocess.check_call("ncatted -O -a reference,"+var+",c,c,'" + data_reference +
+                            "' "+process_file[var],shell=True)
 
     subprocess.check_call("ncatted -O -a grid_mapping,"+var+",d,, "+process_file[var],shell=True)
 
@@ -93,7 +99,8 @@ ncf.smb_comment = "SMB is approximated by precip-evap over the ocean."
 ncf.description = "RACMO2.3p2 data (ANT27/2) forced by ERA-Interim provide yearly mean air temperature (t2m) and surface mass balance (smb) for the years 1979-2016, here averaged over CMIP5 period 1985-2005"
 ncf.link= "https://www.projects.science.uu.nl/iceclimate/publications/data/2018/vwessem2018_tc/RACMO_Yearly/"
 ncf.overview = "https://www.projects.science.uu.nl/iceclimate/models/antarctica.php"
-ncf.reference = "Van Wessem, Jan Melchior, Willem Jan Van De Berg, Brice PY Noël, Erik Van Meijgaard, Charles Amory, Gerit Birnbaum, Constantijn L. Jakobs et al. Modelling the climate and surface mass balance of polar ice sheets using racmo2: Part 2: Antarctica (1979-2016). Cryosphere 12, no. 4 (2018): 1479-1498."
+ncf.reference = data_reference
+ncf.reference2 = data_reference2
 
 ncf.close()
 

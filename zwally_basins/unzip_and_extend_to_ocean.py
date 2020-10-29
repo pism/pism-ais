@@ -1,5 +1,5 @@
-"
-matthias.mengel@pik, torsten.albrecht@pik
+"""
+matthias.mengel@pik, torsten.albrecht@pik, ronja.reese@pik, ricarda.winkelmann@pik
 Download Zwally basin data and save to (5km) netcdf file.
 """
 
@@ -48,10 +48,12 @@ ncout_ocean = os.path.join(basins_data_path, 'basins_zwally_5km_input.nc')
 
 # if data is not yet extracted in basins_ascii
 if not os.path.exists(basins_ascii_path):
-  print "Downloading Zwally basin ascii data."
+  #print "Downloading Zwally basin ascii data."
+  print "Unzipping Zwally basin ascii data."
   os.system("mkdir -p " + basins_ascii_path)
-  os.system("wget -N " + basins_link + " -P " + basins_ascii_path)
-  os.system("cd "+basins_ascii_path+" && unzip ais_basins_imbie_ascii.zip")
+  #os.system("wget -N " + basins_link + " -P " + basins_ascii_path)
+  os.system("unzip ais_basins_imbie_ascii.zip -d "+basins_ascii_path)
+  #os.system("cd "+basins_ascii_path+" && unzip ais_basins_imbie_ascii.zip")
 
 # if os.path.isfile(ncout_name):
 #   print ncout_name, "already written, do nothing."
@@ -452,7 +454,7 @@ ncv = ncout.createVariable( varname="basins",datatype='float32',dimensions=('y',
 ncv[:] = basins
 
 now = datetime.datetime.now().strftime("%B %d, %Y")
-#ncout.created  = "created based on reese@pik at " + now
+#ncout.created  = "created by reese@pik at " + now
 #ncout.data_origin = "downloaded from http://homepages.see.leeds.ac.uk/~earkhb/Basins_page.html"
 ncout.Descricption = "Antarctic drainage basins mapped by NASA and modified." ;
 ncout.Reference = "Zwally, H. Jay, Mario B. Giovinetto, Matthew A. Beckley, and Jack L. Saba, 2012, Antarctic and Greenland Drainage  Systems, GSFC Cryospheric Sciences Laboratory, at http://icesat4.gsfc.nasa.gov/cryo_data/ant_grn_drainage_systems.php." ;

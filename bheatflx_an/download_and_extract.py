@@ -25,9 +25,12 @@ ncout_name = os.path.join(data_path, 'bheatflux_an_input.nc')
 if not os.path.exists(ncout_name):
   print "Downloading data on lon-lat grid."
   os.system("mkdir -p " + data_path)
-  #os.system("wget " + link + " -P " + data_path)
-  #os.system("cd "+data_path+" && tar -zxvf "+os.path.join(data_path, link.split('/')[-1]))
-  os.system("cp AN1-HF.grd "+ncout_name)
+  os.system("wget " + link + " -P " + data_path)
+  print("data_path:" + data_path)
+  print("ncout_name:" + ncout_name)
+  os.system("cd " + data_path) 
+  os.system("tar -zxvf " + os.path.join(data_path, link.split('/')[-1]))
+  os.system("mv AN1-HF.grd " + ncout_name)
 
 
 now = datetime.datetime.now().strftime("%B %d, %Y")
