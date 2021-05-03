@@ -23,19 +23,19 @@ def run(commands):
 
 
 dataset = "racmo_cesm2"
-period = "hist"
-#period = "ssp585"
-period_years = "1950_2014" # hist
-#period_years = "2015_2099" # ssp585
-timestep = "monthly" # time step of RACMO input data ("monthly" or "yearly")
+period = "hist" # historical: "hist" / SSP5-8.5: "ssp585"
+period_years = "1950_2014" # hist: "1950_2014" / ssp585: "2015_2099"
+timestep = "monthly" # time step of input data ("monthly" or "yearly")
+climatology = True # only if timestep is monthly: set to True if you want to have a yearly climatology (e.g. when using PISM with periodic forcing)
+
+
 grid = cf.grid_id
 tap = [str(t) for t in cf.time_averaging_period]
 
 data_path = os.path.join(cf.output_data_path, dataset)
-#inputfile = os.path.join(data_path, dataset+"_"+period+"_"+grid+".nc")
 inputfile = os.path.join(data_path, grid, dataset+"_"+period+"_"+period_years+"_"+timestep+"_"+grid+".nc")
-#timemean_file = os.path.join(data_path, dataset+"_"+period+"_"+grid+"_mean"+tap[0]+"_"+tap[1]+".nc")
 timemean_file = os.path.join(data_path, grid, dataset+"_"+period+"_"+tap[0]+"_"+tap[1]+"_mean_"+grid+".nc")
+
 
 if timestep=="yearly":
     # If data is already yearly, we just apply time mean over the selected period
@@ -43,18 +43,22 @@ if timestep=="yearly":
                 "cdo -O -f nc4c timmean -selyear,{}/{} {} {}".format(tap[0], tap[1], inputfile, timemean_file),
                 ]
 elif timestep=="monthly":
-    # If data is monthly, we have to be cautious:
-    # monthly temperatures need to be AVERAGED over the year,
-    # while monthly accumulation rates need to be SUMMED over the year.
-    # This is done here by creating separate files for both variables and merging them afterwards.
-    temp_var = "air_temp"
-    accu_var = "precipitation"
-    commands = [
-                "cdo -O -f nc4c yearmean -select,name={} {} {}".format(temp_var, inputfile, inputfile.replace('monthly','yearly_'+temp_var)),
-                "cdo -O -f nc4c yearsum -select,name={} {} {}".format(accu_var, inputfile, inputfile.replace('monthly','yearly_'+accu_var)),
-                "cdo -O merge {} {} {}".format(inputfile.replace('monthly','yearly_'+temp_var), inputfile.replace('monthly','yearly_'+accu_var), inputfile.replace('monthly','yearly')),
-                "cdo -O -f nc4c timmean -selyear,{}/{} {} {}".format(tap[0], tap[1], inputfile.replace('monthly','yearly'), timemean_file),
-                ]
+    if not climatology:
+        # If data is monthly, we have to be cautious when calculating yearly values:
+        # Some variables (albedo, temperatures, ...) need to be AVERAGED over the year, while other variables (SMB rates, insolation rates, ...) need to be SUMMED over the year.
+        # This is done here by creating separate files for both variable types and merging them afterwards.
+        mean_vars = "albedo,air_temp,ice_surface_temp"
+        sum_vars = "climatic_mass_balance,evaporation,incoming_shortwave_flux_surf,incoming_shortwave_flux_toa,precipitation,refreeze,runoff,snowmelt,sublimation"
+        commands = [
+                    "cdo -O -f nc4c yearmean -selname,{} {} {}".format(mean_vars, inputfile, inputfile.replace('monthly','yearly_MEAN_')),
+                    "cdo -O -f nc4c yearsum -selname,{} {} {}".format(sum_vars, inputfile, inputfile.replace('monthly','yearly_SUM_')),
+                    "cdo -O merge {} {} {}".format(inputfile.replace('monthly','yearly_MEAN_'), inputfile.replace('monthly','yearly_SUM_'), inputfile.replace('monthly','yearly')),
+                    "cdo -O -f nc4c timmean -selyear,{}/{} {} {}".format(tap[0], tap[1], inputfile.replace('monthly','yearly'), timemean_file),
+                    ]
+    elif climatology:
+        commands = [
+                    "cdo -O -f nc4c ymonmean -selyear,{}/{} {} {}".format(tap[0], tap[1], inputfile, timemean_file.replace('mean','ymonmean')),
+                   ]
 
 # if you see "cdo: error while loading shared libraries:",
 # 'module load cdo'
