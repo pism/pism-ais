@@ -2,9 +2,9 @@
 """
 matthias.mengel@pik, torsten.albrecht@pik
 Regridding: bring your data to the grid we commonly use for PISM Antarctica
-simulations. This is equivalent to the ALBMAP or initMIP grid.
+simulations.
 This step will take a while if high resolution data is processed.
-Regrid Bedmachine data to various grid resolution using cdo remapbil.
+Regrid Velocity data to various grid resolution using cdo remapcony.
 
 """
 
@@ -17,14 +17,14 @@ if project_root not in sys.path: sys.path.append(project_root)
 import config as cf; reload(cf)
 import pism_input.pism_input as pi; reload(pi)
 
-dataset="bedmachine"
-# conservative regridding for bedmap2 and albmap data. does
-# not yet work for the other datasets.
+dataset="mouginot_rignot19"
+
 # regridding_method: choose "bilinear", "integer" or "conservative"
-regridding_method = "bilinear"
+#regridding_method = "bilinear"
+regridding_method = "integer"
 
 data_path = os.path.join(cf.output_data_path, dataset)
-inputfile = os.path.join(data_path, 'BedMachineAntarctica_2020-07-15_v02_ReadyForRemapping.nc')
+inputfile = os.path.join(data_path, 'mouginot_rignot19_450m_input.nc')
 
 cdo_targetgrid_file, regridded_file = pi.get_filenames_for_cdo(
     cf.cdo_remapgridpath, data_path, dataset, cf.grid_id)
@@ -37,3 +37,4 @@ cdo_targetgrid_file, regridded_file = pi.get_filenames_for_cdo(
 # We use cdo, see https://code.zmaw.de/projects/cdo/embedded/index.html
 pi.write_regrid_command_file(cf, data_path, dataset, inputfile, cf.grid_id,
                      cdo_targetgrid_file, regridded_file, regridding_method)
+

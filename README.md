@@ -39,6 +39,9 @@ pism_input
 |   +-- download_and_extract_to_nc.py
 |   +-- remap.py
 +-- bedmachine
+|   +-- nsidc-download_NSIDC-0756.002_2020-10-12.py
+|   +-- move_and_prepare_for_pism.py
+|   +-- ready_for_cdo.py
 |   +-- remap.py
 +-- albmap
 |   +-- download_and_rename_variables.py
@@ -60,7 +63,7 @@ pism_input
 |   +-- cdo_remap_hist/ssp858.sh
 |   +-- cdo_remap_yearly.sh (example for year-wise processing)
 +-- zwally_basins
-|   +-- download_and_extend_to_ocean.py
+|   +-- unzip_and_extend_to_ocean.py
 |   +-- remap.py (with local cdo rempnn)
 +-- icesat4_basins
 |   +-- download_and_write_to_netcdf.py
@@ -70,6 +73,7 @@ pism_input
 |   +-- calculate_potential_temps.py
 |   +-- remap.py
 |   +-- compute_basin_means.py
+|   +-- fill_schmidtko_initmip8km_means_to_basins_on_different_resolution.py 
 +-- accum
 |   +-- download_and_extract_to_nc.py
 |   +-- remap.py
@@ -90,6 +94,7 @@ pism_input
 |   +-- preprocess_netcdf.py
 +-- vel_mouginot19
 |   +-- preprocess_netcdf.py
+|   +-- remap.py
 +-- raised
 |   +-- convert_to_netcdf.py
 |   +-- remap.py

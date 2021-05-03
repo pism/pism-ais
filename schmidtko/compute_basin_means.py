@@ -15,6 +15,7 @@ import numpy.ma as ma
 import netCDF4 as nc
 from shutil import copyfile
 import subprocess
+import datetime
 
 ## this hack is needed to import config.py from the project root
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -104,6 +105,14 @@ basinsvar[:] = basins_variable
 basinsvar.units = ""
 basinsvar.long_name = "drainage basins"
 basinsvar.standard_name = "drainage_basins"
+
+
+now = datetime.datetime.now().strftime("%B %d, %Y")
+wrtfile.Descricption = "Antarctic drainage basins mapped by NASA and modified. Temperature (converted to potential) and salinity averaged over the basins at the depth of the continential shelf." ;
+wrtfile.Reference = "Basins from Zwally, H. Jay, Mario B. Giovinetto, Matthew A. Beckley, and Jack L. Saba, 2012, Antarctic and Greenland Drainage  Systems, GSFC Cryospheric Sciences Laboratory, at http://icesat4.gsfc.nasa.gov/cryo_data/ant_grn_drainage_systems.php. Temperature, Salinity from Schmidtko, S., Heywood, K. J., Thompson, A. F., & Aoki, S. (2014). Multidecadal warming of Antarctic waters. Science, 346(6214), 1227-1231. ,at http://www.geomar.de/fileadmin/personal/fb1/po/sschmidtko/Antarctic_shelf_data.txt" ;
+wrtfile.proj4 = "+lon_0=0.0 +ellps=WGS84 +datum=WGS84 +lat_ts=-71.0 +proj=stere +x_0=0.0 +units=m +y_0=0.0 +lat_0=-90.0"
+wrtfile.comment  = cf.authors+" created netcdf file at " + now
+
 
 wrtfile.close()
 
