@@ -79,24 +79,6 @@ for var in var_list:
     #    dat.variables["smb"][:]=smbperyear[:]  
     #    dat.close()
 
-# Converting SMB units: Not needed probably.
-# subprocess.check_call("ncap2 -O -s 'smb=smb*1000.0/910.0' "+output_file+" "+output_file,shell=True)
-
-# Set SMB on ocean to missing, so it does not disturb the remapping at the ice sheet boundary.
-# subprocess.check_call('cdo -O setrtomiss,-9999,0 '+process_file["smb"]+" "+smb_omask_file, shell=True)
-
-# smb_omask_file = os.path.join(data_path, dataset+"_smb_omask.nc")
-# shutil.copyfile(process_file["smb"], smb_omask_file)
-# smb_msk_data = nc.Dataset(smb_omask_file,"a")
-# # be aware: this is only valid for this dataset and timestep zero.
-# mask = smb_msk_data.variables["smb"][0,:,:] < -0.009
-# shape = smb_msk_data.variables["smb"].shape
-# smb_masked = np.ma.masked_array(smb_msk_data.variables["smb"][:],
-#                                 mask=np.tile(mask,(shape[0],1,1)))
-# smb_msk_data.variables["smb"][:] = smb_masked
-# smb_msk_data.close()
-
-# process_file["smb"] = smb_omask_file
 
 print "Merging files..."
 
@@ -108,44 +90,17 @@ subprocess.check_call('cdo -O merge '+merge_these_files+" "+output_file, shell=T
 ncap2str = ''.join([var+"=double("+var+");" for var in var_list]) # join commands for all variables in var_list into common string
 subprocess.check_call("ncap2 -O -s '"+ncap2str+"' "+output_file+" "+output_file,shell=True)
 
-# Fill the missing SMB field over ocean with the proxy precip - evaporation
-#ncf = nc.Dataset(output_file,"a")
-#smb = ncf.variables["smb"][:]
-# be aware: this masking is only valid for this dataset and timestep zero.
-#mask_ocean = smb[0,:,:] < -0.009
-#mask_ocean_expanded = np.tile(mask_ocean,(smb.shape[0],1,1))
-# a proxy for smb
-#smb_over_ocean = ncf.variables["precip"][:] + ncf.variables["evap"][:]
-#smb[mask_ocean_expanded] = smb_over_ocean[mask_ocean_expanded]
-#ncf.variables["smb"][:] = smb
-#ncf.smb_comment = "SMB is approximated by precip-evap over the ocean."
-#ncf.close()
-
 # convert units of solar flux densities from J m-2 to W m-2 (RACMO sums over a month). Not exactly accurate, as months have different lengths.
-subprocess.check_call("ncap2 -O -s 'sw0d=sw0d/(60.*60.*24.*30.4167)' "+output_file+" "+output_file,shell=True)
-subprocess.check_call("ncap2 -O -s 'swsd=swsd/(60.*60.*24.*30.4167)' "+output_file+" "+output_file,shell=True)
-#subprocess.check_call("ncap2 -O -s 'lwsd=lwsd/(60.*60.*24.*30.4167)' "+output_file+" "+output_file,shell=True)
-
-subprocess.check_call('ncatted -a units,sw0d,o,c,"W m-2" '+output_file,shell=True)
-subprocess.check_call('ncatted -a units,swsd,o,c,"W m-2" '+output_file,shell=True)
-#subprocess.check_call('ncatted -a units,lwsd,o,c,"W m-2" '+output_file,shell=True)
+#for var in ["sw0d","swsd","lwsd"]:
+for var in ["sw0d","swsd"]:
+    subprocess.check_call("ncap2 -O -s '"+var+"="+var+"/(60.*60.*24.*30.4167)' "+output_file+" "+output_file,shell=True)
+    subprocess.check_call('ncatted -a units,'+var+',o,c,"W m-2" '+output_file,shell=True)
 
 # convert units of SMB fluxes from kg m-2 to kg m-2 s-1 (RACMO sums over a month). Not exactly accurate, as months have different lengths.
-subprocess.check_call("ncap2 -O -s 'snowmelt=snowmelt/(60.*60.*24.*30.4167)' "+output_file+" "+output_file,shell=True)
-subprocess.check_call("ncap2 -O -s 'smb=smb/(60.*60.*24.*30.4167)' "+output_file+" "+output_file,shell=True)
-subprocess.check_call("ncap2 -O -s 'refreeze=refreeze/(60.*60.*24.*30.4167)' "+output_file+" "+output_file,shell=True)
-subprocess.check_call("ncap2 -O -s 'runoff=runoff/(60.*60.*24.*30.4167)' "+output_file+" "+output_file,shell=True)
-subprocess.check_call("ncap2 -O -s 'precip=precip/(60.*60.*24.*30.4167)' "+output_file+" "+output_file,shell=True)
-#subprocess.check_call("ncap2 -O -s 'evap=evap/(60.*60.*24.*30.4167)' "+output_file+" "+output_file,shell=True)
-#subprocess.check_call("ncap2 -O -s 'subl=subl/(60.*60.*24.*30.4167)' "+output_file+" "+output_file,shell=True)
-
-subprocess.check_call('ncatted -a units,snowmelt,o,c,"kg m-2 s-1" '+output_file,shell=True)
-subprocess.check_call('ncatted -a units,smb,o,c,"kg m-2 s-1" '+output_file,shell=True)
-subprocess.check_call('ncatted -a units,refreeze,o,c,"kg m-2 s-1" '+output_file,shell=True)
-subprocess.check_call('ncatted -a units,runoff,o,c,"kg m-2 s-1" '+output_file,shell=True)
-subprocess.check_call('ncatted -a units,precip,o,c,"kg m-2 s-1" '+output_file,shell=True)
-#subprocess.check_call('ncatted -a units,evap,o,c,"kg m-2 s-1" '+output_file,shell=True)
-#subprocess.check_call('ncatted -a units,subl,o,c,"kg m-2 s-1" '+output_file,shell=True)
+#for var in ["snowmelt","smb","refreeze","runoff","precip","evap","subl"]:
+for var in ["snowmelt","smb","refreeze","runoff","precip"]:
+    subprocess.check_call("ncap2 -O -s '"+var+"="+var+"/(60.*60.*24.*30.4167)' "+output_file+" "+output_file,shell=True)
+    subprocess.check_call('ncatted -a units,'+var+',o,c,"kg m-2 s-1" '+output_file,shell=True)
 
 # further attribute fixes
 subprocess.check_call('ncatted -a units,x,o,c,"meters" '+output_file,shell=True)
