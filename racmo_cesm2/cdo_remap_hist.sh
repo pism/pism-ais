@@ -35,14 +35,15 @@ griddatadir=$datadir/cdo_remapgrids
 inputdatadir=$datadir/racmo_cesm2/input
 outputdatadir=$datadir/racmo_cesm2/$grid
 
-inputfile=racmo_cesm2_hist_input.nc
-outputfile=racmo_cesm2_hist_1950-2014_monthly_$grid.nc
+gridfile=$griddatadir/$grid.nc
+inputfile=$inputdatadir/racmo_cesm2_hist_input.nc
+outputfile=$outputdatadir/racmo_cesm2_hist_1950_2014_monthly_$grid.nc
 
 # bilinear interpolation, an option if conservative methods fail.
-$cdocmd -b F64 -f nc4c remapbil,$griddatadir/$grid.nc $inputdatadir/$inputfile $outputdatadir/$outputfile
+$cdocmd -b F64 -f nc4c remapbil,$gridfile $inputfile $outputfile
 
 
 # add x and y variables to output file.
-ncks -A -v x,y $griddatadir/$grid.nc $outputdatadir/$outputfile
+ncks -A -v x,y $gridfile $outputfile
 
-echo "regridded file is $outputdatadir/$outputfile"
+echo "regridded file is $outputfile"
