@@ -37,7 +37,7 @@ source_file = {"alb": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/alb_month
                #"clcov": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/clcov_monthlyA_ANT27_CESM2_RACMO2.3p2_hist_r567_195001_201412.nc"),
                }
 
-var_list = ["alb","snowmelt","t2m","smb","refreeze","runoff","precip","sw0d","swsd"]
+var_list = source_file.keys()
 
 process_file = {var:os.path.join(data_path, dataset+"_hist_"+var+".nc") for var in var_list}
 
@@ -66,19 +66,6 @@ for var in var_list:
     subprocess.check_call('ncks -O -C -x -v nblock1 '+process_file[var]+" "+process_file[var], shell=True)
     subprocess.check_call('ncks -O -C -x -v nblock2 '+process_file[var]+" "+process_file[var], shell=True)
 
-    #if var=="smb":
-    #    #356day calendar
-    #    months=np.array([31.0,28.0,31.0,30.0,31.0,30.0,31.0,31.0,30.0,31.0,30.0,31.0])
-
-    #    dat = nc.Dataset(process_file[var], 'a')
-    #    time = dat.variables["time"][:] #days
-    #    smbcum = dat.variables["smb"][:] #kg/m2
-    #    smbperyear = np.zeros_like(smbcum)
-    #    for i,t in enumerate(time):
-    #        smbperyear[i]=smbcum[i]*365.0/months[i%12] #kg/m2/yr
-    #    dat.variables["smb"][:]=smbperyear[:]  
-    #    dat.close()
-
 
 print "Merging files..."
 
@@ -96,11 +83,25 @@ for var in ["sw0d","swsd"]:
     subprocess.check_call("ncap2 -O -s '"+var+"="+var+"/(60.*60.*24.*30.4167)' "+output_file+" "+output_file,shell=True)
     subprocess.check_call('ncatted -a units,'+var+',o,c,"W m-2" '+output_file,shell=True)
 
-# convert units of SMB fluxes from kg m-2 to kg m-2 s-1 (RACMO sums over a month). Not exactly accurate, as months have different lengths.
-#for var in ["snowmelt","smb","refreeze","runoff","precip","evap","subl"]:
+# # convert units of SMB fluxes from kg m-2 to kg m-2 s-1 (RACMO sums over a month). Not exactly accurate, as months have different lengths.
+# for var in ["snowmelt","smb","refreeze","runoff","precip"]:
+#     subprocess.check_call("ncap2 -O -s '"+var+"="+var+"/(60.*60.*24.*30.4167)' "+output_file+" "+output_file,shell=True)
+#     subprocess.check_call('ncatted -a units,'+var+',o,c,"kg m-2 s-1" '+output_file,shell=True)
+
+# convert units of SMB fluxes from kg m-2 to kg m-2 year-1 (RACMO sums over a month).
+dayspermonth = np.array([31.0,28.0,31.0,30.0,31.0,30.0,31.0,31.0,30.0,31.0,30.0,31.0]) # 365_day calendar
 for var in ["snowmelt","smb","refreeze","runoff","precip"]:
-    subprocess.check_call("ncap2 -O -s '"+var+"="+var+"/(60.*60.*24.*30.4167)' "+output_file+" "+output_file,shell=True)
-    subprocess.check_call('ncatted -a units,'+var+',o,c,"kg m-2 s-1" '+output_file,shell=True)
+
+    dat = nc.Dataset(output_file, 'a')
+    time = dat.variables["time"][:] #days
+    varcum = dat.variables[var][:] #kg/m2
+    varperyear = np.zeros_like(varcum)
+    for i,t in enumerate(time):
+        varperyear[i]=varcum[i]*365.0/dayspermonth[i%12] #kg/m2/yr
+    dat.variables[var][:]=varperyear[:]
+    dat.close()
+
+    subprocess.check_call('ncatted -a units,'+var+',o,c,"kg m-2 year-1" '+output_file,shell=True)
 
 # further attribute fixes
 subprocess.check_call('ncatted -a units,x,o,c,"meters" '+output_file,shell=True)
