@@ -27,7 +27,7 @@ source_file = {"alb": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/alb_month
                "t2m": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/t2m_monthlyA_ANT27_CESM2_RACMO2.3p2_hist_r567_195001_201412.nc"),
                "smb": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/smb_monthlyS_ANT27_CESM2_RACMO2.3p2_hist_r567_195001_201412.nc"),
                "refreeze": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/refreeze_monthlyS_ANT27_CESM2_RACMO2.3p2_hist_r567_195001_201412.nc"),
-               "runoff": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/runoff_monthlyS_ANT27_CESM2_RACMO2.3p2_hist_r567_195001_201412.nc"),
+               "runoffS": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/runoffS_monthlyS_ANT27_CESM2_RACMO2.3p2_hist_r567_195001_201412.nc"),
                "precip": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/precip_monthlyS_ANT27_CESM2_RACMO2.3p2_hist_r567_195001_201412.nc"),
                #"evap": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/evap_monthlyS_ANT27_CESM2_RACMO2.3p2_hist_r567_r567_195001_201412.nc"),
                #"subl": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/subl_monthlyS_ANT27_CESM2_RACMO2.3p2_hist_r567_195001_201412.nc"),
@@ -90,7 +90,7 @@ for var in ["sw0d","swsd"]:
 
 # convert units of SMB fluxes from kg m-2 to kg m-2 year-1 (RACMO sums over a month).
 dayspermonth = np.array([31.0,28.0,31.0,30.0,31.0,30.0,31.0,31.0,30.0,31.0,30.0,31.0]) # 365_day calendar
-for var in ["snowmelt","smb","refreeze","runoff","precip"]:
+for var in ["snowmelt","smb","refreeze","runoffS","precip"]:
 
     dat = nc.Dataset(output_file, 'a')
     time = dat.variables["time"][:] #days
@@ -118,6 +118,7 @@ subprocess.check_call("ncrename -v .tskin,ice_surface_temp -O "+output_file+" "+
 subprocess.check_call("ncrename -v .t2m,air_temp -O "+output_file+" "+output_file,shell=True)
 subprocess.check_call("ncrename -v .smb,climatic_mass_balance -O "+output_file+" "+output_file,shell=True)
 subprocess.check_call("ncrename -v .precip,precipitation -O "+output_file+" "+output_file,shell=True)
+subprocess.check_call("ncrename -v .runoffS,runoff -O "+output_file+" "+output_file,shell=True)
 subprocess.check_call("ncrename -v .evap,evaporation -O "+output_file+" "+output_file,shell=True)
 subprocess.check_call("ncrename -v .subl,sublimation -O "+output_file+" "+output_file,shell=True)
 subprocess.check_call("ncrename -v .sw0d,incoming_shortwave_radiation_TOA -O "+output_file+" "+output_file,shell=True)
