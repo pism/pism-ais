@@ -84,6 +84,8 @@ pism_input
 +-- bheatflx_an
 |   +-- download_and_extract.py
 |   +-- remap.py
++-- bheatflx_minmax
+|   +-- download_and_interpolate_to_netcdc.py
 +-- bheatflx_purucker
 |   +-- download_and_interpolate_to_netcdc.py
 +-- bheatflx_shen
