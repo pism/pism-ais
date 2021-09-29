@@ -21,8 +21,11 @@ if not os.path.exists(data_path): os.makedirs(data_path)
 
 output_file = os.path.join(data_path, dataset+"_input_hist.nc")
 
-source_file = {"tskin": os.path.join(cf.racmo_cesm2_data_path,"hist/tskin_monthlyA_ANT27_CESM2_RACMO2.3p2_195001_201412.nc"),
-               "smb": os.path.join(cf.racmo_cesm2_data_path,"hist/smb_monthlyS_ANT27_CESM2_RACMO2.3p2_195001_201412.nc")}
+
+source_file = {"tskin": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/tskin_monthlyA_ANT27_CESM2_RACMO2.3p2_hist_r567_195001_201412.nc"),
+               "smb": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/smb_monthlyS_ANT27_CESM2_RACMO2.3p2_hist_r567_195001_201412.nc")}
+#source_file = {"tskin": os.path.join(cf.racmo_cesm2_data_path,"hist/tskin_monthlyA_ANT27_CESM2_RACMO2.3p2_195001_201412.nc"),
+#               "smb": os.path.join(cf.racmo_cesm2_data_path,"hist/smb_monthlyS_ANT27_CESM2_RACMO2.3p2_195001_201412.nc")}
                #"t2m": os.path.join(cf.racmo_cesm2_data_path,"hist/t2m_monthlyA_ANT27_CESM2_RACMO2.3p2_195001_201412.nc"),
                #"precip": os.path.join(cf.racmo_cesm2_data_path,"hist/precip_monthlyS_ANT27_CESM2_RACMO2.3p2_195001_201412.nc"),
                #}

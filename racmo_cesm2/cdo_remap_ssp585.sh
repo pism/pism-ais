@@ -13,7 +13,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=garbe@pik-potsdam.de
+#SBATCH --mail-user=albrecht@pik-potsdam.de
 
 cdocmd="srun -n $SLURM_NTASKS cdo -P $SLURM_NTASKS"
 OMP_NUM_THREADS=$SLURM_NTASKS
