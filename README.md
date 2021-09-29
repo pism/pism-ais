@@ -292,6 +292,14 @@ Citation:
 - Shen, W., Wiens, D., Lloyd, A. and Nyblade, A., 2020. A Geothermal heat flux map of Antarctica empirically constrained by seismic structure. Geophysical Research Letters, https://doi.org/10.1029/2020GL086955
 
 
+#### Loesing & Ebbing data
+
+Documentation: https://doi.pangaea.de/10.1594/PANGAEA.930237
+
+Citation:
+- Loesing, M.; Ebbing, J. (2021): Predicting Geothermal Heat Flow in Antarctica With a Machine Learning Approach. Journal of Geophysical Research: Solid Earth, 126(6), https://doi.org/10.1029/2020JB021499
+
+
 
 ### Southern Ocean
 
@@ -439,6 +447,12 @@ Wiki: https://www.pik-potsdam.de/research/earth-system-analysis/models/larmip
 #### Abumip
 
 Wiki: http://www.climate-cryosphere.org/wiki/index.php?title=ABUMIP-Antarctica
+
+
+#### ISMIP6
+
+Wiki: https://www.climate-cryosphere.org/wiki/index.php?title=ISMIP6-Projections-Antarctica
+
 
 
 ## License
