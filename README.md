@@ -33,6 +33,7 @@ Here is the graph:
 
 ```
 pism_input
++-- config.py
 +-- grids
 |   +-- create_cdo_targetgrids.py
 +-- bedmap2
@@ -46,6 +47,7 @@ pism_input
 +-- albmap
 |   +-- download_and_rename_variables.py
 |   +-- remap.py
+|   +-- add_units_fill_bounds_after_regridding.py
 +-- racmo_ice2sea
 |   +-- merge_and_rename_variables.py
 |   +-- remap.py
@@ -112,13 +114,16 @@ pism_input
 |   +--convert_accumdatato_netcdf.py
 +-- edc
 |   +--download_tempdata_and_convert_to_netcdf.py
++-- tillphi_pism
+|   +-- extract_and_prepare.py
+|   +-- remap.py
 +-- initmip
 |   +-- preprocess.py (incl. create_anomalies.py)
-|   +-- remap.py (if not on 32,16,8,1km grid)
-|   +-- postprocessing (make data ISMIP6 compatible)
+|   +-- remap.py
+|   +-- run_postprocess.sh (make data ISMIP6 compatible; incl. postprocess_ex/ts.py)
 +-- larmip
 |   +-- preprocess.py (incl. create_anomalies.py)
-|   +-- postprocessing (extract slvol anomalies)
+|   +-- postprocess.py (extract slvol anomalies)
 +-- merge_dataset.py
 +-- pism_input
     +-- pism_input.py (tools)
