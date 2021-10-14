@@ -59,10 +59,10 @@ pism_input
 +-- racmo_hadcm3
 |   +-- merge_and_rename_variables_c20/a1b.py
 +-- racmo_cesm2
-|   +-- merge_and_rename_variables_hist/ssp585.py
+|   +-- merge_and_rename_variables.py
 |   +-- remap.py
 |   +-- time_mean.py
-|   +-- cdo_remap_hist/ssp858.sh
+|   +-- cdo_remap.sh
 |   +-- cdo_remap_yearly.sh (example for year-wise processing)
 |   +-- fill_missing_data.py
 |   +-- correct_time_bnds.py

@@ -15,31 +15,41 @@ import config as cf; reload(cf)
 import pism_input.pism_input as pi; reload(pi)
 
 dataset = "racmo_cesm2"
+period = "hist" # "hist" or "ssp585"
+
 data_path = os.path.join(cf.output_data_path, dataset, "input")
 
 if not os.path.exists(data_path): os.makedirs(data_path)
 
-output_file = os.path.join(data_path, dataset+"_hist_input.nc")
+output_file = os.path.join(data_path, dataset+"_"+period+"_input.nc")
 
-source_file = {"alb": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/alb_monthlyA_ANT27_CESM2_RACMO2.3p2_hist_r567_195001_201412.nc"),
-               "snowmelt": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/snowmelt_monthlyS_ANT27_CESM2_RACMO2.3p2_hist_r567_195001_201412.nc"),
-               "tskin": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/tskin_monthlyA_ANT27_CESM2_RACMO2.3p2_hist_r567_195001_201412.nc"),
-               "t2m": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/t2m_monthlyA_ANT27_CESM2_RACMO2.3p2_hist_r567_195001_201412.nc"),
-               "smb": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/smb_monthlyS_ANT27_CESM2_RACMO2.3p2_hist_r567_195001_201412.nc"),
-               "refreeze": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/refreeze_monthlyS_ANT27_CESM2_RACMO2.3p2_hist_r567_195001_201412.nc"),
-               "runoffS": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/runoffS_monthlyS_ANT27_CESM2_RACMO2.3p2_hist_r567_195001_201412.nc"),
-               "precip": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/precip_monthlyS_ANT27_CESM2_RACMO2.3p2_hist_r567_195001_201412.nc"),
-               #"evap": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/evap_monthlyS_ANT27_CESM2_RACMO2.3p2_hist_r567_r567_195001_201412.nc"),
-               #"subl": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/subl_monthlyS_ANT27_CESM2_RACMO2.3p2_hist_r567_195001_201412.nc"),
-               "sw0d": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/sw0d_monthlyS_ANT27_CESM2_RACMO2.3p2_hist_r567_195001_201412.nc"),
-               "swsd": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/swsd_monthlyS_ANT27_CESM2_RACMO2.3p2_hist_r567_195001_201412.nc"),
-               #"lwsd": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/lwsd_monthlyS_ANT27_CESM2_RACMO2.3p2_hist_r567_195001_201412.nc"), # needed to compute atmospheric emissivity
-               #"clcov": os.path.join(cf.racmo_cesm2_data_path,"hist_r567/clcov_monthlyA_ANT27_CESM2_RACMO2.3p2_hist_r567_195001_201412.nc"),
+if period=="hist":
+    source_path = "hist_r567"
+    source_file_suffix = "hist_r567_195001_201412"
+elif period=="ssp585":
+    source_path = "projection_2100"
+    source_file_suffix = "SSP585_201501_209912"
+
+### select required variables by (un)commenting respective lines in the dictionary below
+source_file = {"alb": os.path.join(cf.racmo_cesm2_data_path,source_path,"alb_monthlyA_ANT27_CESM2_RACMO2.3p2_"+source_file_suffix+".nc"),
+               "snowmelt": os.path.join(cf.racmo_cesm2_data_path,source_path,"snowmelt_monthlyS_ANT27_CESM2_RACMO2.3p2_"+source_file_suffix+".nc"),
+               "tskin": os.path.join(cf.racmo_cesm2_data_path,source_path,"tskin_monthlyA_ANT27_CESM2_RACMO2.3p2_"+source_file_suffix+".nc"),
+               "t2m": os.path.join(cf.racmo_cesm2_data_path,source_path,"t2m_monthlyA_ANT27_CESM2_RACMO2.3p2_"+source_file_suffix+".nc"),
+               "smb": os.path.join(cf.racmo_cesm2_data_path,source_path,"smb_monthlyS_ANT27_CESM2_RACMO2.3p2_"+source_file_suffix+".nc"),
+               "refreeze": os.path.join(cf.racmo_cesm2_data_path,source_path,"refreeze_monthlyS_ANT27_CESM2_RACMO2.3p2_"+source_file_suffix+".nc"),
+               "runoffS": os.path.join(cf.racmo_cesm2_data_path,source_path,"runoffS_monthlyS_ANT27_CESM2_RACMO2.3p2_"+source_file_suffix+".nc"),
+               "precip": os.path.join(cf.racmo_cesm2_data_path,source_path,"precip_monthlyS_ANT27_CESM2_RACMO2.3p2_"+source_file_suffix+".nc"),
+               #"evap": os.path.join(cf.racmo_cesm2_data_path,source_path,"evap_monthlyS_ANT27_CESM2_RACMO2.3p2_"+source_file_suffix+".nc"),
+               #"subl": os.path.join(cf.racmo_cesm2_data_path,source_path,"subl_monthlyS_ANT27_CESM2_RACMO2.3p2_"+source_file_suffix+".nc"),
+               "sw0d": os.path.join(cf.racmo_cesm2_data_path,source_path,"sw0d_monthlyS_ANT27_CESM2_RACMO2.3p2_"+source_file_suffix+".nc"),
+               "swsd": os.path.join(cf.racmo_cesm2_data_path,source_path,"swsd_monthlyS_ANT27_CESM2_RACMO2.3p2_"+source_file_suffix+".nc"),
+               #"lwsd": os.path.join(cf.racmo_cesm2_data_path,source_path,"lwsd_monthlyS_ANT27_CESM2_RACMO2.3p2_"+source_file_suffix+".nc"), # needed to compute atmospheric emissivity
+               #"clcov": os.path.join(cf.racmo_cesm2_data_path,source_path,"clcov_monthlyA_ANT27_CESM2_RACMO2.3p2_"+source_file_suffix+".nc"),
                }
 
 var_list = source_file.keys()
 
-process_file = {var:os.path.join(data_path, dataset+"_hist_"+var+".nc") for var in var_list}
+process_file = {var:os.path.join(data_path, dataset+"_"+period+"_"+var+".nc") for var in var_list}
 
 for var,fl in process_file.iteritems():
     try:
