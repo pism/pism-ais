@@ -11,8 +11,8 @@ proj4str="+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=
 
 # grid_id determines also the resolution
 #grid_id = "initmip32km"
-#grid_id = "initmip16km"
-grid_id = "initmip8km"
+grid_id = "initmip16km"
+#grid_id = "initmip8km"
 #grid_id = "initmip4km"
 #grid_id = "initmip1km"
 #grid_id = "pism7km"
@@ -56,7 +56,7 @@ time_averaging_period = [1985,2014] #[1986,2005] #[1950,1979]
 #torsten local and tumble
 #output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
 #output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/python/pism_input/")
-#output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/data/")
+output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/data/")
 #output_data_path = os.path.expanduser("/p/tmp/garbe/projects/LARMIP/forcingData/")
 #output_data_path = os.path.expanduser("/home/albrecht/Documents/pism/data/pism-ais/")
 
@@ -64,7 +64,7 @@ time_averaging_period = [1985,2014] #[1986,2005] #[1950,1979]
 #output_data_path = os.path.expanduser("/p/projects/pism/mengel/pism_input/")
 
 # julius
-output_data_path = os.path.expanduser("/p/projects/pism/garbe/2018_PISM_Input_Data")
+#output_data_path = os.path.expanduser("/p/projects/pism/garbe/2018_PISM_Input_Data")
 
 # RACMO data is not freely available and cannot be downloaded,
 # so we have to provide an explicit path here
@@ -74,7 +74,10 @@ output_data_path = os.path.expanduser("/p/projects/pism/garbe/2018_PISM_Input_Da
 racmo_i2s_data_path = "/p/projects/pism/pism_input_data/Racmo_Ice2Sea"
 
 # updated and driven by Reanalysis. Preferred to use:
-racmo_wessem_data_path = "/p/projects/pism/pism_input_data/Racmo_ERAInterim"
+#racmo_wessem_data_path = "/p/projects/pism/pism_input_data/Racmo_ERAInterim"
+racmo_wessem_data_path = "/p/projects/pism/pism_input_data/Racmo_ERAInterim/monthly"
+racmo_era5_data_path = "/p/projects/pism/pism_input_data/Racmo_ERA5/monthly"
+
 
 # driven by HadCM3.
 racmo_hadcm3_data_path = "/p/projects/pism/pism_input_data/Racmo_HadCM3"
