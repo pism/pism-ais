@@ -1,5 +1,5 @@
 """
-matthias.mengel@pik, torsten.albrecht@pik, ronja.reese@pik
+matthias.mengel@pik, torsten.albrecht@pik, ronja.reese@pik, moritz.kreuzer@pik
 """
 
 import os, sys
@@ -7,11 +7,15 @@ import subprocess
 import netCDF4 as nc
 import numpy as np
 import shutil
+
+import xarray as xr
+import cftime
+
 ## this hack is needed to import config.py from the project root
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path: sys.path.append(project_root)
-import config as cf; reload(cf)
-import pism_input.pism_input as pi; reload(pi)
+import config as cf;# reload(cf)
+import pism_input.pism_input as pi;# reload(pi)
 
 dataset = "racmo_era5"
 data_reference = "Van Wessem et al., 2014. Improved representation of East Antarctica surface mass balance in a regional climate model. J. Glac., 60(222), 761-770, doi: 10.3189/2014JoG14J051."
@@ -21,6 +25,7 @@ data_path = os.path.join(cf.output_data_path, dataset)
 
 if not os.path.exists(data_path): os.makedirs(data_path)
 
+tmp_file = os.path.join(data_path, dataset+"_tmp.nc")
 output_file = os.path.join(data_path, dataset+"_input.nc")
 
 source_file = {"t2m": os.path.join(cf.racmo_era5_data_path,"t2m_monthlyA_ANT27_ERA5-3H_RACMO2.3p2_197901_202109.nc"),
@@ -31,7 +36,7 @@ source_file = {"t2m": os.path.join(cf.racmo_era5_data_path,"t2m_monthlyA_ANT27_E
 
 process_file = {var:os.path.join(data_path, dataset+"_"+var+".nc") for var in ["t2m","smb","evap","precip"]}
 
-for var,fl in process_file.iteritems():
+for var,fl in process_file.items():
     try:
         os.remove(fl)
     except OSError:
@@ -57,7 +62,7 @@ for var in ["t2m","smb","evap","precip"]:
     subprocess.check_call('ncks -O -C -x -v nblock2 '+process_file[var]+" "+process_file[var], shell=True)
 
 # Converting SMB units: Not needed probably.
-# subprocess.check_call("ncap2 -O -s 'smb=smb*1000.0/910.0' "+output_file+" "+output_file,shell=True)
+# subprocess.check_call("ncap2 -O -s 'smb=smb*1000.0/910.0' "+tmp_file+" "+tmp_file,shell=True)
 
 # Set SMB on ocean to missing, so it does not disturb the remapping at the ice sheet boundary.
 # subprocess.check_call('cdo -O setrtomiss,-9999,0 '+process_file["smb"]+" "+smb_omask_file, shell=True)
@@ -77,20 +82,23 @@ for var in ["t2m","smb","evap","precip"]:
 
 merge_these_files = " ".join([process_file[var] for var in ["t2m","smb","evap","precip"]])
 
-subprocess.check_call('cdo -O merge '+merge_these_files+" "+output_file, shell=True)
+subprocess.check_call('cdo -O merge '+merge_these_files+" "+tmp_file, shell=True)
 
 # make all variables double (some already are).
 subprocess.check_call("ncap2 -O -s 't2m=double(t2m);smb=double(smb);evap=double(evap);precip=double(precip)' "+
-                      output_file+" "+output_file,shell=True)
+                      tmp_file+" "+tmp_file,shell=True)
 
-subprocess.check_call("ncrename -v t2m,ice_surface_temp -O "+output_file+" "+output_file,shell=True)
+subprocess.check_call("ncrename -v t2m,ice_surface_temp -O "+tmp_file+" "+tmp_file,shell=True)
 
 # Fill the missing SMB field over ocean with the proxy precip - evaporation
-ncf = nc.Dataset(output_file,"a")
+ncf = nc.Dataset(tmp_file,"a")
 smb = ncf.variables["smb"][:]
-# be aware: this masking is only valid for this dataset and timestep zero.
-mask_ocean = smb[0,:,:] < -0.009
+# assume: smb[0,0,0] has ocean fill value
+mask_ocean = (smb[0,:,:] == smb[0,0,0])
 mask_ocean_expanded = np.tile(mask_ocean,(smb.shape[0],1,1))
+## be aware: this masking is only valid for this dataset and timestep zero.
+#mask_ocean = smb[0,:,:] < -0.009
+#mask_ocean_expanded = np.tile(mask_ocean,(smb.shape[0],1,1))
 # a proxy for smb
 smb_over_ocean = ncf.variables["precip"][:] + ncf.variables["evap"][:]
 smb[mask_ocean_expanded] = smb_over_ocean[mask_ocean_expanded]
@@ -104,14 +112,34 @@ ncf.reference2 = data_reference2
 
 ncf.close()
 
-subprocess.check_call('ncatted -a units,smb,o,c,"kg m-2 year-1" '+output_file,shell=True)
-subprocess.check_call("ncrename -v smb,climatic_mass_balance -O "+output_file+" "+output_file,shell=True)
-subprocess.check_call('ncatted -a units,precip,o,c,"kg m-2 year-1" '+output_file,shell=True)
-subprocess.check_call("ncrename -v precip,precipitation -O "+output_file+" "+output_file,shell=True)
-subprocess.check_call("ncap2 -O -s 'air_temp=ice_surface_temp' "+output_file+" "+output_file,shell=True)
+subprocess.check_call('ncatted -a units,smb,o,c,"kg m-2" '+tmp_file,shell=True)
+subprocess.check_call("ncrename -v smb,climatic_mass_balance -O "+tmp_file+" "+tmp_file,shell=True)
+subprocess.check_call('ncatted -a units,precip,o,c,"kg m-2" '+tmp_file,shell=True)
+subprocess.check_call("ncrename -v precip,precipitation -O "+tmp_file+" "+tmp_file,shell=True)
+subprocess.check_call("ncap2 -O -s 'air_temp=ice_surface_temp' "+tmp_file+" "+tmp_file,shell=True)
+
+
+### convert mass units to be time independent  (kg/m2 -> kg/(m2 year))
+ds = xr.open_dataset(tmp_file, use_cftime=True)
+
+time_daysinyear = [366 if (t%4 == 0) else 365 for t in ds.time.dt.year]
+conversion_per_year = time_daysinyear / ds.time.dt.days_in_month
+
+for v in ['climatic_mass_balance', 'precipitation', 'evap']:
+    assert ds[v].attrs['units'] == 'kg m-2', f"units of var {var} is '{ds[v].attrs['units']}' instead of 'kg m-2'"
+    attrs = ds[v].attrs
+    ds[v] = ds[v] * conversion_per_year
+    ds[v].attrs.update(attrs)
+    ds[v].attrs['units'] = 'kg m-2 year-1'
+
+ds.to_netcdf(output_file, unlimited_dims = ['time'])
+
+
 
 # prepare the input file for cdo remapping
 # this step takes a while for high resolution data (i.e. 1km)
 # pi.prepare_ncfile_for_cdo(output_file)
 
-print " RACMO file",output_file,"successfully preprocessed."
+subprocess.check_call(f"rm {tmp_file}", shell=True)
+
+print(" RACMO file",output_file,"successfully preprocessed.")

@@ -56,6 +56,11 @@ pism_input
 |   +-- merge_and_rename_variables.py
 |   +-- remap.py
 |   +-- time_mean.py
++-- racmo_era5
+|   +-- merge_and_rename_variables.py
+|   +-- remap.py
+|   +-- time_mean.py
+|   +-- monthly_climatology_mean.py
 +-- racmo_hadcm3
 |   +-- merge_and_rename_variables_c20/a1b.py
 +-- racmo_cesm2
