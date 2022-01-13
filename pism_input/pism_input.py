@@ -51,9 +51,9 @@ def write_regrid_command_file(config, data_path, dataset, inputfile, grid_id,
 
     with open("cdo_remap.sh", 'w') as f:
         f.write(out)
-    print "Wrote cdo_remap.sh. Now run 'bash cdo_remap.sh'"
+    print("Wrote cdo_remap.sh. Now run 'bash cdo_remap.sh'")
     if config.cluster_regridding:
-        print "Submit with sbatch cdo_remap.sh to compute nodes."
+        print("Submit with sbatch cdo_remap.sh to compute nodes.")
 
 
 def create_grid_for_cdo_remap(path_to_write, name, grid):
@@ -70,11 +70,11 @@ def create_grid_for_cdo_remap(path_to_write, name, grid):
     nc_outfile = os.path.join(path_to_write, name+'.nc')
     # a bit dirty way to get the resolution from the name
     grid_spacing = int(re.findall('\d+', name)[-1]) * 1.e3 # convert km -> m
-    print grid_spacing
+    print(grid_spacing)
     # define output grid
     de = dn =  grid_spacing # m
 
-    print grid
+    print(grid)
 
     if "pism" in name:
 
@@ -108,8 +108,8 @@ def create_grid_for_cdo_remap(path_to_write, name, grid):
 
     ee, nn = np.meshgrid(easting,northing)
 
-    print "Grid is created for "+name
-    print M,N,easting[0],northing[0],easting[-1],northing[-1],np.diff(easting)[0],np.diff(northing)[0]
+    print("Grid is created for "+name)
+    print(M,N,easting[0],northing[0],easting[-1],northing[-1],np.diff(easting)[0],np.diff(northing)[0])
 
     #projection = "+proj=stere +ellps=WGS84 +datum=WGS84 +lon_0=0 +lat_0=-90 +lat_ts=-71 +units=m"
     projection = "+lon_0=0.0 +ellps=WGS84 +datum=WGS84 +lat_ts=-71.0 +proj=stere +x_0=0.0 +units=m +y_0=0.0 +lat_0=-90.0"
@@ -170,7 +170,7 @@ def create_grid_for_cdo_remap(path_to_write, name, grid):
     nc.Conventions = 'CF-1.4'
     nc.close()
 
-    print "Grid file", nc_outfile, "has been successfully written."
+    print("Grid file", nc_outfile, "has been successfully written.")
 
     return nc_outfile
 
@@ -183,21 +183,18 @@ def get_projection_from_file(nc):
     # which contains a Proj4 string:
     try:
         p = Proj(str(nc.proj4))
-        print(
-            'Found projection information in global attribute proj4, using it')
+        print('Found projection information in global attribute proj4, using it')
     except:
         try:
             p = Proj(str(nc.projection))
-            print(
-                'Found projection information in global attribute projection, using it')
+            print('Found projection information in global attribute projection, using it')
         except:
             try:
                 # go through variables and look for 'grid_mapping' attribute
-                for var in nc.variables.keys():
+                for var in list(nc.variables.keys()):
                     if hasattr(nc.variables[var], 'grid_mapping'):
                         mappingvarname = nc.variables[var].grid_mapping
-                        print(
-                            'Found projection information in variable "%s", using it' % mappingvarname)
+                        print('Found projection information in variable "%s", using it' % mappingvarname)
                         break
                 var_mapping = nc.variables[mappingvarname]
                 p = Proj(proj="stere",
@@ -231,11 +228,11 @@ def prepare_ncfile_for_cdo(nc_outfile):
 
     # assign x dimension
     for dim in xdims:
-        if dim in nc.dimensions.keys():
+        if dim in list(nc.dimensions.keys()):
             xdim = dim
     # assign y dimension
     for dim in ydims:
-        if dim in nc.dimensions.keys():
+        if dim in list(nc.dimensions.keys()):
             ydim = dim
 
     # coordinate variable in x-direction
@@ -282,7 +279,7 @@ def prepare_ncfile_for_cdo(nc_outfile):
     proj = get_projection_from_file(nc)
 
     # If it does not yet exist, create dimension 'grid_corner_dim_name'
-    if grid_corner_dim_name not in nc.dimensions.keys():
+    if grid_corner_dim_name not in list(nc.dimensions.keys()):
         for corner in range(0, grid_corners):
             ## grid_corners in x-direction
             gc_easting[:, corner] = easting + de_vec[corner]
@@ -315,14 +312,14 @@ def prepare_ncfile_for_cdo(nc_outfile):
         # Assign values to variable 'lat_bnds'
         var_out[:] = gc_lat
 
-    if (not 'lon' in nc.variables.keys()) or (not 'lat' in nc.variables.keys()):
+    if (not 'lon' in list(nc.variables.keys())) or (not 'lat' in list(nc.variables.keys())):
         print("No lat/lon coordinates found, creating them")
         ee, nn = np.meshgrid(easting, northing)
         lon, lat = proj(ee, nn, inverse=True)
 
     var = 'lon'
     # If it does not yet exist, create variable 'lon'
-    if not var in nc.variables.keys():
+    if not var in list(nc.variables.keys()):
         var_out = nc.createVariable(var, 'f', dimensions=(ydim, xdim))
         # Assign values to variable 'lon'
         var_out[:] = lon
@@ -339,7 +336,7 @@ def prepare_ncfile_for_cdo(nc_outfile):
 
     var = 'lat'
     # If it does not yet exist, create variable 'lat'
-    if not var in nc.variables.keys():
+    if not var in list(nc.variables.keys()):
         var_out = nc.createVariable(var, 'f', dimensions=(ydim, xdim))
         var_out[:] = lat
     else:
@@ -354,7 +351,7 @@ def prepare_ncfile_for_cdo(nc_outfile):
     var_out.bounds = "lat_bnds"
 
     # Make sure variables have 'coordinates' attribute
-    for var in nc.variables.keys():
+    for var in list(nc.variables.keys()):
         if (nc.variables[var].ndim >= 2):
             nc.variables[var].coordinates = "lon lat"
 
@@ -385,7 +382,7 @@ def prepare_ncfile_for_cdo(nc_outfile):
     # Close file
     nc.close()
 
-    print "Prepared file",nc_outfile,"for cdo."
+    print("Prepared file",nc_outfile,"for cdo.")
 
 
 def get_filenames_for_cdo(cdo_remapgridpath, data_path, dataset, grid_id):
@@ -396,8 +393,8 @@ def get_filenames_for_cdo(cdo_remapgridpath, data_path, dataset, grid_id):
         dataset+"_"+grid_id+".nc")
 
     if not os.path.isfile(cdo_targetgrid_file):
-        print "cdo target grid file", cdo_targetgrid_file," does not exist."
-        print "run grids/create_cdo_grid.py first."
+        print("cdo target grid file", cdo_targetgrid_file," does not exist.")
+        print("run grids/create_cdo_grid.py first.")
         raise IOError
 
     return cdo_targetgrid_file, regrid_destination_file

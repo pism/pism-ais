@@ -10,12 +10,13 @@ Regrid Bedmap2 data to various grid resolution using cdo remapcony.
 
 import os, sys
 import jinja2
+import importlib
 
 ## this hack is needed to import config.py from the project root
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path: sys.path.append(project_root)
-import config as cf; reload(cf)
-import pism_input.pism_input as pi; reload(pi)
+import config as cf; importlib.reload(cf)
+import pism_input.pism_input as pi; importlib.reload(pi)
 
 dataset = "racmo_era5"
 
