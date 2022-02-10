@@ -93,12 +93,12 @@ for var in ["sw0d","swsd"]:
     subprocess.check_call("ncap2 -O -s '"+var+"="+var+"/(60.*60.*24.*30.4167)' "+output_file+" "+output_file,shell=True)
     subprocess.check_call('ncatted -a units,'+var+',o,c,"W m-2 month-1" '+output_file,shell=True)
 
-# # convert units of SMB fluxes from kg m-2 to kg m-2 s-1 (RACMO sums over a month). Not exactly accurate, as months have different lengths.
+# # Option 1: convert units of SMB fluxes from kg m-2 to kg m-2 s-1 (RACMO sums over a month). Not exactly accurate, as months have different lengths.
 # for var in ["snowmelt","smb","refreeze","runoff","precip"]:
 #     subprocess.check_call("ncap2 -O -s '"+var+"="+var+"/(60.*60.*24.*30.4167)' "+output_file+" "+output_file,shell=True)
 #     subprocess.check_call('ncatted -a units,'+var+',o,c,"kg m-2 s-1" '+output_file,shell=True)
 
-# convert units of SMB fluxes from kg m-2 to kg m-2 year-1 (RACMO sums over a month).
+# Option 2: convert units of SMB fluxes from kg m-2 to kg m-2 year-1 (RACMO sums over a month).
 dayspermonth = np.array([31.0,28.0,31.0,30.0,31.0,30.0,31.0,31.0,30.0,31.0,30.0,31.0]) # 365_day calendar
 for var in ["snowmelt","smb","refreeze","runoffS","precip"]:
 
@@ -111,7 +111,11 @@ for var in ["snowmelt","smb","refreeze","runoffS","precip"]:
     dat.variables[var][:]=varperyear[:]
     dat.close()
 
-    subprocess.check_call('ncatted -a units,'+var+',o,c,"kg m-2 month-1" '+output_file,shell=True)
+    subprocess.check_call('ncatted -a units,'+var+',o,c,"kg m-2 year-1" '+output_file,shell=True)
+
+# # Option 3: inherit RACMO's monthly values for the SMB fluxes
+# for var in ["snowmelt","smb","refreeze","runoff","precip"]:
+#     subprocess.check_call('ncatted -a units,'+var+',o,c,"kg m-2 month-1" '+output_file,shell=True)
 
 # further attribute fixes
 subprocess.check_call('ncatted -a units,x,o,c,"meters" '+output_file,shell=True)
