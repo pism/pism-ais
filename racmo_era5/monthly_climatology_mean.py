@@ -23,10 +23,11 @@ year_clim  = 1
 grid = cf.grid_id
 dataset = "racmo_era5"
 
-path = f'/p/projects/pism/kreuzer/pism_input_2020/{dataset}/'
+
+path = os.path.join(cf.output_data_path, dataset)
+#path = f'/p/projects/pism/kreuzer/pism_input_2020/{dataset}/'
 file_input = os.path.join(path, f'{dataset}_{grid}.nc')
 file_output = os.path.join(path,f'{dataset}_{grid}_{year_start}_{year_end}_clim_month.nc')
-
 filename=__file__
 
 

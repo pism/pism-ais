@@ -51,7 +51,7 @@ use_cdo_extrapolation=True
 regridding_method = "bilinear"
 
 # time period for multi-year averages
-time_averaging_period = [1985,2014] #[1986,2005] #[1950,1979]
+time_averaging_period = [1979,2009] #[1985,2014] #[1986,2005] #[1950,1979]
 
 #torsten local and tumble
 #output_data_path = os.path.expanduser("/p/projects/tumble/pism_input/GitLab/")
