@@ -9,6 +9,7 @@ import subprocess
 ## this hack is needed to import config.py from the project root
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path: sys.path.append(project_root)
+from importlib import reload
 import config as cf; reload(cf)
 import pism_input.pism_input as pi; reload(pi)
 
@@ -19,7 +20,7 @@ ncout_name = os.path.join(bedmachine_data_path, filename+"_ReadyForRemapping.nc"
 
 # move file to output path
 if not os.path.exists(os.path.join(bedmachine_data_path)):
-  print "Moving bedmachine data."
+  print("Moving bedmachine data.")
   os.system("mkdir " + bedmachine_data_path)
 subprocess.call("mv %s %s" % (filename+'.nc', bedmachine_data_path), shell=True)
 subprocess.call("mv %s %s" % (filename+'.nc.xml', bedmachine_data_path), shell=True)
@@ -30,7 +31,7 @@ subprocess.check_call("cp %s %s " % (os.path.join(bedmachine_data_path,filename+
 # variables do not need to be renamed as PISM recongnizes standard names
 
 # raise Lake Vostok
-print "Adjusting bed to remove lake Vostok."
+print("Adjusting bed to remove lake Vostok.")
 
 ncf = nc.Dataset(ncout_name, 'r+')
 topg_var = ncf.variables["bed"]
@@ -40,7 +41,7 @@ thickness = ncf.variables["thickness"][:]
 
 topg = topg_var[:]
 LAKE_VOSTOK=4
-print "Before ", np.mean(topg[mask==LAKE_VOSTOK])
+print("Before ", np.mean(topg[mask==LAKE_VOSTOK]))
 topg[mask==LAKE_VOSTOK] = surface[mask==LAKE_VOSTOK] - thickness[mask==LAKE_VOSTOK] 
 print "After ", np.mean(topg[mask==LAKE_VOSTOK])
 topg_var[:] = topg

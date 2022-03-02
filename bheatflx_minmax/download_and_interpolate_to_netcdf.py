@@ -21,7 +21,7 @@ import subprocess
 ## this hack is needed to import config.py from the project root
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path: sys.path.append(project_root)
-
+from importlib import reload
 import config as cf; reload(cf)
 import pism_input.pism_input as pi; reload(pi)
 
@@ -38,7 +38,7 @@ data_file = "HF_Min_Max_MaxAbs.csv"
 # if data is not yet there, download
 downloaded_file = os.path.join(data_path,data_file)
 if not os.path.isfile(downloaded_file):
-#  print "Downloading basal heatflux data."
+#  print("Downloading basal heatflux data.")
   os.system("mkdir " + data_path)
   os.system("wget -N " + link + data_file +" -P " + data_path)
 
@@ -289,4 +289,4 @@ wrtfile.close()
 subprocess.check_call('ncks -A -v lon,lat '+gridfile+' '+final_filename,shell=True)
 
 
-print 'Data successfully saved to', final_filename
+print('Data successfully saved to', final_filename)

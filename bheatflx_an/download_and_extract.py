@@ -12,6 +12,7 @@ import datetime
 ## this hack is needed to import config.py from the project root
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path: sys.path.append(project_root)
+from importlib import reload
 import config as cf; reload(cf)
 import pism_input.pism_input as pi; reload(pi)
 
@@ -23,7 +24,7 @@ ncout_name = os.path.join(data_path, 'bheatflux_an_input.nc')
 
 # if data is not yet downloaded
 if not os.path.exists(ncout_name):
-  print "Downloading data on lon-lat grid."
+  print("Downloading data on lon-lat grid.")
   os.system("mkdir -p " + data_path)
   os.system("wget " + link + " -P " + data_path)
   print("data_path:" + data_path)

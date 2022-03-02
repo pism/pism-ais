@@ -12,6 +12,7 @@ import datetime
 ## this hack is needed to import config.py from the project root
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path: sys.path.append(project_root)
+from importlin import reload
 import config as cf; reload(cf)
 import pism_input.pism_input as pi; reload(pi)
 
@@ -25,7 +26,7 @@ ncout_name = os.path.join(bedmap2_data_path, 'bedmap2_1km_input.nc')
 
 # if data is not yet extracted in bedmap2_bin
 if not os.path.exists(os.path.join(bedmap2_data_path,"bedmap2_bin")):
-  print "Downloading bedmap2 binary data."
+  print("Downloading bedmap2 binary data.")
   os.system("mkdir " + bedmap2_data_path)
   os.system("wget -N --no-check-certificate " + bedmap2_link + " -P " + bedmap2_data_path)
   os.system("cd "+bedmap2_data_path+" && unzip bedmap2_bin.zip")
@@ -50,7 +51,7 @@ x = np.linspace(-(N-1)*dx/2.0,(N-1)*dx/2.0,N)
 y = np.linspace(-(N-1)*dy/2.0,(N-1)*dy/2.0,N)
 
 
-print "Reading bedmap2 binary files from %s ...\n" % (bedmap2_data_path)
+print("Reading bedmap2 binary files from %s ...\n" % (bedmap2_data_path))
 
 bedm2_vars = {}
 for var, file in data_files.iteritems():
@@ -58,7 +59,7 @@ for var, file in data_files.iteritems():
   vardata = np.flipud(np.ma.masked_equal(np.reshape(
           np.fromfile(fname,dtype=np.float32),(N,N)),-9999.0))
 
-  print " range of "+str(var)+" = [%.2f, %.2f]" % (vardata.min(),vardata.max())
+  print(" range of "+str(var)+" = [%.2f, %.2f]" % (vardata.min(),vardata.max()))
   #get rid off NaN
   vardata[vardata.mask]=data_fills[var]
 
@@ -81,7 +82,7 @@ bedm2_attributes = {"topg": {"long_name" : "elevation of bedrock",
                             "standard_name" : "mask",
                             "units" : "", "reference" : reference_short} }
 
-print "Writing NetCDF file '%s' ..." % ncout_name
+print("Writing NetCDF file '%s' ..." % ncout_name)
 ncout = netCDF4.Dataset(ncout_name,"w",format='NETCDF4_CLASSIC')
 
 # no time dimension needed here

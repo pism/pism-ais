@@ -31,7 +31,7 @@ import subprocess
 ## this hack is needed to import config.py from the project root
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path: sys.path.append(project_root)
-
+from importlib import reload
 import config as cf; reload(cf)
 import pism_input.pism_input as pi; reload(pi)
 
@@ -51,7 +51,7 @@ linku = "http://store.pangaea.de/Publications/Martos-etal_2017/Antarctic_GHF_unc
 # if data is not yet there, download
 downloaded_file = os.path.join(data_path,data_file)
 if not os.path.isfile(downloaded_file):
-  print "Downloading albmap data."
+  print("Downloading albmap data.")
   os.system("mkdir " + data_path)
   os.system("wget -N " + link + " -P " + data_path)
   os.system("wget -N " + linku + " -P " + data_path)
@@ -86,7 +86,7 @@ f.close()
 x_new = np.sort(np.unique(xval)) #are sorted already
 y_new = np.sort(np.unique(yval))
 
-print "Create a "+ str(len(x_new)) +" x " + str(len(y_new)) +" grid on 15km resolution"
+print("Create a "+ str(len(x_new)) +" x " + str(len(y_new)) +" grid on 15km resolution")
 
 #create array for these dimensions and fill in values:
 #fillvalue = 70.0
@@ -137,4 +137,4 @@ wrtfile.close()
 pi.prepare_ncfile_for_cdo(final_filename)
 #subprocess.check_call('python ../tools/nc2cdo.py '+final_filename,shell=True)
 
-print 'Data successfully saved to', final_filename
+print('Data successfully saved to', final_filename)

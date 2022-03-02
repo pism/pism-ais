@@ -24,7 +24,7 @@ link = "http://websrv.cs.umt.edu/isis/images/4/4d/Antarctica_5km_dev1.0.nc"
 # if data is not yet there, download
 downloaded_file = os.path.join(data_path,"Antarctica_5km_dev1.0.nc")
 if not os.path.isfile(downloaded_file):
-  print "Downloading albmap data."
+  print("Downloading albmap data.")
   os.system("mkdir " + data_path)
   os.system("wget -N " + link + " -P " + data_path)
 
@@ -75,4 +75,4 @@ pi.prepare_ncfile_for_cdo(final_filename)
 #subprocess.check_call('ncatted -O -a proj4,global,a,c,"+lon_0=0.0 +ellps=WGS84 +datum=WGS84 +lat_ts=-71.0 +proj=stere +x_0=0.0 +units=m +y_0=0.0 +lat_0=-90.0"'+ final_filename,shell=True)
 
 
-print "  PISM-readable file",final_filename,"successfully created."
+print("  PISM-readable file",final_filename,"successfully created.")

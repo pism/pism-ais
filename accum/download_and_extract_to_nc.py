@@ -23,15 +23,15 @@ ncout_name = os.path.join(arthern_data_path, 'accum_1km_input.nc')
 
 # if data is not yet extracted in bedmap2_bin
 if not os.path.exists(os.path.join(arthern_data_path,"accum_bin")):
-  print "Downloading arthern acumulation binary data."
+  print("Downloading arthern acumulation binary data.")
   os.system("mkdir -p " + os.path.join(arthern_data_path, 'accum_bin'))
   os.system("wget -N " + arthern_link + " -P " + arthern_data_path+'/')
   os.system("unzip "+os.path.join(arthern_data_path,"Arthern_accumulation_bin.zip")+" -d "+os.path.join(arthern_data_path, 'accum_bin/'))
   os.system("rm "+os.path.join(arthern_data_path,"Arthern_accumulation_bin.zip"))
 
 if os.path.isfile(ncout_name):
-  print "Accum file", ncout_name
-  print "was already written, do nothing."
+  print("Accum file", ncout_name)
+  print("was already written, do nothing.")
   sys.exit(0)
 
 data_files = {"accum":"arthern_accumulation_bedmap2_grid.flt",
@@ -53,16 +53,16 @@ x = np.arange(x0_art,x0_art+(Nx)*dx,dx)
 y = np.arange(y0_art,y0_art+(Ny)*dy,dy)
 
 
-print "Reading arthern binary files from %s ...\n" % (arthern_data_path)
+print("Reading arthern binary files from %s ...\n" % (arthern_data_path))
 
 accum_vars = {}
 for var, file in data_files.iteritems():
   fname = os.path.join(arthern_data_path,"accum_bin",file)
   vardata = np.flipud(np.ma.masked_equal(np.reshape(
           np.fromfile(fname,dtype=np.float32),(Ny,Nx)),-9999.0))
-  print np.shape(vardata)
+  print(np.shape(vardata))
 
-  print " range of "+str(var)+" = [%.2f, %.2f]" % (vardata.min(),vardata.max())
+  print(" range of "+str(var)+" = [%.2f, %.2f]" % (vardata.min(),vardata.max()))
   #get rid off NaN
   vardata[vardata.mask]=data_fills[var]
 
@@ -74,7 +74,7 @@ accum_attributes = {"accum": {"long_name" : "snow accumulation",
                     "rms": {"long_name" : "RMSE snow accumulation",
                             "units" : "m year-1"}}
 
-print "Writing NetCDF file '%s' ..." % ncout_name
+print("Writing NetCDF file '%s' ..." % ncout_name)
 ncout = netCDF4.Dataset(ncout_name,"w",format='NETCDF4_CLASSIC')
 
 # no time dimension needed here
@@ -99,5 +99,5 @@ ncout.comment  = cf.authors+" created netcdf accumulation file at " + now
 ncout.citation = "Arthern, R. J., D. P. Winebrenner, and D. G. Vaughan (2006), Antarctic snow accumulation mapped using polarization of 4.3-cm wavelength microwave emission, J. Geophys. Res., 111, D06107, doi:10.1029/2004JD005667."
 
 ncout.close()
-print "Done"
+print("Done")
 

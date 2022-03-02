@@ -42,5 +42,5 @@ for var in ["air_temp","bheatflx","precipitation","thk","topg"]:
 nci.close()
 ncr.close()
 
-print "Added back units and filled missing values in bound regions with zero in"
-print regridded_file
+print("Added back units and filled missing values in bound regions with zero in")
+print(regridded_file)
