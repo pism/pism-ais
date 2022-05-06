@@ -11,7 +11,7 @@
 #
 #
 # Inputs:
-# https://icesat4.gsfc.nasa.gov/cryo_data/drainage_divides/Ant_ICESat_MODIS_Mask_1km.ascii.gz
+# https://earth.gsfc.nasa.gov/sites/default/files/lab_cryo/data/polar_ice_altimetry/antarctic_and_greenland_drainage_systems/ant_icesat_modis_mask_1km_ascii.tgz
 #
 # Outputs:
 # zwally_basins_5km.nc : in geographical coordinates
@@ -32,8 +32,9 @@ gmt gmtset PROJ_LENGTH_UNIT c
 
 # DOWNLOAD FILE IF NEEDED -----------------------------------------------------
 
-wget https://icesat4.gsfc.nasa.gov/cryo_data/drainage_divides/Ant_ICESat_MODIS_Mask_1km.ascii.gz
+wget https://earth.gsfc.nasa.gov/sites/default/files/lab_cryo/data/polar_ice_altimetry/antarctic_and_greenland_drainage_systems/ant_icesat_modis_mask_1km_ascii.tgz
 
+tar -xvf ant_icesat_modis_mask_1km_ascii.tgz
 
 # USER FILES AND VARIABLES -----------------------------------------------------
 

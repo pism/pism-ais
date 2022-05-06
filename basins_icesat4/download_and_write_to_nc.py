@@ -1,12 +1,11 @@
 """
 matthias.mengel@pik, torsten.albrecht@pik
 
-This is preprocessing for the icesat4 drainage basin data, accessible from
-https://icesat4.gsfc.nasa.gov/cryo_data/ant_grn_drainage_systems.php
+This is preprocessing for the ICESat (Zwally) drainage basin data, accessible from
+https://earth.gsfc.nasa.gov/cryo/data/polar-altimetry/antarctic-and-greenland-drainage-systems
 This script downloads the data and saves it to a netcdf file.
 
-The icesat4 drainage basins are available on 1km and updated from the Zwally et al. 2012
-IMBIE basins http://homepages.see.leeds.ac.uk/~earkhb/Basins_page.html
+The ICESat drainage basins are available on 1km and updated from the Zwally et al. 2012
 
 """
 
@@ -25,7 +24,7 @@ import config as cf; reload(cf)
 import pism_input.pism_input as pi; reload(pi)
 
 dataset="icesat4_basins"
-data_link="https://icesat4.gsfc.nasa.gov/cryo_data/drainage_divides/Ant_ICESat_MODIS_Mask_1km.ascii.gz"
+data_link="https://earth.gsfc.nasa.gov/sites/default/files/lab_cryo/data/polar_ice_altimetry/antarctic_and_greenland_drainage_systems/ant_icesat_modis_mask_1km_ascii.tgz"
 
 # exclude floating ice and icy islands from drainage basins
 exclude_shelves_and_islands = True
@@ -36,10 +35,10 @@ ncout_file = os.path.join(basins_data_path,dataset+"_1km_input.nc")
 
 # if data is not yet extracted in basins_ascii
 if not os.path.exists(basins_ascii_file):
-  print "Downloading Zwally basin ascii data."
+  print "Downloading ICESat (Zwally) basin ascii data."
   os.system("mkdir -pv " + basins_data_path)
   os.system("wget -N " + data_link + " -P " + basins_data_path)
-  os.system("cd "+basins_data_path+" && gunzip Ant_ICESat_MODIS_Mask_1km.ascii.gz")
+  os.system("cd "+basins_data_path+" && tar -xvf ant_icesat_modis_mask_1km_ascii.tgz")
 
 
 raw_data = pd.read_csv(basins_ascii_file, skiprows=40, header=None, delimiter=r"\s+",
@@ -103,7 +102,7 @@ ncv[:] = np.flipud(drainage_id_grid)
 
 now = datetime.datetime.now().strftime("%B %d, %Y")
 
-ncout.data_origin = "https://icesat4.gsfc.nasa.gov/cryo_data/ant_grn_drainage_systems.php"
+ncout.data_origin = "https://earth.gsfc.nasa.gov/cryo/data/polar-altimetry/antarctic-and-greenland-drainage-systems"
 ncout.proj4 = cf.proj4str
 ncout.comment  = cf.authors+" created netcdf basins file at " + now
 ncout.close()
