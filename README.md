@@ -141,7 +141,7 @@ pism_input
 
 ### Surface elevation
 
-#### Albmap data
+#### Albmap
 
 5km resolution, NetCDF files of Antarctica gathered from various data sources and interpolated, when necessary, onto the same grid using polar stereographic projection
 
@@ -152,7 +152,7 @@ Citation:
 
 - Griggs, J. A., & Bamber, J. L. (2009). A new 1 km digital elevation model of Antarctica derived from combined radar and laser data-Part 2: Validation and error estimates. The Cryosphere, 3(1), 113.
 
-#### Bedmap2 data
+#### Bedmap2
 
 Dataset describing surface elevation, ice-thickness and the sea ﬂoor and subglacial bed elevation of the Antarctic south of 60◦ S. Dataset was derived using data from a variety of sources, including many substantial surveys completed since the original Bedmap compilation (Bedmap1) in 2001. The Bedmap2 ice thickness grid is made from 25 million measurements, over two orders of magnitude more than were used in Bedmap1.
 
@@ -163,7 +163,7 @@ Citation:
 
 ### Bedrock topography
 
-#### Bedmap2 data
+#### Bedmap2
 
 Dataset describing surface elevation, ice-thickness and the sea ﬂoor and subglacial bed elevation of the Antarctic south of 60◦ S. Dataset was derived using data from a variety of sources, including many substantial surveys completed since the original Bedmap compilation (Bedmap1) in 2001. The Bedmap2 ice thickness grid is made from 25 million measurements, over two orders of magnitude more than were used in Bedmap1.
 
@@ -186,7 +186,7 @@ Citation:
 
 ### Accumulation
 
-#### Arthern accumulation
+#### Arthern et al.
 
 Antarctic surface accumulation map on the same grid, with the same projection and in the same file formats as bedmap2.
 
@@ -196,7 +196,7 @@ Citation:
 - Arthern, R. J., D. P. Winebrenner, and D. G. Vaughan (2006), Antarctic snow accumulation mapped using polarization of 4.3-cm wavelength microwave emission, J. Geophys. Res., 111, D06107, doi:10.1029/2004JD005667.
 
 
-#### Albmap data
+#### Albmap
 
 5km resolution, NetCDF files of Antarctica gathered from various data sources and interpolated, when necessary, onto the same grid using polar stereographic projection
 
@@ -209,44 +209,41 @@ Citation:
 
 ### Surface mass balance
 
-#### Racmo data (v.2.1)
+#### RACMO2.1
 
 HadCM3_c20_I2S_precip_Y.nc contains precipitation in mm/yr for 1980-1999 over Antarctica from RACMO2 run forced with HadCM3 data. HadCM3_c20_I2S_t2m_Y.nc contains temperature in Kelvin for 1980-1999 over Antarctica from RACMO2 run forced with HadCM3 data. (ANT55/HAD)
 
 Citation: 
 - Ligtenberg, S. R. M., van de Berg, W. J., van den Broeke, M. R., Rae, J. G. L. & van Meijgaard, E. (2013). Future surface mass balance of the Antarctic Ice Sheet and its influence on sea level change, simulated by a regional atmospheric climate model. Clim. Dynam. 41, 867–884
 
-###### Note:
-Data was given for use in this paper:
+**Note:** Data was given for use in this paper:
 - Frieler Katja; Clark Peter U.; He Feng; Buizert Christo; Reese Ronja; Ligtenberg Stefan R. M.; van den Broeke Michiel R.; Winkelmann Ricarda & Levermann Anders Consistent evidence of increasing Antarctic accumulation with warming. Nature Clim. Change, 2015, 5, 348-352
 
 
+#### RACMO2.3p2
 
-#### Racmo data (v.2.3p2)
+The latest RACMO2.3p2 data (ANT27/2) forced by ***ERA-Interim*** provide yearly mean air temperature (t2m) and surface mass balance (smb) for the years 1979-2016. 
 
-The latest RACMO2.3p2 data (ANT27/2) forced by *ERA-Interim* provide yearly mean air temperature (t2m) and surface mass balance (smb) for the years 1979-2016. 
+Download link: <https://www.projects.science.uu.nl/iceclimate/publications/data/2018/vwessem2018_tc/RACMO_Yearly/>
 
+Website: <https://www.projects.science.uu.nl/iceclimate/models/antarctica.php>
 
 Citation:
 - Van Wessem, Jan Melchior, Willem Jan Van De Berg, Brice PY Noël, Erik Van Meijgaard, Charles Amory, Gerit Birnbaum, Constantijn L. Jakobs et al. "Modelling the climate and surface mass balance of polar ice sheets using racmo2: Part 2: Antarctica (1979-2016)." Cryosphere 12, no. 4 (2018): 1479-1498.
 
-download link: https://www.projects.science.uu.nl/iceclimate/publications/data/2018/vwessem2018_tc/RACMO_Yearly/
 
-see also overview: https://www.projects.science.uu.nl/iceclimate/models/antarctica.php
+RACMO2.3p2 data (ANT27/2) forced by ***HadCM3*** climate model provide yearly mean air temperature (tskin) and surface mass balance (smb) for the historical period 1980-1999 and the A1B projection period 2000-2200.
 
+RACMO2.3p2 data (ANT27/2) forced by ***CESM2*** climate model provide monthly mean air temperature (tskin) and surface mass balance (smb) for the historical period 1950-2014 and the SSP5-8.5 projection period 2015-2100.
 
-RACMO2.3p2 data (ANT27/2) forced by *HadCM3* climate model provide yearly mean air temperature (tskin) and surface mass balance (smb) for the historical period 1980-1999 and the A1B projection period 2000-2200.
-
-RACMO2.3p2 data (ANT27/2) forced by *CESM2* climate model provide monthly mean air temperature (tskin) and surface mass balance (smb) for the historical period 1950-2014 and the SSP5-8.5 projection period 2015-2100.
-
-not yet published, contact J.M.vanWessem[at]uu.nl
+Citation: *not yet published, contact J.M.vanWessem[at]uu.nl*
 
 
 
 
 ### Mean annual temperature
 
-#### Albmap data
+#### Albmap
 
 5km resolution, NetCDF files of Antarctica gathered from various data sources and interpolated, when necessary, onto the same grid using polar stereographic projection
 
@@ -258,10 +255,9 @@ Citation:
 
 ### Geothermal flux
 
-overview white paper:
-- https://www.scar.org/scar-news/serce-news/scar-serce-ghf
+Overview white paper: <https://www.scar.org/scar-news/serce-news/scar-serce-ghf>
 
-#### Albmap data
+#### Albmap
 
 5km resolution, NetCDF files of Antarctica gathered from various data sources and interpolated, when necessary, onto the same grid using polar stereographic projection
 
@@ -272,40 +268,40 @@ Citation:
 
 - Maule, C. F., Purucker, M. E., Olsen, N., & Mosegaard, K. (2005). Heat flux anomalies in Antarctica revealed by satellite magnetic data. Science, 309(5733), 464-467.
 
-#### Martos data
+#### Martos et al.
 
-Documentation: https://doi.pangaea.de/10.1594/PANGAEA.882503
+Documentation: <https://doi.pangaea.de/10.1594/PANGAEA.882503>
 
 Citation: 
 - Martos, Y. M., Catalán, M., Jordan, T. A., Golynsky, A., Golynsky, D., Eagles, G., & Vaughan, D. G. (2017). Heat flux distribution of Antarctica unveiled. Geophysical Research Letters, 44(22).
 
-#### Purucker data
+#### Purucker et al.
 
-Documentation: https://core2.gsfc.nasa.gov/research/purucker/heatflux_updates.html
+Documentation: <https://core2.gsfc.nasa.gov/research/purucker/heatflux_updates.html>
 
 Citation: 
 - Purucker, M. E.: Geothermal heat flux data set based on low res- olution observations collected by the CHAMP satellite between 2000 and 2010, and produced from the MF-6 model following the technique described in Fox Maule et al. (2005), 2013
 
 
-#### An data
+#### An et al.
 
-Documentation: http://www.seismolab.org/model/antarctica/lithosphere/#an1-hf
+Documentation: <http://www.seismolab.org/model/antarctica/lithosphere/#an1-hf>
 
 Citation:
 - An, M., Wiens, D.A., Zhao, Y., Feng, M., Nyblade, A., Kanao, M., Li, Y., Maggi, A. and Lévêque, J.J., 2015. Temperature, lithosphere‐asthenosphere boundary, and heat flux beneath the Antarctic Plate inferred from seismic velocities. Journal of Geophysical Research: Solid Earth, 120(12), pp.8720-8742.
 
 
-#### Shen data
+#### Shen et al.
 
-Documentation: https://sites.google.com/view/weisen/research-products?authuser=0
+Documentation: <https://sites.google.com/view/weisen/research-products?authuser=0>
 
 Citation:
 - Shen, W., Wiens, D., Lloyd, A. and Nyblade, A., 2020. A Geothermal heat flux map of Antarctica empirically constrained by seismic structure. Geophysical Research Letters, https://doi.org/10.1029/2020GL086955
 
 
-#### Loesing & Ebbing data
+#### Loesing & Ebbing
 
-Documentation: https://doi.pangaea.de/10.1594/PANGAEA.930237
+Documentation: <https://doi.pangaea.de/10.1594/PANGAEA.930237>
 
 Citation:
 - Loesing, M.; Ebbing, J. (2021): Predicting Geothermal Heat Flow in Antarctica With a Machine Learning Approach. Journal of Geophysical Research: Solid Earth, 126(6), https://doi.org/10.1029/2020JB021499
@@ -314,7 +310,7 @@ Citation:
 
 ### Southern Ocean
 
-#### Schmidtko dataset.
+#### Schmidtko et al.
 
 Citation: 
 - Schmidtko, Sunke, Heywood, Karen J., Thompson, Andrew F. and Aoki, Shigeru (2014) Multidecadal warming of Antarctic waters Science, 346 (6214). pp. 1227-1231.
@@ -323,49 +319,40 @@ Citation:
 
 ### Drainage regions
 
-#### Zwally dataset
+#### Zwally et al. / ICESat
 
-Documentation: <http://homepages.see.leeds.ac.uk/~earkhb/Basins_page.html>
+Documentation: <https://earth.gsfc.nasa.gov/cryo/data/polar-altimetry/antarctic-and-greenland-drainage-systems>
 
 Citation: 
-- Zwally, H. J., Giovinetto, M. B., Beckley, M. A., & Saba, J. L. (2012). Antarctic and Greenland drainage systems. GSFC Cryospheric Sciences Laboratory.
+- Zwally, H. Jay, Mario B. Giovinetto, Matthew A. Beckley, and Jack L. Saba, 2012, Antarctic and Greenland Drainage Systems, GSFC Cryospheric Sciences Laboratory at <http://icesat4.gsfc.nasa.gov/cryo_data/ant_grn_drainage_systems.php>.
 
-
-#### Icesat4 dataset
-
-Documentation: https://icesat4.gsfc.nasa.gov/cryo_data/ant_grn_drainage_systems.php
-
-Citation:
-- Zwally, H. J., Giovinetto, M. B., Beckley, M. A., & Saba, J. L. (2012). Antarctic and Greenland drainage systems. GSFC Cryospheric Sciences Laboratory.
 
 
 
 ### Surface Velocity
 
-#### Rignot data (2017)
+#### Rignot et al. (2017)
 
 Citation: 
 - Rignot, E., J. Mouginot, and B. Scheuchl. 2017. MEaSUREs InSAR-Based Antarctica Ice Velocity Map, Version 2. [Indicate subset used]. Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. doi: http://dx.doi.org/10.5067/D7GK8F5J8M8R. [Date Accessed].
 
-More infos: http://nsidc.org/data/nsidc-0484
+More infos: <http://nsidc.org/data/nsidc-0484>
 
 
-
-#### Mouginot annual data (2017)
+#### Mouginot et al. (2017) (annual)
 
 Citation: 
 - Mouginot, J., E. Rignot, B. Scheuchl, and R. Millan. 2017. Comprehensive Annual Ice Sheet Velocity Mapping Using Landsat-8, Sentinel-1, and RADARSAT-2 Data, Remote Sensing. 9. Art. #364. https://doi.org/10.3390/rs9040364
 
-More infos: https://nsidc.org/data/NSIDC-0720/
+More infos: <https://nsidc.org/data/NSIDC-0720/>
 
 
-
-#### Mouginot data (2019)
+#### Mouginot et al. (2019)
 
 Citation: 
 - Mouginot, J., E. Rignot, and B. Scheuchl. 2019. MEaSUREs Phase-Based Antarctica Ice Velocity Map, Version 1. [Indicate subset used]. doi: https://doi.org/10.5067/PZ3NJ5RXRH10. [Date Accessed].
 
-More infos: https://nsidc.org/data/NSIDC-0754/
+More infos: <https://nsidc.org/data/NSIDC-0754/>
 
 
 ### Grounding line
@@ -376,9 +363,7 @@ Citation:
 - Bentley, Michael J., et al. "A community-based geological reconstruction of Antarctic Ice Sheet deglaciation since the Last Glacial Maximum." Quaternary Science Reviews 100 (2014): 1-9.
 
 
-Vertices downloaded and converted to csv as publication [supplement](https://www.sciencedirect.com/science/article/pii/S0277379114002546#appsec1) from:
-
-https://ars.els-cdn.com/content/image/1-s2.0-S0277379114002546-mmc1.xlsx
+Vertices downloaded and converted to csv as publication [supplement](https://www.sciencedirect.com/science/article/pii/S0277379114002546#appsec1) from <https://ars.els-cdn.com/content/image/1-s2.0-S0277379114002546-mmc1.xlsx>.
 
 
 
@@ -386,18 +371,18 @@ https://ars.els-cdn.com/content/image/1-s2.0-S0277379114002546-mmc1.xlsx
 
 #### EDC
 
-Citation: Jouzel, J., Masson-Delmotte, V., Cattani, O., Dreyfus, G., Falourd, S., Hoffmann, G., ... & Fischer, H. (2007). Orbital and millennial Antarctic climate variability over the past 800,000 years. science, 317(5839), 793-796.
+Citation: 
+- Jouzel, J., Masson-Delmotte, V., Cattani, O., Dreyfus, G., Falourd, S., Hoffmann, G., ... & Fischer, H. (2007). Orbital and millennial Antarctic climate variability over the past 800,000 years. science, 317(5839), 793-796.
 
-Anomaly over the last 800kyr provided as difference from the average of the last 1000 years, downloaded from 
-
-ftp://ftp.ncdc.noaa.gov/pub/data/paleo/icecore/antarctica/epica_domec/edc3deuttemp2007.txt
+Anomaly over the last 800kyr provided as difference from the average of the last 1000 years, downloaded from <ftp://ftp.ncdc.noaa.gov/pub/data/paleo/icecore/antarctica/epica_domec/edc3deuttemp2007.txt>
 
 
 #### WDC
 
-Citation: Cuffey, K.M., G.D. Clow, E.J. Steig, C. Buizert, T.J. Fudge, M. Koutnik, E.D. Waddington, R.B. Alley, and J.P. Severinghaus (2016). Deglacial temperature history of West Antarctica. Proc. Natl. Acad. Sci. 113(50): 14249-14254. doi:10.1073/pnas.1609132113.
+Citation: 
+- Cuffey, K.M., G.D. Clow, E.J. Steig, C. Buizert, T.J. Fudge, M. Koutnik, E.D. Waddington, R.B. Alley, and J.P. Severinghaus (2016). Deglacial temperature history of West Antarctica. Proc. Natl. Acad. Sci. 113(50): 14249-14254. doi:10.1073/pnas.1609132113.
 
-Download txt.data from http://www.usap-dc.org/view/dataset/600377 and calculate anomaly to year 0 BP over the last 67kyr.
+Download .txt data from <http://www.usap-dc.org/view/dataset/600377 and calculate anomaly to year 0 BP over the last 67kyr>.
 
 
 
@@ -405,40 +390,45 @@ Download txt.data from http://www.usap-dc.org/view/dataset/600377 and calculate 
 
 #### WDC
 
-Citation: Fudge, T. J., et al. "Variable relationship between accumulation and temperature in West Antarctica for the past 31,000 years." Geophysical Research Letters 43.8 (2016): 3795-3803.
+Citation: 
+- Fudge, T. J., et al. "Variable relationship between accumulation and temperature in West Antarctica for the past 31,000 years." Geophysical Research Letters 43.8 (2016): 3795-3803.
 
-Download xls file from http://www.usap-dc.org/view/dataset/601004 and convert sheet "50year" to csv.
+Download .xls file from <http://www.usap-dc.org/view/dataset/601004> and convert sheet "50year" to .csv.
 
 
 
 ### Sea level forcing
 
-#### ice6g
+#### ICE-6G
 
-Citation: Stuhne, G. R., and W. R. Peltier. "Reconciling the ICE‐6G_C reconstruction of glacial chronology with ice sheet dynamics: The cases of Greenland and Antarctica." Journal of Geophysical Research: Earth Surface 120.9 (2015): 1841-1865.
+Citation: 
+- Stuhne, G. R., and W. R. Peltier. "Reconciling the ICE‐6G_C reconstruction of glacial chronology with ice sheet dynamics: The cases of Greenland and Antarctica." Journal of Geophysical Research: Earth Surface 120.9 (2015): 1841-1865.
 
 Anomaly over last 122kyr. Data not public (contact Dick Peltier).
 
 
-#### specmap
+#### SPECMAP
 
-Citation: Imbrie, J. D., and A. McIntyre. "SPECMAP time scale developed by Imbrie et al., 1984 based on normalized planktonic records (normalized O-18 vs. time, specmap. 017)." Earth System Science Data (2006).
+Citation: 
+- Imbrie, J. D., and A. McIntyre. "SPECMAP time scale developed by Imbrie et al., 1984 based on normalized planktonic records (normalized O-18 vs. time, specmap. 017)." Earth System Science Data (2006).
 
 Anomaly over last 405kyr, data extracted from [Albmap dataset](http://websrv.cs.umt.edu/isis/images/4/4d/Antarctica_5km_dev1.0.nc).
 
 
-#### bintanja08
+#### Bintanja & Van de Wal
 
-Citation: Bintanja, R., & Van de Wal, R. S. W. (2008). North American ice-sheet dynamics and the onset of 100,000-year glacial cycles. Nature, 454(7206), 869.
+Citation: 
+- Bintanja, R., & Van de Wal, R. S. W. (2008). North American ice-sheet dynamics and the onset of 100,000-year glacial cycles. Nature, 454(7206), 869.
 
-Anomaly data over last 3,000kyr downloaded from: ftp://ftp.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/bintanja2008/bintanja2008.txt
+Anomaly data over last 3,000kyr downloaded from <ftp://ftp.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/bintanja2008/bintanja2008.txt>.
 
 
-#### lambeck14
+#### Lambeck et al.
 
-Citation: Lambeck, K., Rouby, H., Purcell, A., Sun, Y., & Sambridge, M. (2014). Sea level and global ice volumes from the Last Glacial Maximum to the Holocene. Proceedings of the National Academy of Sciences, 111(43), 15296-15303.
+Citation: 
+- Lambeck, K., Rouby, H., Purcell, A., Sun, Y., & Sambridge, M. (2014). Sea level and global ice volumes from the Last Glacial Maximum to the Holocene. Proceedings of the National Academy of Sciences, 111(43), 15296-15303.
 
-Anomaly data over 35kyr extracted from Table 3 in pdf supplement http://www.pnas.org/content/suppl/2014/10/08/1411762111.DCSupplemental
+Anomaly data over 35kyr extracted from Table 3 in PDF supplement <http://www.pnas.org/content/suppl/2014/10/08/1411762111.DCSupplemental>.
 
 
 
@@ -447,22 +437,22 @@ Anomaly data over 35kyr extracted from Table 3 in pdf supplement http://www.pnas
 
 #### InitMIP
 
-Wiki: http://www.climate-cryosphere.org/wiki/index.php?title=InitMIP-Antarctica
+Wiki: <http://www.climate-cryosphere.org/wiki/index.php?title=InitMIP-Antarctica>
 
 
 #### Larmip
 
-Wiki: https://www.pik-potsdam.de/research/earth-system-analysis/models/larmip
+Wiki: <https://www.pik-potsdam.de/research/earth-system-analysis/models/larmip>
 
 
 #### Abumip
 
-Wiki: http://www.climate-cryosphere.org/wiki/index.php?title=ABUMIP-Antarctica
+Wiki: <http://www.climate-cryosphere.org/wiki/index.php?title=ABUMIP-Antarctica>
 
 
 #### ISMIP6
 
-Wiki: https://www.climate-cryosphere.org/wiki/index.php?title=ISMIP6-Projections-Antarctica
+Wiki: <https://www.climate-cryosphere.org/wiki/index.php?title=ISMIP6-Projections-Antarctica>
 
 
 
