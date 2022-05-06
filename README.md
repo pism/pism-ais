@@ -47,7 +47,13 @@ pism_input
 +-- albmap
 |   +-- download_and_rename_variables.py
 |   +-- remap.py
-|   +-- add_units_fill_bounds_after_regridding.py
+|   +-- add_units_fill_bounds_after_regridding.py
++-- basins_icesat4
+|   +-- download_and_write_to_netcdf.py
+|   +-- remap.py (FIXME: cdo rempnn)
++-- basins_zwally
+|   +-- unzip_and_extend_to_ocean.py
+|   +-- remap.py (with local cdo rempnn)
 +-- racmo_ice2sea
 |   +-- merge_and_rename_variables.py
 |   +-- remap.py
@@ -71,12 +77,6 @@ pism_input
 |   +-- cdo_remap_yearly.sh (example for year-wise processing)
 |   +-- fill_missing_data.py
 |   +-- correct_time_bnds.py
-+-- zwally_basins
-|   +-- unzip_and_extend_to_ocean.py
-|   +-- remap.py (with local cdo rempnn)
-+-- icesat4_basins
-|   +-- download_and_write_to_netcdf.py
-|   +-- remap.py (FIXME: cdo rempnn)
 +-- schmidtko
 |   +-- download_and_write_to_netcdf.py
 |   +-- calculate_potential_temps.py
