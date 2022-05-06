@@ -28,8 +28,8 @@ inputfile = os.path.join(data_path, 'schmidtko_initmip8km_means.nc')
 
 targetgrid_file = os.path.join(cf.cdo_remapgridpath, cf.grid_id+'.nc')
 regridded_file = os.path.join(data_path, dataset+"_"+cf.grid_id+"_means.nc")
-basins_file = os.path.join(cf.output_data_path,'zwally_basins',"zwally_basins"+"_"+cf.grid_id+".nc") 
-basins_input_file = os.path.join(cf.output_data_path,'zwally_basins',"zwally_basins"+"_initmip8km.nc")      
+basins_file = os.path.join(cf.output_data_path,'basins_icesat_zwally',"basins_icesat_zwally"+"_"+cf.grid_id+".nc") 
+basins_input_file = os.path.join(cf.output_data_path,'basins_icesat_zwally',"basins_icesat_zwally"+"_initmip8km.nc")      
 
 
 # copy the targetgrid file to the output file

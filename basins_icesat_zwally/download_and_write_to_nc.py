@@ -23,7 +23,7 @@ if project_root not in sys.path: sys.path.append(project_root)
 import config as cf; reload(cf)
 import pism_input.pism_input as pi; reload(pi)
 
-dataset="icesat4_basins"
+dataset="basins_icesat_zwally"
 data_link="https://earth.gsfc.nasa.gov/sites/default/files/lab_cryo/data/polar_ice_altimetry/antarctic_and_greenland_drainage_systems/ant_icesat_modis_mask_1km_ascii.tgz"
 
 # exclude floating ice and icy islands from drainage basins

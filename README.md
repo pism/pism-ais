@@ -48,12 +48,11 @@ pism_input
 |   +-- download_and_rename_variables.py
 |   +-- remap.py
 |   +-- add_units_fill_bounds_after_regridding.py
-+-- basins_icesat4
++-- basins_icesat_zwally
 |   +-- download_and_write_to_netcdf.py
-|   +-- remap.py (FIXME: cdo rempnn)
-+-- basins_zwally
-|   +-- unzip_and_extend_to_ocean.py
-|   +-- remap.py (with local cdo rempnn)
+|   +-- remap.py
+|   +-- Zwally_basins.gmt (extend to ocean using GMT)
+|   +-- unzip_and_extend_to_ocean.old.py (depends on unavailable input file... use Zwally_basins.gmt instead; currently only kept for reference)
 +-- racmo_ice2sea
 |   +-- merge_and_rename_variables.py
 |   +-- remap.py

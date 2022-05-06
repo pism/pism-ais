@@ -1,6 +1,6 @@
 """
 matthias.mengel@pik, torsten.albrecht@pik, ronja.reese@pik, ricarda.winkelmann@pik
-Download Zwally basin data and save to (5km) netcdf file.
+Download ICESat (Zwally) basin data and save to (5km) netcdf file.
 """
 
 import os, glob
@@ -16,7 +16,7 @@ if project_root not in sys.path: sys.path.append(project_root)
 import config as cf; reload(cf)
 import pism_input.pism_input as pi; reload(pi)
 
-dataset="zwally_basins"
+dataset="basins_icesat_zwally"
 
 """
 Parameters
@@ -30,7 +30,7 @@ fillInBasinMask=1
 
 ### Zwally basins   ##########################################################
 # Documentation of the data: http://homepages.see.leeds.ac.uk/~earkhb/Basins_page.html
-basins_link="http://homepages.see.leeds.ac.uk/~earkhb/ais_basins_imbie_ascii.zip"
+basins_link="http://homepages.see.leeds.ac.uk/~earkhb/ais_basins_imbie_ascii.zip" ### link not working any more!
 
 ## such file definitions should go to config.py, so that other functions can access them.
 basins_data_path = os.path.join(cf.output_data_path, dataset)
@@ -49,7 +49,7 @@ ncout_ocean = os.path.join(basins_data_path, 'basins_zwally_5km_input.nc')
 # if data is not yet extracted in basins_ascii
 if not os.path.exists(basins_ascii_path):
   #print "Downloading Zwally basin ascii data."
-  print "Unzipping Zwally basin ascii data."
+  print "Unzipping ICESat (Zwally) basin ascii data."
   os.system("mkdir -p " + basins_ascii_path)
   #os.system("wget -N " + basins_link + " -P " + basins_ascii_path)
   os.system("unzip ais_basins_imbie_ascii.zip -d "+basins_ascii_path)

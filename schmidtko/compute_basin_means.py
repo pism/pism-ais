@@ -31,8 +31,8 @@ infile = os.path.join(data_path, 'schmidtko_'+cf.grid_id+'.nc')
 outfile = os.path.join(data_path, 'schmidtko_'+cf.grid_id+'_means.nc')
 print infile
 
-zwally_data_path = os.path.join(cf.output_data_path,"zwally_basins")
-basinfile = os.path.join(zwally_data_path, 'zwally_basins_'+cf.grid_id+'.nc')
+zwally_data_path = os.path.join(cf.output_data_path,"basins_icesat_zwally")
+basinfile = os.path.join(zwally_data_path, 'basins_icesat_zwally'+cf.grid_id+'.nc')
 
 
 # Load data
