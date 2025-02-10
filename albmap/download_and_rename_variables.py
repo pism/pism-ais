@@ -18,8 +18,10 @@ data_path = os.path.join(cf.output_data_path, dataset)
 final_filename = os.path.join(data_path,"albmap_5km_input.nc")
 
 # Documentation of the data: https://www.bas.ac.uk/project/bedmap-2/
-link = "http://websrv.cs.umt.edu/isis/images/4/4d/Antarctica_5km_dev1.0.nc"
+#link = "http://websrv.cs.umt.edu/isis/images/4/4d/Antarctica_5km_dev1.0.nc"
 ## such file definitions should go to config.py, so that other functions can access them.
+# need to be unzipped and renamed
+link = "https://store.pangaea.de/Publications/LeBrocq_et_al_2010/ALBMAPv1.nc.zip"
 
 # if data is not yet there, download
 downloaded_file = os.path.join(data_path,"Antarctica_5km_dev1.0.nc")

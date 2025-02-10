@@ -175,9 +175,10 @@ Citation:
 
 #### BedMachine Antarctica
 
-Dataset based on mass conservation (currently version 2, dated 2020-07-15), available from the National Snow & Ice Data Center at <https://nsidc.org/data/nsidc-0756> (data set ID NSIDC-0756).
+Dataset based on mass conservation (currently version 3, dated 2022-10-11), available from the National Snow & Ice Data Center at <https://nsidc.org/data/nsidc-0756> (data set ID NSIDC-0756).
 
-Website: <https://sites.uci.edu/morlighem/bedmachine-antarctica/>
+Website for v2: <https://sites.ps.uci.edu/morlighem/dataproducts/bedmachine-antarctica/>
+Download v3 via: <https://nsidc.org/data/nsidc-0756/versions/3>
 
 Citation:
 - Morlighem, M., E. Rignot, T. Binder, D. D. Blankenship, R. Drews, G. Eagles, O. Eisen, F. Ferraccioli, R. Forsberg, P. Fretwell, V. Goel, J. S. Greenbaum, H. Gudmundsson, J. Guo, V. Helm, C. Hofstede, I. Howat, A. Humbert, W. Jokat, N. B. Karlsson, W. Lee, K. Matsuoka, R. Millan, J. Mouginot, J. Paden, F. Pattyn, J. L. Roberts, S. Rosier, A. Ruppel, H. Seroussi, E. C. Smith, D. Steinhage, B. Sun, M. R. van den Broeke, T. van Ommen, M. van Wessem, and D. A. Young. 2020. Deep glacial troughs and stabilizing ridges unveiled beneath the margins of the Antarctic ice sheet, Nature Geoscience. 13. 132-137. <https://doi.org/10.1038/s41561-019-0510-8>
@@ -377,7 +378,9 @@ Vertices downloaded and converted to csv as publication [supplement](https://www
 Citation: 
 - Jouzel, J., Masson-Delmotte, V., Cattani, O., Dreyfus, G., Falourd, S., Hoffmann, G., ... & Fischer, H. (2007). Orbital and millennial Antarctic climate variability over the past 800,000 years. science, 317(5839), 793-796.
 
-Anomaly over the last 800kyr provided as difference from the average of the last 1000 years, downloaded from <ftp://ftp.ncdc.noaa.gov/pub/data/paleo/icecore/antarctica/epica_domec/edc3deuttemp2007.txt>
+Doenload from: <https://www.ncei.noaa.gov/access/paleo-search/study/6080>
+
+Anomaly over the last 800kyr provided as difference from the average of the last 1000 years, downloaded from <https://www.ncei.noaa.gov/pub/data/paleo/icecore/antarctica/epica_domec/edc3deuttemp2007-noaa.txt>
 
 
 #### WDC

@@ -69,6 +69,9 @@ output_data_path = os.path.expanduser("/p/projects/tumble/albrecht/pism_input/da
 # julius
 #output_data_path = os.path.expanduser("/p/projects/pism/garbe/2018_PISM_Input_Data")
 
+# all inout data have been downloaded to /p/projects/pism/pism_input_data/PISM-AIS
+
+
 # RACMO data is not freely available and cannot be downloaded,
 # so we have to provide an explicit path here
 # if racmo data is intended to be used in publications,
@@ -123,7 +126,9 @@ initmip_data_path = "/p/projects/tumble/pism_input/ISMIP6/initMIP/AIS/"
 #initmip_pism_out = "/p/tmp/albrecht/pism18/pismOut/larmip/larmip2304/results/result_constant_8km_100000yrs.nc"
 #initmip_pism_out = "/p/tmp/albrecht/pism18/pismOut/forcing/forcing2542_TPSO/results/snapshots_2000.000.nc"
 #initmip_pism_out = "/p/projects/pism/albrecht/abumip/results/forcing2543e6_TPSO/results/result_ctrl_4km_1000yrs.nc"
+# does not exist any more
 initmip_pism_out = "/p/tmp/mengel/pism_out/opttphi_056_initmip4km_nomassoceanconst_amundsenm0p37/snapshots_2450.000.nc"
+
 
 # merge the follwing dataset into one PISM-ready file.
 # datasets should be named here as the subfolder of its preprocessing.

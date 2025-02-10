@@ -14,8 +14,8 @@ if project_root not in sys.path: sys.path.append(project_root)
 import config as cf; reload(cf)
 
 datain = cf.paleo_time_input
-datfile = "edc3deuttemp2007.txt"
-link = "ftp://ftp.ncdc.noaa.gov/pub/data/paleo/icecore/antarctica/epica_domec/"+datfile
+datfile = "edc3deuttemp2007-noaa.txt"
+link = "https://www.ncei.noaa.gov/pub/data/paleo/icecore/antarctica/epica_domec"+datfile
 cmd = 'wget -r '+link+' -O '+datfile
 if not os.path.isfile(datain+datfile): 
   print "Downloading "+datfile
