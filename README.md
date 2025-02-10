@@ -144,7 +144,6 @@ pism_input
 
 5km resolution, NetCDF files of Antarctica gathered from various data sources and interpolated, when necessary, onto the same grid using polar stereographic projection
 
-Documentation: <http://websrv.cs.umt.edu/isis/index.php/Present_Day_Antarctica>
 Dataset: <https://doi.pangaea.de/10.1594/PANGAEA.734145>
 
 Citation:  
