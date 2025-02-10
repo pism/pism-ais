@@ -147,9 +147,7 @@ pism_input
 Dataset: <https://doi.pangaea.de/10.1594/PANGAEA.734145>
 
 Citation:  
-- Bamber, J. L., Gomez-Dans, J. L., & Griggs, J. A. (2009). A new 1 km digital elevation model of the Antarctic derived from combined satellite radar and laser data-Part 1: Data and methods. The Cryosphere, 3(1), 101.
-
-- Griggs, J. A., & Bamber, J. L. (2009). A new 1 km digital elevation model of Antarctica derived from combined radar and laser data-Part 2: Validation and error estimates. The Cryosphere, 3(1), 113.
+- Le Brocq, A. M., Payne, A. J., and Vieli, A.: An improved Antarctic dataset for high resolution numerical ice sheet models (ALBMAP v1), Earth Syst. Sci. Data, 2, 247–260, https://doi.org/10.5194/essd-2-247-2010, 2010 
 
 #### Bedmap2
 
