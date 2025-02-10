@@ -15,8 +15,8 @@ import netCDF4
 ## this hack is needed to import config.py from the project root
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path: sys.path.append(project_root)
-import config as cf; reload(cf)
-import pism_input.pism_input as pi; reload(pi)
+import config as cf
+import pism_input.pism_input as pi
 
 
 if __name__ == "__main__":

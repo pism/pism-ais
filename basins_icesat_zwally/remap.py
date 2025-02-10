@@ -14,9 +14,9 @@ import subprocess
 ## this hack is needed to import config.py from the project root
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path: sys.path.append(project_root)
-from importlib import reload
-import config as cf; reload(cf)
-import pism_input.pism_input as pi; reload(pi)
+
+import config as cf
+import pism_input.pism_input as pi
 
 dataset="basins_icesat_zwally"
 
@@ -31,6 +31,7 @@ cdo_targetgrid_file, regridded_file = pi.get_filenames_for_cdo(
 # pi.write_regrid_command_file(cf, data_path, dataset, inputfile, cf.grid_id,
 #                      cdo_targetgrid_file, regridded_file, cf.regridding_method)
 
+
 ## Integer regridding for basin values, can be run interactively.
-subprocess.check_call("cdo remapnn,"+cdo_targetgrid_file+" "+inputfile+" "+
-                      regridded_file, shell=True)
+subprocess.check_call("export REMAP_EXTRAPOLATE=off && cdo -setmisstoc,0 - remapnn,"+
+                       cdo_targetgrid_file+" "+inputfile+" "+regridded_file, shell=True)

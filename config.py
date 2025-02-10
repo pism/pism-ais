@@ -16,6 +16,8 @@ grid_id = "initmip16km"
 #grid_id = "initmip4km"
 #grid_id = "initmip1km"
 #grid_id = "pism7km"
+#grid_id = "pism50km"
+#grid_id = "initmip50km"
 
 # grids, as inferred from PISM output
 grids={
@@ -38,6 +40,7 @@ grids={
     "initmip8km":[761,761,-3040000,-3040000,3040000,3040000],
     "initmip16km":[381,381,-3040000,-3040000,3040000,3040000],
     "initmip32km":[191,191,-3040000,-3040000,3040000,3040000],
+    "initmip50km":[120,120,-3040000,-3040000,3040000,3040000],
     "initmip64km":[95,95,-3040000,-3040000,3040000,3040000]}
 
 # if true, prepare regridding bash grid to be submitted and not run interactively.
@@ -118,7 +121,7 @@ initmip_data_path = "/p/projects/tumble/pism_input/ISMIP6/initMIP/AIS/"
 #initmip_pism_out = "/p/tmp/garbe/projects/AIS_Equilibrium/pismpik_ant_equi_larmip8km_1.0_10/snapshots_29000.000.nc"
 #initmip_pism_out = "/p/tmp/garbe/projects/AIS_Equilibrium/pismpik_ant_equi_larmip8km_1.0_10/snapshots_58000.000.nc"
 #initmip_pism_out = "/p/tmp/albrecht/pism18/pismOut/larmip/larmip2304/results/result_constant_8km_100000yrs.nc"
-initmip_pism_out = "/p/tmp/albrecht/pism18/pismOut/forcing/forcing2542_TPSO/results/snapshots_2000.000.nc"
+#initmip_pism_out = "/p/tmp/albrecht/pism18/pismOut/forcing/forcing2542_TPSO/results/snapshots_2000.000.nc"
 #initmip_pism_out = "/p/projects/pism/albrecht/abumip/results/forcing2543e6_TPSO/results/result_ctrl_4km_1000yrs.nc"
 initmip_pism_out = "/p/tmp/mengel/pism_out/opttphi_056_initmip4km_nomassoceanconst_amundsenm0p37/snapshots_2450.000.nc"
 

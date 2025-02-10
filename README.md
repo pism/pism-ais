@@ -145,6 +145,7 @@ pism_input
 5km resolution, NetCDF files of Antarctica gathered from various data sources and interpolated, when necessary, onto the same grid using polar stereographic projection
 
 Documentation: <http://websrv.cs.umt.edu/isis/index.php/Present_Day_Antarctica>
+Dataset: <https://doi.pangaea.de/10.1594/PANGAEA.734145>
 
 Citation:  
 - Bamber, J. L., Gomez-Dans, J. L., & Griggs, J. A. (2009). A new 1 km digital elevation model of the Antarctic derived from combined satellite radar and laser data-Part 1: Data and methods. The Cryosphere, 3(1), 101.
@@ -200,6 +201,7 @@ Citation:
 5km resolution, NetCDF files of Antarctica gathered from various data sources and interpolated, when necessary, onto the same grid using polar stereographic projection
 
 Documentation: <http://websrv.cs.umt.edu/isis/index.php/Present_Day_Antarctica>
+Dataset: <https://doi.pangaea.de/10.1594/PANGAEA.734145>
 
 Citation: 
 - Vaughan, D. G., Bamber, J. L., Giovinetto, M., Russell, J., & Cooper, A. P. R. (1999). Reassessment of net surface mass balance in Antarctica. Journal of climate, 12(4), 933-946.
@@ -247,6 +249,7 @@ Citation: *not yet published, contact J.M.vanWessem[at]uu.nl*
 5km resolution, NetCDF files of Antarctica gathered from various data sources and interpolated, when necessary, onto the same grid using polar stereographic projection
 
 Documentation: <http://websrv.cs.umt.edu/isis/index.php/Present_Day_Antarctica>
+Dataset: <https://doi.pangaea.de/10.1594/PANGAEA.734145>
 
 Citation: 
 - Comiso, J. C. (2000). Variability and trends in Antarctic surface temperatures from in situ and satellite infrared measurements. Journal of Climate, 13(10), 1674-1696.
@@ -261,6 +264,7 @@ Overview white paper: <https://www.scar.org/scar-news/serce-news/scar-serce-ghf>
 5km resolution, NetCDF files of Antarctica gathered from various data sources and interpolated, when necessary, onto the same grid using polar stereographic projection
 
 Documentation: <http://websrv.cs.umt.edu/isis/index.php/Present_Day_Antarctica>
+Dataset: <https://doi.pangaea.de/10.1594/PANGAEA.734145>
 
 Citation: 
 - Shapiro, N. M., & Ritzwoller, M. H. (2004). Inferring surface heat flux distributions guided by a global seismic model: particular application to Antarctica. Earth and Planetary Science Letters, 223(1), 213-224.
